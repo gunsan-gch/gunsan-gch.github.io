@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://gunsan-gch.github.io/gunsan-gch-2027/sitemap.xml
