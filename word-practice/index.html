@@ -54,14 +54,56 @@ main{max-width:980px;margin:auto;padding:18px 16px 110px}
 .head .tag{margin-left:auto;align-self:flex-start;font-size:.75rem;font-weight:800;padding:4px 10px;border-radius:999px;background:var(--ok-l);color:var(--ok)}
 
 main:focus{outline:none}
-.grid{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,1fr);grid-template-rows:auto auto 1fr;grid-template-areas:"a b" "x b" "h b";gap:14px;margin-top:14px;align-items:start}
-.grid>.card{padding:16px}
-.ga{grid-area:a}.gb{grid-area:b}.gx{grid-area:x}.gh{grid-area:h}
+.grid{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,1fr);gap:14px;margin-top:14px;align-items:start}
+.col{display:grid;gap:14px;min-width:0}
+.grid .card{padding:16px}
 .grid .extra,.grid .help{margin-top:0}
+.grid .help{padding:6px 16px}
 .grid .dls{grid-template-columns:1fr}
 .lab{display:flex;align-items:center;gap:7px;font-size:.8rem;font-weight:900;letter-spacing:.02em;color:var(--muted);margin:0 0 10px}
 .lab i{font-style:normal;width:22px;height:22px;border-radius:7px;display:grid;place-items:center;color:#fff;font-size:.75rem}
-.lab .l1{background:#7c3aed}.lab .l2{background:var(--orange)}.lab .l3{background:var(--brand)}.lab .l4{background:var(--ok)}
+.lab .l1{background:#7c3aed}.lab .l2{background:var(--orange)}.lab .l3{background:var(--brand)}.lab .l4{background:var(--ok)}.lab .l5{background:var(--red)}
+.labn{font-weight:600;color:#98a2b3;letter-spacing:0}
+
+/* 클릭 순서 그림 */
+.flow{display:grid;gap:10px}
+.fp{border:1.5px solid #f5c2c2;background:#fffafa;border-radius:12px;padding:10px 12px}
+.fp h4{margin:0 0 8px;font-size:.9rem;display:flex;gap:7px;align-items:center}
+.fp h4 b{background:var(--red);color:#fff;border-radius:6px;padding:0 7px;font-size:.75rem}
+.fp p{margin:8px 0 0;font-size:.85rem}
+.fp .dn{text-align:center;color:var(--red);font-size:.8rem;line-height:1;margin:4px 0}
+.mw{border:1px solid #c9d1e0;border-radius:8px;background:#f7f8fb;font-size:.78rem}
+.mw .mt{background:#e6eaf3;padding:4px 9px;font-weight:800;font-size:.76rem;border-bottom:1px solid #d3d9e6;border-radius:8px 8px 0 0}
+.mw .mb{padding:10px;display:flex;gap:12px;flex-wrap:wrap;align-items:center}
+.mtabs{display:flex;gap:2px;padding:5px 7px 0;background:#eef1f7;border-bottom:1px solid #d3d9e6;flex-wrap:wrap}
+.mtabs span{padding:2px 7px;font-size:.72rem;color:#667085;border-radius:5px 5px 0 0}
+.mtabs span.on{background:#f7f8fb;color:var(--ink);font-weight:800}
+.mcol{display:grid;gap:7px}
+.mrow{display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+.ml{background:#fff;border:1px solid #d3d9e6;border-radius:4px;min-width:96px}
+.ml div{padding:2px 8px}
+.ml .sel{background:var(--brand);color:#fff;font-weight:800}
+.mbtn{display:inline-block;border:1px solid #c9d1e0;background:#fff;border-radius:5px;padding:3px 9px;font-size:.76rem;font-weight:700;white-space:nowrap}
+.mbtn.pri{background:var(--brand);border-color:var(--brand);color:#fff}
+.minp{display:inline-block;border:1px solid #c9d1e0;background:#fff;border-radius:4px;padding:1px 7px;min-width:40px;font-weight:800}
+.rad{width:12px;height:12px;border-radius:50%;border:1.5px solid #667085;display:inline-block;margin:0 2px 0 4px;vertical-align:-1px;background:#fff}
+.rad.on{background:radial-gradient(var(--brand) 40%,#fff 46%)}
+.tgt{position:relative;outline:2.5px solid var(--red);outline-offset:2px;border-radius:5px}
+.tgt[data-p]::after{content:attr(data-p);position:absolute;top:-12px;right:-12px;width:20px;height:20px;border-radius:50%;background:var(--red);color:#fff;font-size:.7rem;font-weight:900;display:grid;place-items:center;z-index:1;box-shadow:0 0 0 2px #fff}
+.mtab{border-collapse:collapse}
+.mtab td{width:22px;height:13px;border:1px solid #8a94a6;background:#fff}
+.mtab.all td,.mtab tr.s td{background:#9db4ff}
+.bpick{display:grid;grid-template-columns:auto 52px auto;grid-template-rows:auto 36px auto;gap:3px;align-items:center;justify-items:center}
+.bpick .bp{grid-column:2;grid-row:2;width:52px;height:36px;border:1px solid #667085;background:linear-gradient(#98a2b3,#98a2b3) center/1px 100% no-repeat,linear-gradient(#98a2b3,#98a2b3) center/100% 1px no-repeat,#fff}
+.bpick .t{grid-column:2;grid-row:1}.bpick .l{grid-column:1;grid-row:2}.bpick .r{grid-column:3;grid-row:2}.bpick .b{grid-column:2;grid-row:3}
+.rib{display:flex;gap:2px;background:#eef1f7;padding:3px;border-radius:6px;flex-wrap:wrap}
+.rib span{padding:2px 8px;font-size:.74rem;border-radius:4px}
+.rib .act{background:#fff;font-weight:800}
+.ctx{background:#fff;border:1px solid #c9d1e0;border-radius:6px;box-shadow:0 4px 12px rgba(0,0,0,.12);font-size:.76rem;min-width:118px;padding:3px 0}
+.ctx div{padding:3px 10px}
+.mgrid{border-collapse:collapse;font-size:.7rem;background:#fff}
+.mgrid td{border:1px solid #d3d9e6;padding:1px 5px;text-align:right;min-width:30px}
+.mgrid tr:first-child td,.mgrid td:first-child{background:#eef1f7;font-weight:700;text-align:center}
 
 /* 완성 모습 */
 .goal{display:grid;gap:8px}
@@ -208,7 +250,9 @@ dialog::backdrop{background:rgba(17,24,39,.55)}
 .toast{position:fixed;left:50%;bottom:86px;transform:translateX(-50%);background:#1d2433;color:#fff;padding:10px 16px;border-radius:12px;font-size:.88rem;font-weight:700;z-index:80;box-shadow:0 8px 24px rgba(0,0,0,.25)}
 
 @media(max-width:760px){
-  .grid{grid-template-columns:1fr;grid-template-rows:auto;grid-template-areas:"a" "b" "x" "h"}
+  .grid{display:flex;flex-direction:column;align-items:stretch}
+  .col{display:contents}
+  .gb{order:1}.ga{order:2}.gd{order:3}.gx{order:4}.gh{order:5}
   .hero{grid-template-columns:1fr}
   .hero .thumb{display:none}
   .dls{grid-template-columns:1fr}
@@ -251,8 +295,8 @@ dialog::backdrop{background:rgba(17,24,39,.55)}
 
 <dialog id="goalDlg" aria-labelledby="goalTitle">
   <div class="dh"><h2 id="goalTitle">완성 예시 (조건 번호 표시)</h2>
-    <div><button class="tbtn" data-z="-25">−</button> <button class="tbtn" data-z="25">+</button> <button class="tbtn" data-close>닫기 ✕</button></div></div>
-  <div class="db"><div class="zoom"><img id="goalImg" src="img/goal.webp" alt="조건 번호가 표시된 완성 문서 예시" width="1300" height="1837"></div></div>
+    <div><button class="tbtn hidden" id="wholeBtn">📄 전체 문서</button> <button class="tbtn" data-z="-25">−</button> <button class="tbtn" data-z="25">+</button> <button class="tbtn" data-close>닫기 ✕</button></div></div>
+  <div class="db"><div class="zoom"><img id="goalImg" src="img/goal.webp" alt="완성 예시 확대"></div></div>
 </dialog>
 
 <dialog id="helpDlg" aria-labelledby="helpTitle">
@@ -420,18 +464,18 @@ const M=[
  help:[['1이 계속 보여요','<b>새 번호로 시작</b>에서 시작 번호 3을 넣었는지 확인!']]},
 
 {icon:'⬆️',title:'머리말',sub:'오른쪽 위에 보라색 글씨',imgs:['c15'],
- paths:[['쪽','머리말','Ctrl+N,H']],
- dlg:[{t:'머리말 · 글자 모양',tabs:[],rows:[['내용','국내 통신시장 동향'],['글꼴','한컴 윤고딕 740'],['크기 · 속성','10pt · 진하게'],['글자 색','보라 25% 어둡게',C.purple25],['정렬','오른쪽']]}],
- steps:[`머리말 만들기 ${K('Ctrl+N,H')} (양 쪽)`,'<b>국내 통신시장 동향</b> 입력 → 글자 모양',`오른쪽 정렬 → ${K('Shift+Esc')} 로 나오기`],
+ paths:[['쪽','머리말/꼬리말','Ctrl+N,H']],
+ dlg:[{t:'머리말/꼬리말',tabs:[],rows:[['종류','머리말'],['위치','양 쪽']],btn:'만들기'},{t:'글자 모양 · 정렬',tabs:[],rows:[['내용','국내 통신시장 동향'],['글꼴','한컴 윤고딕 740'],['크기 · 속성','10pt · 진하게'],['글자 색','보라 25% 어둡게',C.purple25],['정렬','오른쪽']]}],
+ steps:[`${K('Ctrl+N,H')} → 종류 <b>머리말</b> · 위치 <b>양 쪽</b> → <b>만들기</b>`,'<b>국내 통신시장 동향</b> 입력 → 글자 모양',`오른쪽 정렬 → ${K('Shift+Esc')} 로 나오기`],
  tip:'이미 머리말이 있으면 그 자리를 <b>더블클릭</b>해서 고쳐요.',
  help:[['본문 첫 줄에 써 버렸어요','그건 본문이에요. 지우고 <b>쪽 → 머리말</b>로 다시!']]},
 
 {icon:'⬇️',title:'꼬리말',sub:'아래 가운데에 파란 글씨',imgs:['c16'],
- paths:[['쪽','꼬리말','Ctrl+N,F']],
- dlg:[{t:'꼬리말 · 글자 모양',tabs:[],rows:[['내용','상공일보'],['글꼴','한컴산뜻돋움'],['크기 · 속성','10pt · 진하게'],['글자 색','하늘색 25% 어둡게',C.sky25],['정렬','가운데']]}],
- steps:[`꼬리말 만들기 ${K('Ctrl+N,F')} (양 쪽)`,'<b>상공일보</b> 입력 → 글자 모양',`가운데 정렬 → ${K('Shift+Esc')} → ${K('Ctrl+S')} 저장`],
+ paths:[['쪽','머리말/꼬리말','Ctrl+N,H']],
+ dlg:[{t:'머리말/꼬리말',tabs:[],rows:[['종류','꼬리말'],['위치','양 쪽']],btn:'만들기'},{t:'글자 모양 · 정렬',tabs:[],rows:[['내용','상공일보'],['글꼴','한컴산뜻돋움'],['크기 · 속성','10pt · 진하게'],['글자 색','하늘색 25% 어둡게',C.sky25],['정렬','가운데']]}],
+ steps:[`${K('Ctrl+N,H')} → 종류를 <b>꼬리말</b>로 바꾸고 · 위치 <b>양 쪽</b> → <b>만들기</b>`,'<b>상공일보</b> 입력 → 글자 모양',`가운데 정렬 → ${K('Shift+Esc')} → ${K('Ctrl+S')} 저장`],
  tip:'제목은 50%, 꼬리말은 <b>25%</b> 어둡게! 헷갈리지 마세요.',
- help:[['쪽 번호가 가운데로 갔어요','쪽 번호 위치를 다시 <b>오른쪽 아래</b>로 지정하세요.']]},
+ help:[['머리말이 만들어졌어요','창에서 종류를 <b>꼬리말</b>로 바꿨는지 확인! '+K('Ctrl+Z')+' 후 다시 해요.'],['쪽 번호가 가운데로 갔어요','쪽 번호 위치를 다시 <b>오른쪽 아래</b>로 지정하세요.']]},
 
 {icon:'🏆',title:'최종 검수',sub:'제출 전 마지막 확인',imgs:['goal-thumb'],tall:true,
  paths:[['파일','미리 보기'],['파일','저장','Ctrl+S']],dlg:[],
@@ -440,6 +484,68 @@ const M=[
  help:[['2쪽으로 넘어가요','글상자 · 차트 크기와 바깥 여백, 빈 줄이 많지 않은지 확인하세요.']],
  extra:'finish'}
 ];
+
+/* 어려운 단계(6·10·13)의 클릭 순서 그림 — 실제 한글 화면을 단순화한 것 */
+const tbl=(rows,cls='')=>`<table class="mtab ${cls}">${rows.map(r=>`<tr class="${r}">${'<td></td>'.repeat(4)}</tr>`).join('')}</table>`;
+const FLOW={
+6:`<div class="fp"><h4><b>A</b>개요 1 · 개요 2 고치기</h4>
+  <div class="mw"><div class="mt">스타일 ${k('F6')}</div><div class="mb">
+    <div class="ml"><div>바탕글</div><div>본문</div><div class="sel tgt" data-p="1">개요 1</div><div>개요 2</div><div>개요 3</div></div>
+    <div class="mcol"><span class="mbtn">＋ 스타일 추가하기</span><span class="mbtn tgt" data-p="2">✎ 스타일 편집하기</span></div></div></div>
+  <div class="dn">▼</div>
+  <div class="mw"><div class="mt">스타일 편집하기</div><div class="mb mcol">
+    <div class="mrow">스타일 이름 <span class="minp">개요 1</span></div>
+    <div class="mrow"><span class="mbtn tgt" data-p="3">문단 모양…</span>&nbsp;<span class="mbtn tgt" data-p="4">글자 모양…</span>&nbsp;<span class="mbtn pri tgt" data-p="5">설정</span></div></div></div>
+  <p>③ 문단 모양: 왼쪽 여백 <b>0pt</b> → ④ 글자 모양: <b>한컴 윤고딕 740 · 11pt · 진하게</b> → ⑤ 설정<br>개요 2도 똑같이 (왼쪽 여백 <b>15pt</b>만 바꾸기)</p></div>
+<div class="fp"><h4><b>B</b>표제목 · 참고문헌 1 · 2 새로 만들기</h4>
+  <div class="mw"><div class="mt">스타일 ${k('F6')}</div><div class="mb"><span class="mbtn tgt" data-p="1">＋ 스타일 추가하기</span></div></div>
+  <div class="dn">▼</div>
+  <div class="mw"><div class="mt">스타일 추가하기</div><div class="mb mcol">
+    <div class="mrow">스타일 이름 <span class="minp tgt" data-p="2">표제목</span></div>
+    <div class="mrow">스타일 종류 <span class="tgt" data-p="3"><span class="rad on"></span>문단 <span class="rad"></span>글자</span></div>
+    <div class="mrow"><span class="mbtn tgt" data-p="4">문단 모양…</span>&nbsp;<span class="mbtn">글자 모양…</span>&nbsp;<span class="mbtn pri tgt" data-p="5">추가</span></div></div></div>
+  <p>참고문헌 2만 ③에서 <b>글자</b>를 고르세요!</p></div>
+<div class="fp"><h4><b>C</b>문단에 적용하기</h4>
+  <div class="mrow">적용할 문단 클릭 → ${k('F6')} → 목록에서 스타일 클릭 → <span class="mbtn pri">설정</span></div>
+  <p>참고문헌 2는 <i>Marketer, 13</i> 글자만 드래그한 뒤 적용!</p></div>`,
+
+10:`<div class="fp"><h4><b>A</b>표 전체를 셀 블록으로</h4>
+  <div class="mrow">${tbl(['','','',''],'all')}<span>표 안 클릭 → ${k('F5')} ${k('F5')} ${k('F5')}<br><small style="color:var(--muted)">표 전체가 파랗게 되면 성공</small></span></div></div>
+<div class="fp"><h4><b>B</b>${k('P')} → 표/셀 속성</h4>
+  <div class="mw"><div class="mt">표/셀 속성</div><div class="mtabs"><span class="on tgt" data-p="1">기본</span><span>여백/캡션</span><span>테두리</span><span>배경</span><span class="tgt" data-p="3">표</span><span>셀</span></div>
+  <div class="mb mcol"><div class="mrow">너비 <span class="minp">79</span>mm 높이 <span class="minp">33.6</span>mm</div>
+    <div class="mrow"><span class="tgt" data-p="2"><span class="chk">✓</span> 글자처럼 취급</span></div></div></div>
+  <p>③ <b>표</b> 탭 → 모든 셀의 안 여백 왼쪽 <b>2</b> · 오른쪽 <b>2</b>mm → 설정</p></div>
+<div class="fp"><h4><b>C</b>${k('L')} → 셀 테두리/배경 · 테두리 탭</h4>
+  <div class="mw"><div class="mt">셀 테두리/배경</div><div class="mtabs"><span class="on">테두리</span><span>배경</span><span>대각선</span></div>
+  <div class="mb"><div class="mcol"><div class="mrow">종류 <span class="minp tgt" data-p="1">── 실선</span></div><div class="mrow">굵기 <span class="minp tgt" data-p="2">0.12mm</span></div></div>
+    <div class="bpick"><span class="mbtn t">위</span><span class="mbtn l">왼</span><span class="bp"></span><span class="mbtn r">오</span><span class="mbtn b">아래</span></div>
+    <div class="mcol"><span class="mbtn">모두</span><span class="mbtn">바깥쪽</span><span class="mbtn tgt" data-p="3">안쪽</span></div></div></div>
+  <p>① 실선 ② 0.12mm ③ <b>[안쪽]</b> → 굵기 <b>0.4mm</b> → <b>[위] [아래]</b> → 종류 <b>없음</b> → <b>[왼] [오]</b> → 설정</p></div>
+<div class="fp"><h4><b>D</b>합계 행 위 이중선 (맨 마지막!)</h4>
+  <div class="mrow">${tbl(['','','','s'])}<span>합계 행만 블록 → ${k('L')} → 이중 실선 · 0.5mm → <b>[위]</b>만</span></div></div>
+<div class="fp"><h4><b>E</b>제목 행 · 합계 행 배경색</h4>
+  <div class="mrow">${tbl(['s','','',''])}<span>제목 행 블록 → ${k('L')} → <b>배경</b> 탭 → 면 색 <span class="sw" style="display:inline-block;vertical-align:-3px;background:${C.purple25}"></span> 보라 25% 어둡게</span></div>
+  <p>합계 행도 같은 방법으로 <b>하양 15% 어둡게</b></p></div>`,
+
+13:`<div class="fp"><h4><b>A</b>차트 넣기</h4>
+  <div class="rib"><span>파일</span><span>편집</span><span>보기</span><span class="act tgt" data-p="1">입력</span><span>서식</span><span>쪽</span><span>표</span></div>
+  <div class="mrow" style="margin-top:8px"><span class="mbtn">표</span><span class="mbtn tgt" data-p="2">📊 차트</span><span class="mbtn">그림</span><span>→ 묶은 세로 막대형</span></div></div>
+<div class="fp"><h4><b>B</b>차트 데이터 편집</h4>
+  <div class="mrow"><table class="mgrid"><tr><td class="tgt" data-p="1"></td><td>사용자</td><td>가입자</td><td>비중</td></tr><tr><td>2021</td><td>44.58</td><td>562</td><td>7.93</td></tr><tr><td>2022</td><td>48.22</td><td>561.2</td><td>8.59</td></tr><tr><td>2023</td><td>53.49</td><td>560.7</td><td>9.54</td></tr></table>
+  <span>① 왼쪽 위 칸 클릭 → 붙여넣기<br>남는 행·열은 삭제</span></div></div>
+<div class="fp"><h4><b>C</b>비중만 꺾은선 + 보조 축</h4>
+  <div class="mrow"><svg width="150" height="92" viewBox="0 0 150 92" role="img" aria-label="비중 막대가 선택된 차트"><rect x=".5" y=".5" width="149" height="91" fill="#fff" stroke="#c9d1e0"/>
+    <g><rect x="14" y="70" width="9" height="10" fill="#5b7cf7"/><rect x="23" y="16" width="9" height="64" fill="#f97316"/><rect x="32" y="78" width="9" height="2" fill="#98a2b3"/>
+    <rect x="58" y="69" width="9" height="11" fill="#5b7cf7"/><rect x="67" y="16" width="9" height="64" fill="#f97316"/><rect x="76" y="78" width="9" height="2" fill="#98a2b3"/>
+    <rect x="102" y="68" width="9" height="12" fill="#5b7cf7"/><rect x="111" y="17" width="9" height="63" fill="#f97316"/><rect x="120" y="78" width="9" height="2" fill="#98a2b3"/></g>
+    <g fill="#fff" stroke="#e5484d" stroke-width="1.5"><rect x="33" y="74" width="5" height="5"/><rect x="77" y="74" width="5" height="5"/><rect x="121" y="74" width="5" height="5"/></g>
+    <line x1="10" y1="80.5" x2="140" y2="80.5" stroke="#98a2b3"/></svg>
+  <div class="ctx"><div>데이터 편집</div><div class="tgt" data-p="2">차트 종류 변경</div><div class="tgt" data-p="3">계열 속성</div></div></div>
+  <p>① 바닥의 <b>작은 회색 막대(비중)</b> 클릭 → 우클릭<br>② 차트 종류 변경 → <b>표식이 있는 꺾은선형</b><br>③ 다시 우클릭 → 계열 속성 → <b>보조 축</b></p></div>
+<div class="fp"><h4><b>D</b>크기 · 위치는 바깥 테두리에서</h4>
+  <div class="mrow"><span class="tgt" data-p="1" style="display:inline-block;width:70px;height:46px;border:1px solid #667085;background:#fff"></span><span>차트 밖 클릭 → 차트를 <b>한 번</b> 클릭<br>→ 우클릭 → <b>개체 속성</b></span></div></div>`
+};
 
 const RANKS=[[0,'인턴','🎒'],[3,'수습사원','🌱'],[6,'사원','💼'],[9,'주임','⭐'],[12,'대리','🏅'],[15,'과장','👔'],[16,'팀장','👑']];
 const COPY={title:'커지는 자급제 폰 시장\n작성자: 김동욱 기자\n작성일: ',
@@ -473,7 +579,7 @@ function dlgHTML(d){
   return `<div class="dlg" role="img" aria-label="${d.t} 설정 창 그림"><div class="bar">${d.t}<span>✕</span></div>
   ${d.tabs.length?`<div class="tabs">${d.tabs.map(t=>`<span class="tab ${on.includes(t)?'on':''}">${t}</span>`).join('')}</div>`:''}
   <div class="body">${d.rows.map(r=>r[0][0]==='#'?`<div class="sec">${r[0].slice(1)}</div>`:`<div class="fld"><span class="fl">${r[0]}</span><span class="fv">${fieldVal(r[1],r[2])}</span></div>`).join('')}</div>
-  <div class="foot"><span>설정</span><span>취소</span></div></div>`;
+  <div class="foot"><span>${d.btn||'설정'}</span><span>취소</span></div></div>`;
 }
 function stepsHTML(i,m){
   const t=ticks(i);
@@ -514,7 +620,7 @@ function extraHTML(x){
 function render(){
   const i=S.cur,m=M[i],t=ticks(i),done=!!S.done[i];
   document.documentElement.style.setProperty('--fs',S.fs+'px');
-  const imgs=m.imgs.map(n=>`<button data-goal aria-label="완성 예시 크게 보기"><img src="img/${n}.webp" alt="${m.title} 완성 모습"></button>`).join('');
+  const imgs=m.imgs.map(n=>`<button data-goal="${n}" aria-label="이 부분 크게 보기"><img src="img/${n}.webp" alt="${m.title} 완성 모습"></button>`).join('');
   let html='';
   if(i===0){
     const n=doneCount(),r=rankOf(n);
@@ -525,13 +631,15 @@ function render(){
   }
   html+=`<section class="card head" style="margin-top:${i===0?14:0}px"><div class="num ${done?'ok':''}">${i===0?'🏢':i===17?'🏆':String(i).padStart(2,'0')}</div>
     <div><h1>${i>=1&&i<=16?`${m.icon} `:''}${m.title}</h1><p>${m.sub}</p></div>${done?'<span class="tag">✔ 결재 완료</span>':''}</section>`;
-  const left=`<div class="card ga"><p class="lab"><i class="l1">①</i>${i===0||i===17?'오늘 완성할 문서':'완성하면 이렇게!'}</p>${imgs?`<div class="goal ${m.tall?'tall':''}">${imgs}</div>`:''}${mascot(m.tip)}
-    <p class="lab" style="margin-top:16px"><i class="l2">②</i>어디서? (한글 메뉴)</p><div class="paths">${m.paths.map(pathHTML).join('')}</div></div>`;
-  const right=`<div class="card gb"><p class="lab"><i class="l4">③</i>한 줄씩 하고 체크</p>${stepsHTML(i,m)}
-    ${m.dlg.length?`<p class="lab" style="margin-top:16px"><i class="l3">④</i>이 값으로 설정 <span style="font-weight:600">(노란 칸)</span></p>${m.dlg.map(dlgHTML).join('')}`:''}</div>`;
+  const left=`<div class="card ga"><p class="lab"><i class="l1">🖼</i>${i===0||i===17?'오늘 완성할 문서':'완성하면 이렇게!'}</p>${imgs?`<div class="goal ${m.tall?'tall':''}">${imgs}</div>`:''}${mascot(m.tip)}
+    <p class="lab" style="margin-top:16px"><i class="l2">🧭</i>어디서? (한글 메뉴)</p><div class="paths">${m.paths.map(pathHTML).join('')}</div></div>`;
+  const todo=`<div class="card gb"><p class="lab"><i class="l4">✓</i>지금 할 일 · 한 줄씩 체크</p>${stepsHTML(i,m)}</div>`;
+  const flow=FLOW[i]?`<p class="lab"><i class="l5">🖱</i>이 순서로 누르세요 <span class="labn">실제 화면을 단순화한 그림</span></p><div class="flow">${FLOW[i]}</div>`:'';
+  const vals=m.dlg.length?`<p class="lab" ${flow?'style="margin-top:16px"':''}><i class="l3">✎</i>이 값으로 설정 <span class="labn">(노란 칸)</span></p>${m.dlg.map(dlgHTML).join('')}`:'';
+  const setv=flow||vals?`<div class="card gd">${flow}${vals}</div>`:'';
   const help=m.help&&m.help.length?`<details class="card help gh"><summary>막혔어요</summary>${m.help.map(h=>`<div class="qa"><b>${h[0]}</b><span>${h[1]}</span></div>`).join('')}</details>`:'';
   if(i===17)html+=extraHTML('finish');
-  html+=`<div class="grid">${left}${right}${i!==17&&m.extra?extraHTML(m.extra):''}${help}</div>`;
+  html+=`<div class="grid"><div class="col">${left}${i!==17&&m.extra?extraHTML(m.extra):''}${help}</div><div class="col">${todo}${setv}</div></div>`;
   $('#main').innerHTML=html;
   // 상단 지도
   $('#map').innerHTML=M.map((x,j)=>`<button class="dot ${S.done[j]?'done':''} ${j===i?'cur':''}" data-go="${j}" title="${j}. ${x.title}" aria-label="${j}. ${x.title}${S.done[j]?' 완료':''}">${j===0?'🏢':j===17?'🏆':S.done[j]&&j!==i?'✓':j}</button>`).join('');
@@ -562,8 +670,10 @@ function stamp(text,sub){const s=document.createElement('div');s.className='stam
 
 $('#main').addEventListener('click',e=>{
   const st=e.target.closest('[data-step]');
-  if(st){const t=ticks(S.cur),j=+st.dataset.step;t[j]=!t[j];st.classList.toggle('on',t[j]);st.setAttribute('aria-checked',t[j]);st.querySelector('.box').textContent=t[j]?'✓':j+1;bottom();save();return}
-  if(e.target.closest('[data-goal]')){openGoal();return}
+  if(st){const t=ticks(S.cur),j=+st.dataset.step;t[j]=!t[j];
+    if(!t[j]&&S.done[S.cur]){delete S.done[S.cur];render();toast('체크를 풀어서 결재가 취소됐어요');return}
+    st.classList.toggle('on',t[j]);st.setAttribute('aria-checked',t[j]);st.querySelector('.box').textContent=t[j]?'✓':j+1;bottom();save();return}
+  const g=e.target.closest('[data-goal]');if(g){openGoal(g.dataset.goal);return}
   const cp=e.target.closest('[data-copy]');if(cp){copy(cp.dataset.copy);return}
   const sp=e.target.closest('.stamps span');if(sp){go([...sp.parentNode.children].indexOf(sp)+1)}
 });
@@ -591,11 +701,18 @@ async function copy(key){
   catch(e){toast('복사가 안 돼요. 직접 보고 입력해 주세요')}
 }
 let zoom=100;
-function openGoal(){zoom=100;$('#goalImg').style.width='100%';$('#goalDlg').showModal()}
+function openGoal(part){
+  part=part&&part!=='goal-thumb'?part:'';zoom=100;
+  $('#goalImg').src=`img/${part||'goal'}.webp`;$('#goalImg').style.width='100%';
+  $('#goalTitle').textContent=part?'이 부분 크게 보기':'완성 예시 전체 (조건 번호 표시)';
+  $('#wholeBtn').classList.toggle('hidden',!part);
+  if(!$('#goalDlg').open)$('#goalDlg').showModal();
+}
+$('#wholeBtn').onclick=()=>openGoal();
 document.querySelectorAll('[data-z]').forEach(b=>b.onclick=()=>{zoom=Math.max(50,Math.min(250,zoom+ +b.dataset.z));$('#goalImg').style.width=zoom+'%'});
 document.addEventListener('click',e=>{if(e.target.closest('[data-close]')){e.target.closest('dialog').close()}});
 document.querySelectorAll('dialog').forEach(d=>d.addEventListener('click',e=>{if(e.target===d)d.close()}));
-$('#goalBtn').onclick=openGoal;
+$('#goalBtn').onclick=()=>openGoal();
 $('#helpBtn').onclick=()=>{$('#dlsHelp').innerHTML=DLS;$('#helpDlg').showModal()};
 $('#fsUp').onclick=()=>{S.fs=Math.min(20,S.fs+1);render()};
 $('#fsDown').onclick=()=>{S.fs=Math.max(14,S.fs-1);render()};
