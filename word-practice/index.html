@@ -251,26 +251,57 @@ dialog::backdrop{background:rgba(17,24,39,.55)}
 .keys{display:grid;grid-template-columns:auto 1fr;gap:6px 12px;font-size:.9rem;align-items:center}
 .toast{position:fixed;left:50%;bottom:86px;transform:translateX(-50%);background:#1d2433;color:#fff;padding:10px 16px;border-radius:12px;font-size:.88rem;font-weight:700;z-index:80;box-shadow:0 8px 24px rgba(0,0,0,.25)}
 
-/* 지시 해독 */
-.chat{display:grid;gap:8px;background:#eef1f6;border-radius:12px;padding:12px}
-.msg{max-width:90%;padding:9px 12px;border-radius:14px;font-size:.95rem;background:#fff;justify-self:start;line-height:1.7}
-.msg .who{display:block;font-size:.72rem;font-weight:800;color:var(--muted);line-height:1.3}
-.msg.me{justify-self:end;background:#dbe5ff}
+/* 지시 해독: 진행 막대 · 메신저 · 업무 지시서 */
+.stepper{list-style:none;margin:14px 0 12px;padding:0;display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.stepper li{display:flex;align-items:center;gap:8px;padding:10px 12px;border-radius:12px;background:#fff;border:1.5px solid var(--line);font-weight:800;color:#98a2b3}
+.stepper li b{width:26px;height:26px;border-radius:50%;display:grid;place-items:center;background:#eef1f6;flex:none}
+.stepper li small{margin-left:auto;font-size:.8rem}
+.stepper li.on{border-color:var(--brand);color:var(--ink);box-shadow:0 0 0 3px #dbe5ff}
+.stepper li.on b{background:var(--brand);color:#fff}
+.stepper li.done{color:#2f6b45;background:var(--ok-l);border-color:#9ddbb2}
+.stepper li.done b{background:var(--ok);color:#fff}
+.banner{display:flex;gap:12px;align-items:center;background:#1d2433;color:#fff;border-radius:14px;padding:14px 18px;font-size:1.1rem;font-weight:700;line-height:1.5;margin-bottom:14px}
+.banner .ic{font-size:1.6rem;flex:none}
+.banner mark{background:#fff3b0;color:#1d2433;border-radius:4px;padding:0 5px}
+.banner.ok{background:var(--ok)}
+.bgrid{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);gap:14px;align-items:start}
+.phone{background:#fff;border-radius:18px;border:1px solid var(--line);box-shadow:var(--sh);overflow:hidden}
+.phead{display:flex;align-items:center;gap:10px;padding:12px 16px;border-bottom:1px solid var(--line);font-weight:800}
+.phead small{display:block;font-weight:600;color:var(--muted);font-size:.75rem}
+.av{width:40px;height:40px;border-radius:50%;flex:none;display:grid;place-items:center;font-size:21px;background:#e9efff;overflow:hidden}
+.av.me{background:#fff3b0}
+.av img{width:100%;height:100%;object-fit:cover;object-position:28% 12%}
+.chat{display:grid;gap:12px;align-content:start;background:#eef1f6;padding:16px;max-height:480px;overflow:auto}
+.crow{display:flex;gap:8px;align-items:flex-start}
+.crow.me{flex-direction:row-reverse}
+.msg{max-width:80%;padding:11px 15px;border-radius:4px 18px 18px 18px;font-size:1.05rem;background:#fff;line-height:1.75}
+.crow.me .msg{background:#dbe5ff;border-radius:18px 4px 18px 18px}
 .msg.warn{background:#fdecec}
-.note{justify-self:start;font-size:.84rem;color:#8a5a00;background:#fff8d6;border-radius:8px;padding:5px 10px}
-.vg{padding:0 4px;border-radius:5px;background:#fff3b0;border-bottom:2px dashed var(--hi-b);font-weight:800}
-.vg.found{background:#ffe1e1;border-bottom-color:var(--red);color:#b42318}
+.msg .who{display:block;font-size:.75rem;font-weight:800;color:var(--muted);line-height:1.3;margin-bottom:2px}
+.vg{font:inherit;padding:1px 6px;border-radius:6px;background:#fff3b0;border-bottom:2px dashed var(--hi-b);font-weight:800;animation:glow 1.6s infinite}
+.vg.found{background:#ffe1e1;border-bottom-color:var(--red);color:#b42318;animation:none}
+@keyframes glow{50%{box-shadow:0 0 0 4px rgba(242,183,5,.35)}}
+.replies{padding:12px 14px 14px;border-top:1px solid var(--line);background:#fafbff}
+.replies p{margin:0 0 8px;font-size:.82rem;font-weight:800;color:var(--muted)}
 .qs{display:grid;grid-template-columns:1fr 1fr;gap:8px}
-.qbtn{text-align:left;padding:10px 12px;border:1.5px solid var(--line);border-radius:12px;background:#fff;font-weight:700;font-size:.9rem}
-.qbtn:hover:not(:disabled){border-color:#b9c7f5;background:#fafbff}
+.qbtn{text-align:left;padding:11px 13px;border:1.5px solid var(--line);border-radius:12px;background:#fff;font-weight:700;font-size:.95rem}
+.qbtn:hover:not(:disabled){border-color:#b9c7f5;background:#f5f8ff}
 .qbtn.ok{background:var(--ok-l);border-color:#9ddbb2;color:#2f6b45;cursor:default}
 .qbtn.no{background:#fdecec;border-color:#f5c2c2;color:#b42318;cursor:default}
-.order{margin-top:14px;border:2px solid var(--ok);border-radius:12px;padding:12px 14px;background:#f6fef9}
-.order h3{margin:0 0 8px;font-size:1rem}
-.order table{width:100%;border-collapse:collapse;font-size:.92rem}
-.order th{text-align:left;width:76px;color:var(--muted);padding:4px 0;vertical-align:top;font-weight:700}
-.order td{padding:4px 0;font-weight:700}
-.order p{margin:8px 0 0;font-size:.84rem;color:#2f6b45}
+.board{display:grid;gap:14px}
+.bcard{background:#fff;border-radius:16px;border:1px solid var(--line);box-shadow:var(--sh);padding:14px 16px;position:relative}
+.bcard h3{margin:0 0 10px;font-size:1.02rem}
+.memo{display:grid;gap:8px}
+.memo div{border:1.5px dashed #d0d5dd;border-radius:10px;padding:8px 11px;font-size:.92rem;color:#98a2b3;line-height:1.5}
+.memo div.ok{border:1.5px solid #f5c2c2;background:#fff5f5;color:var(--ink)}
+.memo div.ok b{color:#b42318}
+.wo{width:100%;border-collapse:collapse;font-size:.95rem}
+.wo th{text-align:left;width:86px;color:var(--muted);padding:8px 0;vertical-align:top;font-weight:700;border-bottom:1px dashed var(--line)}
+.wo td{padding:8px 0;font-weight:800;border-bottom:1px dashed var(--line);line-height:1.45}
+.wo td.empty{color:#c0c6d0;font-weight:600}
+.wo tr:last-child th,.wo tr:last-child td{border-bottom:0}
+.bcard .seal{position:absolute;right:12px;top:-20px;width:58px;height:58px;border-radius:50%;border:3px solid var(--red);color:var(--red);display:grid;place-items:center;font-weight:900;transform:rotate(-14deg);background:rgba(255,255,255,.85);animation:stamp .5s cubic-bezier(.2,1.6,.4,1) both}
+.wolesson{margin:10px 0 0;font-size:.85rem;color:#2f6b45;font-weight:600}
 .flowline{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin-top:12px}
 .flowline span{background:rgba(255,255,255,.18);border:1px solid rgba(255,255,255,.35);padding:4px 11px;border-radius:999px;font-size:.85rem;font-weight:800}
 .flowline i{font-style:normal;opacity:.8}
@@ -308,6 +339,10 @@ dialog::backdrop{background:rgba(17,24,39,.55)}
   .num{width:48px;height:48px;font-size:1.35rem}
   .meter .bar{display:none}
   .qs{grid-template-columns:1fr}
+  .bgrid{grid-template-columns:1fr}
+  .stepper li{padding:8px;font-size:.85rem}
+  .stepper li small{display:none}
+  .banner{font-size:1rem}
 }
 @media(max-width:420px){
   main{padding:14px 12px 110px}
@@ -383,7 +418,7 @@ const ON='☑',OFF='☐';
 /* 미션 데이터: 짧게! 한 단계 = 한 동작 */
 const M=[
 {icon:'💬',title:'지시 해독',sub:'모호한 지시를 질문으로 명확하게',imgs:[],paths:[],dlg:[],
- steps:['메시지에서 <b>애매한 말 3개</b> 찾기 (노란 말 누르기)','<b>좋은 확인 질문 4개</b>로 팀장님 답 받기','명확해진 <b>업무 지시서</b> 읽기'],
+ steps:['애매한 말 3개 찾기','좋은 확인 질문 4개 하기','업무 지시서 완성'],
  note:'메신저에서 하나씩 해 보고 → 여기서 체크!',
  tip:'신입사원이 제일 많이 하는 실수: 묻지 않고 <b>“네!”</b> 하고 바로 시작하기',
  help:[['어떤 질문이 좋은 질문이에요?','<b>무엇을 · 누구에게 · 언제까지 · 어떻게</b>를 구체적으로 묻는 질문이에요. “알아서 하면 되죠?”는 다시 모호해져요.']],
@@ -553,6 +588,7 @@ const QS=[
  {q:'언제까지 드리면 될까요?',a:'<b>수업 끝나기 10분 전</b>까지요. 다 못 하면 된 데까지 보고해요.',ok:1},
  {q:'네, 알겠습니다!',a:'바로 “네” 하면 나중에 다시 만들 수도 있어요. <b>먼저 물어봐요!</b>',ok:0},
  {q:'보고는 어떤 형식으로 할까요?',a:'<b>PPT 1장</b>이요. 차트 + 핵심 숫자 3줄, 말로는 <b>30초</b>!',ok:1}];
+const WO=[['무엇을',0,'자급제 폰 시장 자료 · 한글 · A4 세로 1쪽<br><small style="font-weight:600">기준: 세부지시사항 16개 (이 페이지 1~16번)</small>'],['누구에게',2,'영업팀 회의 · 표와 차트 필수'],['언제까지',3,'수업 끝나기 10분 전'],['어떻게 보고',5,'PPT 1장 (차트 + 숫자 3줄) · 30초 말하기']];
 /* 업무 보고: 숫자 칸 정답 */
 const REP={a:'38.33',b:'53.49',c:'6.89',d:'9.54',e:'556',f:'560.7'};
 
@@ -693,20 +729,26 @@ function extraHTML(x){
     <tr class="sum skip"><td>합계</td><td class="r">184.62</td><td class="r">2,239.9</td><td></td></tr></tbody></table>
     <p class="stepnote"><span style="background:#dbe5ff;padding:0 4px">파란 칸</span>만 선택 → 차트 만들기. 2020년과 합계는 빼요.</p></section>`;
   case 'brief':{
-    const v=S.bv,q=S.bq,good=q.filter(n=>QS[n].ok).length,w=n=>`<button class="vg ${v.includes(n)?'found':''}" data-v="${n}">${VAGUE[n][0]}</button>`;
-    return `<section class="card extra gx"><div class="xhead"><h2>💬 사내 메신저</h2><span class="labn">김 팀장 · 오전 9:02</span></div>
-    <div class="chat"><div class="msg"><span class="who">김 팀장</span>신입 씨, 내일 회의 때 쓸 자급제 폰 시장 자료 ${w(0)} ${w(1)} 만들어 줘요. 다 되면 ${w(2)}해 주고요.</div>
-    ${v.map(n=>`<div class="note">🤔 “${VAGUE[n][0]}” — ${VAGUE[n][1]}</div>`).join('')}
-    ${q.map(n=>`<div class="msg me">${QS[n].q}</div><div class="msg ${QS[n].ok?'':'warn'}"><span class="who">${QS[n].ok?'김 팀장':'염 대리 (속닥)'}</span>${QS[n].a}</div>`).join('')}</div>
-    <p class="lab" style="margin:14px 0 8px">애매한 말 ${v.length}/3 · 좋은 질문 ${good}/4 — 팀장님께 뭐라고 물어볼까요?</p>
-    <div class="qs">${QS.map((x,n)=>`<button class="qbtn ${q.includes(n)?(x.ok?'ok':'no'):''}" data-q="${n}" ${q.includes(n)?'disabled':''}>${x.q}</button>`).join('')}</div>
-    ${good===4?`<div class="order"><h3>📋 업무 지시서 · 명확해졌어요!</h3><table>
-      <tr><th>무엇을</th><td>자급제 폰 시장 자료 · 한글 · A4 세로 1쪽</td></tr>
-      <tr><th>기준</th><td>세부지시사항 16개 (이 페이지 1~16번)</td></tr>
-      <tr><th>누구에게</th><td>영업팀 회의 · 표와 차트 필수</td></tr>
-      <tr><th>언제까지</th><td>수업 끝나기 10분 전</td></tr>
-      <tr><th>보고</th><td>PPT 1장 (차트 + 숫자 3줄) · 30초 말하기</td></tr></table>
-      <p>모호한 지시는 <b>무엇을 · 누구에게 · 언제까지 · 어떻게</b>를 물어서 명확하게!</p></div>`:''}</section>`;}
+    const v=S.bv,q=S.bq,good=q.filter(n=>QS[n].ok).length,stage=v.length<3?1:good<4?2:3;
+    const w=n=>`<button class="vg ${v.includes(n)?'found':''}" data-v="${n}">${VAGUE[n][0]}</button>`;
+    const st=(n,label,cnt)=>`<li class="${stage>n?'done':stage===n?'on':''}"><b>${stage>n?'✓':n}</b>${label}${cnt?`<small>${cnt}</small>`:''}</li>`;
+    const banner=[,`<span class="ic">👆</span><span>팀장님 메시지에서 <mark>노란 말</mark> 3개를 눌러 보세요. 무엇이 애매한지 알려 줘요.</span>`,
+      `<span class="ic">💬</span><span>이제 팀장님께 물어볼 질문을 골라요. <b>좋은 질문 4개</b>를 찾으면 업무 지시서가 채워져요.</span>`,
+      `<span class="ic">✅</span><span>지시가 명확해졌어요! 업무 지시서를 읽고 아래 <b>지시 확인 완료</b>를 누르세요.</span>`][stage];
+    const boss='<span class="av" aria-hidden="true">👔</span>',yeom='<span class="av" aria-hidden="true"><img src="img/mascot.webp" alt=""></span>',me='<span class="av me" aria-hidden="true">🙋</span>';
+    return `<ol class="stepper">${st(1,'애매한 말 찾기',`${v.length}/3`)}${st(2,'확인 질문하기',`${good}/4`)}${st(3,'업무 지시서')}</ol>
+    <div class="banner ${stage===3?'ok':''}">${banner}</div>
+    <div class="bgrid"><section class="phone" aria-label="사내 메신저">
+      <div class="phead">${boss}<span>김 팀장<small>영업팀 · 오전 9:02</small></span></div>
+      <div class="chat" id="chat"><div class="crow">${boss}<div class="msg"><span class="who">김 팀장</span>신입 씨, 내일 회의 때 쓸 자급제 폰 시장 자료 ${w(0)} ${w(1)} 만들어 줘요. 다 되면 ${w(2)}해 주고요.</div></div>
+      ${q.map(n=>`<div class="crow me">${me}<div class="msg">${QS[n].q}</div></div><div class="crow">${QS[n].ok?boss:yeom}<div class="msg ${QS[n].ok?'':'warn'}"><span class="who">${QS[n].ok?'김 팀장':'염 대리 (속닥)'}</span>${QS[n].a}</div></div>`).join('')}</div>
+      ${stage===2?`<div class="replies"><p>답장 고르기 · 좋은 질문을 찾아요</p><div class="qs">${QS.map((x,n)=>`<button class="qbtn ${q.includes(n)?(x.ok?'ok':'no'):''}" data-q="${n}" ${q.includes(n)?'disabled':''}>${x.q}</button>`).join('')}</div></div>`:''}
+    </section>
+    <div class="board"><section class="bcard"><h3>🤔 애매한 말 노트</h3><div class="memo">${VAGUE.map((x,n)=>v.includes(n)?`<div class="ok"><b>“${x[0]}”</b> — ${x[1]}</div>`:`<div>? 아직 못 찾았어요</div>`).join('')}</div></section>
+    <section class="bcard">${stage===3?'<span class="seal">확인</span>':''}<h3>📋 업무 지시서</h3><table class="wo">
+      ${WO.map(r=>`<tr><th>${r[0]}</th>${q.includes(r[1])?`<td>${r[2]}</td>`:'<td class="empty">? 질문해서 채워요</td>'}</tr>`).join('')}</table>
+      ${stage===3?'<p class="wolesson">모호한 지시는 <b>무엇을 · 누구에게 · 언제까지 · 어떻게</b>를 물어서 명확하게!</p>':''}</section>
+    ${mascot(M[0].tip)}</div></div>`;}
   case 'report':{
     const f=(k,w)=>`<input class="ri ${repOk(k)}" data-r="${k}" value="${esc(S.rep[k])}" inputmode="decimal" aria-label="숫자 칸" style="${w?`width:${w}px`:''}">`;
     return `<section class="card extra gx"><div class="xhead"><h2>📂 보고 준비물</h2></div>
@@ -738,6 +780,8 @@ function render(){
       <button class="thumb" data-goal aria-label="완성 예시 크게 보기"><img src="img/goal-thumb.webp" alt="완성 문서 미리 보기" width="420" height="594"></button></section>
       <div class="ranks" aria-label="승진 단계">${RANKS.map(x=>`<span class="${x===r?'me':''}">${x[2]} ${x[1]}${x[0]?` · ${x[0]}개`:''}</span>`).join('')}</div>`;
   }
+  if(m.extra==='brief')html+=extraHTML('brief');
+  else{
   html+=`<section class="card head" style="margin-top:${i===0?14:0}px"><div class="num ${done?'ok':''}">${m.cond?String(m.cond).padStart(2,'0'):m.icon}</div>
     <div><h1>${m.cond?`${m.icon} `:''}${m.title}</h1><p>${m.sub}</p></div>${done?'<span class="tag">✔ 결재 완료</span>':''}</section>`;
   const left=`<div class="card ga">${imgs?`<p class="lab"><i class="l1">🖼</i>${m.goalLabel||(m.cond?'완성하면 이렇게!':'오늘 완성할 문서')}</p><div class="goal ${m.tall?'tall':''}">${imgs}</div>`:''}${mascot(m.tip)}
@@ -749,7 +793,9 @@ function render(){
   const help=m.help&&m.help.length?`<details class="card help gh"><summary>막혔어요</summary>${m.help.map(h=>`<div class="qa"><b>${h[0]}</b><span>${h[1]}</span></div>`).join('')}</details>`:'';
   html+=`<div class="grid"><div class="col">${left}${m.extra?extraHTML(m.extra):''}${help}</div><div class="col">${todo}${setv}</div></div>`;
   if(m.extra==='report')html+=extraHTML('finish');
+  }
   $('#main').innerHTML=html;
+  const chat=$('#chat');if(chat)chat.scrollTop=chat.scrollHeight;
   // 상단 지도
   $('#map').innerHTML=M.map((x,j)=>`<button class="dot ${S.done[j]?'done':''} ${j===i?'cur':''}" data-go="${j}" title="${x.cond?x.cond+'. ':''}${x.title}" aria-label="${x.cond?x.cond+'번 ':''}${x.title}${S.done[j]?' 완료':''}">${!x.cond?x.icon:S.done[j]&&j!==i?'✓':x.cond}</button>`).join('');
   const cur=$('#map .cur');if(cur)cur.scrollIntoView({block:'nearest',inline:'center'});
@@ -786,7 +832,7 @@ $('#main').addEventListener('click',e=>{
   const cp=e.target.closest('[data-copy]');if(cp){copy(cp.dataset.copy);return}
   const sp=e.target.closest('.stamps span');if(sp){go([...sp.parentNode.children].indexOf(sp)+2);return}
   const vb=e.target.closest('[data-v]');if(vb){const n=+vb.dataset.v;if(!S.bv.includes(n))S.bv.push(n);if(S.bv.length===3)ticks(S.cur)[0]=true;render();return}
-  const qb=e.target.closest('[data-q]');if(qb){const n=+qb.dataset.q;if(!S.bq.includes(n))S.bq.push(n);if(S.bq.filter(x=>QS[x].ok).length===4)ticks(S.cur)[1]=true;render();if(!QS[n].ok)toast('앗, 그 질문은 다시 생각해 봐요!');return}
+  const qb=e.target.closest('[data-q]');if(qb){const n=+qb.dataset.q;if(!S.bq.includes(n))S.bq.push(n);if(S.bq.filter(x=>QS[x].ok).length===4){const t=ticks(S.cur);t[1]=t[2]=true}render();if(!QS[n].ok)toast('앗, 그 질문은 다시 생각해 봐요!');return}
 });
 $('#main').addEventListener('input',e=>{
   const r=e.target.closest('[data-r]');if(!r)return;
