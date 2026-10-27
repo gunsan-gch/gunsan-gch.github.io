@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="description" content="신입사원 문서 미션 · 한글 워드프로세서 실기 16개 조건을 그림과 체크리스트로 하나씩 완성해요.">
-<title>신입사원 문서 미션 · 군산여상</title>
+<meta name="description" content="신입사원의 첫 업무 보고 · 모호한 지시를 명확히 하고, 한글로 문서를 만들고, PPT로 보고해요.">
+<title>신입사원의 첫 업무 보고 · 군산여상</title>
 <link rel="preconnect" href="https://cdn.jsdelivr.net">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pretendard@1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
 <style>
@@ -249,6 +249,37 @@ dialog::backdrop{background:rgba(17,24,39,.55)}
 .keys{display:grid;grid-template-columns:auto 1fr;gap:6px 12px;font-size:.9rem;align-items:center}
 .toast{position:fixed;left:50%;bottom:86px;transform:translateX(-50%);background:#1d2433;color:#fff;padding:10px 16px;border-radius:12px;font-size:.88rem;font-weight:700;z-index:80;box-shadow:0 8px 24px rgba(0,0,0,.25)}
 
+/* 지시 해독 */
+.chat{display:grid;gap:8px;background:#eef1f6;border-radius:12px;padding:12px}
+.msg{max-width:90%;padding:9px 12px;border-radius:14px;font-size:.95rem;background:#fff;justify-self:start;line-height:1.7}
+.msg .who{display:block;font-size:.72rem;font-weight:800;color:var(--muted);line-height:1.3}
+.msg.me{justify-self:end;background:#dbe5ff}
+.msg.warn{background:#fdecec}
+.note{justify-self:start;font-size:.84rem;color:#8a5a00;background:#fff8d6;border-radius:8px;padding:5px 10px}
+.vg{padding:0 4px;border-radius:5px;background:#fff3b0;border-bottom:2px dashed var(--hi-b);font-weight:800}
+.vg.found{background:#ffe1e1;border-bottom-color:var(--red);color:#b42318}
+.qs{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.qbtn{text-align:left;padding:10px 12px;border:1.5px solid var(--line);border-radius:12px;background:#fff;font-weight:700;font-size:.9rem}
+.qbtn:hover:not(:disabled){border-color:#b9c7f5;background:#fafbff}
+.qbtn.ok{background:var(--ok-l);border-color:#9ddbb2;color:#2f6b45;cursor:default}
+.qbtn.no{background:#fdecec;border-color:#f5c2c2;color:#b42318;cursor:default}
+.order{margin-top:14px;border:2px solid var(--ok);border-radius:12px;padding:12px 14px;background:#f6fef9}
+.order h3{margin:0 0 8px;font-size:1rem}
+.order table{width:100%;border-collapse:collapse;font-size:.92rem}
+.order th{text-align:left;width:76px;color:var(--muted);padding:4px 0;vertical-align:top;font-weight:700}
+.order td{padding:4px 0;font-weight:700}
+.order p{margin:8px 0 0;font-size:.84rem;color:#2f6b45}
+.flowline{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin-top:12px}
+.flowline span{background:rgba(255,255,255,.18);border:1px solid rgba(255,255,255,.35);padding:4px 11px;border-radius:999px;font-size:.85rem;font-weight:800}
+.flowline i{font-style:normal;opacity:.8}
+/* 업무 보고 */
+.slideprev{display:block;width:100%;margin-top:12px;border:1px solid var(--line);border-radius:10px;overflow:hidden;background:#fff}
+.rlines{display:grid;gap:10px;font-size:.95rem}
+.rlines>div{display:flex;flex-wrap:wrap;align-items:center;gap:6px}
+.ri{font:inherit;font-weight:800;width:72px;padding:5px 8px;border:1.5px solid #c9d1e0;border-radius:8px;background:#fff;text-align:center}
+.ri.wide{flex:1;min-width:200px;text-align:left;font-weight:600}
+.ri.good{border-color:var(--ok);background:var(--ok-l);color:#2f6b45}
+.ri.bad{border-color:var(--red);background:#fdecec;color:#b42318}
 @media(max-width:760px){
   .grid{display:flex;flex-direction:column;align-items:stretch}
   .col{display:contents}
@@ -260,6 +291,7 @@ dialog::backdrop{background:rgba(17,24,39,.55)}
   .head h1{font-size:1.3rem}
   .num{width:48px;height:48px;font-size:1.35rem}
   .meter .bar{display:none}
+  .qs{grid-template-columns:1fr}
 }
 @media(max-width:420px){
   main{padding:14px 12px 110px}
@@ -273,7 +305,7 @@ dialog::backdrop{background:rgba(17,24,39,.55)}
 <body>
 <header class="top">
   <div class="topin">
-    <div class="logo"><span class="mark" aria-hidden="true">📄</span><strong>신입사원 문서 미션</strong></div>
+    <div class="logo"><span class="mark" aria-hidden="true">📄</span><strong>신입사원의 첫 업무 보고</strong></div>
     <div class="rank" id="rank" title="완료한 조건 수에 따라 승진해요"></div>
     <button class="tbtn" id="goalBtn">🖼 완성 예시</button>
     <button class="tbtn fs" id="fsDown" aria-label="글자 작게">가−</button>
@@ -312,6 +344,7 @@ dialog::backdrop{background:rgba(17,24,39,.55)}
       <span><kbd>F7</kbd></span><span>편집 용지</span>
       <span><kbd>F5</kbd></span><span>표 안에서 셀 블록 선택</span>
       <span><kbd>Shift</kbd>+<kbd>Esc</kbd></span><span>머리말·각주 편집에서 본문으로 나오기</span>
+      <span><kbd>F5</kbd> (PowerPoint)</span><span>슬라이드 쇼 시작 · 한글에서는 셀 블록이니 주의!</span>
     </div>
     <p style="font-size:.85rem;color:var(--muted)"><kbd>Ctrl</kbd>+<kbd>N</kbd>,<kbd>P</kbd> 처럼 쉼표가 있으면 <b>Ctrl+N을 눌렀다 떼고</b> P를 누르세요.</p>
     <h3 style="margin:18px 0 8px;font-size:1rem">실습 파일</h3>
@@ -333,6 +366,13 @@ const ON='☑',OFF='☐';
 
 /* 미션 데이터: 짧게! 한 단계 = 한 동작 */
 const M=[
+{icon:'💬',title:'지시 해독',sub:'모호한 지시를 질문으로 명확하게',imgs:[],paths:[],dlg:[],
+ steps:['메시지에서 <b>애매한 말 3개</b> 찾기 (노란 말 누르기)','<b>좋은 확인 질문 4개</b>로 팀장님 답 받기','명확해진 <b>업무 지시서</b> 읽기'],
+ note:'메신저에서 하나씩 해 보고 → 여기서 체크!',
+ tip:'신입사원이 제일 많이 하는 실수: 묻지 않고 <b>“네!”</b> 하고 바로 시작하기',
+ help:[['어떤 질문이 좋은 질문이에요?','<b>무엇을 · 누구에게 · 언제까지 · 어떻게</b>를 구체적으로 묻는 질문이에요. “알아서 하면 되죠?”는 다시 모호해져요.']],
+ extra:'brief',stamp:'확인',next:'지시 확인 완료! →'},
+
 {icon:'🏢',title:'출근 준비',sub:'화면 나누고, 내 파일 저장하고, 용지 확인',
  imgs:['goal-thumb'],tall:true,
  paths:[['파일','다른 이름으로 저장'],['쪽','편집 용지','F7'],['쪽','다단 설정']],
@@ -344,7 +384,7 @@ const M=[
         `<b>쪽 → 다단 설정</b>: 2단 · 간격 8mm · 구분선 실선 0.12mm`],
  tip:'단축키가 안 먹으면? 먼저 <b>한글 창을 한 번 클릭</b>하세요!',
  help:[['타이핑 파일이 없어요','아래 <b>본문 원본 HWP</b>를 받아서 쓰세요.'],['이미 2단이에요','그럼 다시 나누지 말고 값만 확인!']],
- extra:'start'},
+ extra:'start',stamp:'출근',next:'출근 완료! 시작 →'},
 
 {icon:'🔲',title:'쪽 테두리',sub:'문서 바깥에 이중선 테두리 두르기',imgs:['c1'],
  paths:[['쪽','쪽 테두리/배경','테두리 탭']],
@@ -477,13 +517,28 @@ const M=[
  tip:'제목은 50%, 꼬리말은 <b>25%</b> 어둡게! 헷갈리지 마세요.',
  help:[['머리말이 만들어졌어요','창에서 종류를 <b>꼬리말</b>로 바꿨는지 확인! '+K('Ctrl+Z')+' 후 다시 해요.'],['쪽 번호가 가운데로 갔어요','쪽 번호 위치를 다시 <b>오른쪽 아래</b>로 지정하세요.']]},
 
-{icon:'🏆',title:'최종 검수',sub:'제출 전 마지막 확인',imgs:['goal-thumb'],tall:true,
- paths:[['파일','미리 보기'],['파일','저장','Ctrl+S']],dlg:[],
- steps:['미리 보기로 <b>A4 한 쪽</b>에 다 들어가는지 확인','완성 예시와 비교: 겹치거나 잘린 곳 없음',`${K('Ctrl+S')} 저장하고 파일 이름 확인`],
- tip:'수고했어요! 이제 <b>보고서 제출</b>만 남았어요.',
- help:[['2쪽으로 넘어가요','글상자 · 차트 크기와 바깥 여백, 빈 줄이 많지 않은지 확인하세요.']],
- extra:'finish'}
+{icon:'📢',title:'업무 보고',sub:'PPT 1장으로 결론부터 보고하기',imgs:['report-done'],goalLabel:'이렇게 보고하면 돼요',app:'한글 · PowerPoint',
+ paths:[['한글','파일','미리 보기'],['한글 차트 바깥 테두리 클릭','Ctrl+C'],['PowerPoint 점선 칸 클릭','Ctrl+V'],['PowerPoint','슬라이드 쇼','F5']],dlg:[],
+ steps:[`한글: 미리 보기로 <b>A4 1쪽</b> 확인 → ${K('Ctrl+S')}`,'<b>보고 템플릿.pptx</b> 받아서 PowerPoint로 열기','제목 아래에 <b>내 반 · 번호 · 이름</b> 쓰기',`한글 차트 클릭 → ${K('Ctrl+C')} → PPT 점선 칸에 ${K('Ctrl+V')}`,'아래에서 <b>숫자 3줄 + 결론</b> 완성 → PPT에 옮기기',`${K('F5')} 슬라이드 쇼 → <b>30초 보고</b> → ${K('Ctrl+S')}`],
+ note:'한 동작 하고 → 여기서 한 줄 체크!',
+ tip:'보고는 <b>결론 먼저!</b> “결론부터 말씀드리면…”으로 시작해요.',
+ help:[['차트가 안 붙어요','차트 <b>바깥 테두리</b>를 한 번 클릭하고 복사하세요. 그래도 안 되면 <b>차트 그림</b>을 받아 PPT에서 <b>삽입 → 그림</b>.'],['한글을 다 못 끝냈어요','괜찮아요! <b>된 데까지</b> 보고하는 것도 업무예요. 차트가 없으면 표를 붙이세요.'],['템플릿이 안 열려요','PowerPoint에서 <b>새 프레젠테이션</b> → 제목과 차트, 숫자 3줄을 직접 넣어도 돼요.']],
+ extra:'report',stamp:'보고',next:'📢 보고 완료!'}
 ];
+
+M.forEach((m,i)=>{if(i>=2&&i<=17)m.cond=i-1});  // 한글 조건 1~16번
+
+/* 지시 해독: 애매한 말과 확인 질문 */
+const VAGUE=[['깔끔하게','무엇이 “깔끔한” 거죠? 서식 기준이 없어요.'],['하나','한 장? 한 파일? 어떤 프로그램으로?'],['간단히 보고','말로? 문서로? 얼마나 짧게?']];
+const QS=[
+ {q:'어떤 프로그램 · 용지로 만들까요?',a:'한글로, <b>A4 세로 1쪽</b>이요. 서식은 첨부한 <b>세부지시사항 16개</b> 그대로!',ok:1},
+ {q:'제가 알아서 예쁘게 하면 되죠?',a:'“알아서”는 또 모호해요. <b>기준</b>을 물어봐야 해요!',ok:0},
+ {q:'회의에서 누가 보는 자료인가요?',a:'영업팀 전체요. 숫자가 한눈에 보이게 <b>표와 차트</b>는 꼭 넣어 주세요.',ok:1},
+ {q:'언제까지 드리면 될까요?',a:'<b>수업 끝나기 10분 전</b>까지요. 다 못 하면 된 데까지 보고해요.',ok:1},
+ {q:'네, 알겠습니다!',a:'바로 “네” 하면 나중에 다시 만들 수도 있어요. <b>먼저 물어봐요!</b>',ok:0},
+ {q:'보고는 어떤 형식으로 할까요?',a:'<b>PPT 1장</b>이요. 차트 + 핵심 숫자 3줄, 말로는 <b>30초</b>!',ok:1}];
+/* 업무 보고: 숫자 칸 정답 */
+const REP={a:'38.33',b:'53.49',c:'6.89',d:'9.54',e:'556',f:'560.7'};
 
 /* 어려운 단계(6·10·13)의 클릭 순서 그림 — 실제 한글 화면을 단순화한 것 */
 const tbl=(rows,cls='')=>`<table class="mtab ${cls}">${rows.map(r=>`<tr class="${r}">${'<td></td>'.repeat(4)}</tr>`).join('')}</table>`;
@@ -553,12 +608,14 @@ const COPY={title:'커지는 자급제 폰 시장\n작성자: 김동욱 기자\n
  chart:'구분\t자급제 사용자\t전체 가입자\t비중\n2021\t44.58\t562\t7.93\n2022\t48.22\t561.2\t8.59\n2023\t53.49\t560.7\t9.54'};
 
 const $=s=>document.querySelector(s);
-const KEY='gunsan-word-mission-v2';
-let S={cur:0,tick:{},done:{},fs:16};
+const KEY='gunsan-word-mission-v3';
+let S={cur:0,tick:{},done:{},fs:16,bv:[],bq:[],rep:{}};
 try{const p=JSON.parse(localStorage.getItem(KEY)||'null');if(p&&typeof p==='object')S={...S,...p}}catch(e){}
 S.cur=Math.min(M.length-1,Math.max(0,+S.cur||0));
 const save=()=>{try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}};
-const doneCount=()=>M.reduce((n,_,i)=>n+(i>=1&&i<=16&&S.done[i]?1:0),0);
+const doneCount=()=>M.reduce((n,m,i)=>n+(m.cond&&S.done[i]?1:0),0);
+const esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const repOk=k=>{const v=String(S.rep[k]??'').replace(/[,\s]/g,'');return v===''?'':v===REP[k]||(+v===+REP[k]&&!isNaN(parseFloat(v)))?'good':'bad'};
 const rankOf=n=>RANKS.filter(r=>n>=r[0]).pop();
 const ticks=i=>S.tick[i]||(S.tick[i]=[]);
 
@@ -584,7 +641,7 @@ function dlgHTML(d){
 function stepsHTML(i,m){
   const t=ticks(i);
   return `<ol class="steps">${m.steps.map((s,j)=>`<li class="step ${t[j]?'on':''}" data-step="${j}" role="checkbox" aria-checked="${!!t[j]}" tabindex="0"><span class="box">${t[j]?'✓':j+1}</span><span class="tx">${s}</span></li>`).join('')}</ol>
-  <p class="stepnote">한글에서 한 동작 하고 → 여기서 한 줄 체크!</p>`;
+  <p class="stepnote">${m.note||'한글에서 한 동작 하고 → 여기서 한 줄 체크!'}</p>`;
 }
 function mascot(tip){return `<div class="mascot"><img src="img/mascot.webp" alt="" width="482" height="360"><div class="bubble"><small>김 대리의 꿀팁</small>${tip}</div></div>`}
 
@@ -610,9 +667,36 @@ function extraHTML(x){
   case 'table':return `<section class="card extra gx"><div class="xhead"><h2>표 데이터</h2><button class="btn" data-copy="table">📋 복사</button></div>${tableHTML()}<p class="stepnote">합계 칸은 비워 두고, 11번에서 계산식으로 채워요.</p></section>`;
   case 'sum':return `<section class="card extra gx"><div class="xhead"><h2>🖱 이만큼 선택하세요</h2></div>${tableHTML('sum')}<p class="stepnote"><span style="background:#dbe5ff;padding:0 4px">파란 칸</span> + <span style="background:var(--hi);padding:0 4px">노란 빈 칸</span>을 한 열씩 같이 선택 → 노란 칸에 합계가 들어가요.</p></section>`;
   case 'chart':return `<section class="card extra gx"><div class="xhead"><h2>차트 데이터</h2><button class="btn" data-copy="chart">📋 복사</button></div>${tableHTML('chart')}<p class="stepnote">2020년과 합계는 넣지 않아요.</p></section>`;
+  case 'brief':{
+    const v=S.bv,q=S.bq,good=q.filter(n=>QS[n].ok).length,w=n=>`<button class="vg ${v.includes(n)?'found':''}" data-v="${n}">${VAGUE[n][0]}</button>`;
+    return `<section class="card extra gx"><div class="xhead"><h2>💬 사내 메신저</h2><span class="labn">김 팀장 · 오전 9:02</span></div>
+    <div class="chat"><div class="msg"><span class="who">김 팀장</span>신입 씨, 내일 회의 때 쓸 자급제 폰 시장 자료 ${w(0)} ${w(1)} 만들어 줘요. 다 되면 ${w(2)}해 주고요.</div>
+    ${v.map(n=>`<div class="note">🤔 “${VAGUE[n][0]}” — ${VAGUE[n][1]}</div>`).join('')}
+    ${q.map(n=>`<div class="msg me">${QS[n].q}</div><div class="msg ${QS[n].ok?'':'warn'}"><span class="who">${QS[n].ok?'김 팀장':'김 대리 (속닥)'}</span>${QS[n].a}</div>`).join('')}</div>
+    <p class="lab" style="margin:14px 0 8px">애매한 말 ${v.length}/3 · 좋은 질문 ${good}/4 — 팀장님께 뭐라고 물어볼까요?</p>
+    <div class="qs">${QS.map((x,n)=>`<button class="qbtn ${q.includes(n)?(x.ok?'ok':'no'):''}" data-q="${n}" ${q.includes(n)?'disabled':''}>${x.q}</button>`).join('')}</div>
+    ${good===4?`<div class="order"><h3>📋 업무 지시서 · 명확해졌어요!</h3><table>
+      <tr><th>무엇을</th><td>자급제 폰 시장 자료 · 한글 · A4 세로 1쪽</td></tr>
+      <tr><th>기준</th><td>세부지시사항 16개 (이 페이지 1~16번)</td></tr>
+      <tr><th>누구에게</th><td>영업팀 회의 · 표와 차트 필수</td></tr>
+      <tr><th>언제까지</th><td>수업 끝나기 10분 전</td></tr>
+      <tr><th>보고</th><td>PPT 1장 (차트 + 숫자 3줄) · 30초 말하기</td></tr></table>
+      <p>모호한 지시는 <b>무엇을 · 누구에게 · 언제까지 · 어떻게</b>를 물어서 명확하게!</p></div>`:''}</section>`;}
+  case 'report':{
+    const f=(k,w)=>`<input class="ri ${repOk(k)}" data-r="${k}" value="${esc(S.rep[k])}" inputmode="decimal" aria-label="숫자 칸" style="${w?`width:${w}px`:''}">`;
+    return `<section class="card extra gx"><div class="xhead"><h2>📂 보고 준비물</h2></div>
+    <div class="dls"><a class="dl" href="files/report-template.pptx" download="보고_템플릿.pptx"><span class="ic">📊</span><span>보고 템플릿.pptx<small>PowerPoint 1장짜리</small></span></a>
+    <a class="dl" href="img/chart.png" download="차트.png"><span class="ic">🖼</span><span>차트 그림<small>한글 차트가 안 붙을 때만</small></span></a></div>
+    <button class="slideprev" data-goal="report-slide" aria-label="템플릿 크게 보기"><img src="img/report-slide.webp" alt="빈 보고 템플릿 미리 보기"></button></section>
+    <section class="card extra gx"><div class="xhead"><h2>🔢 숫자 3줄 + 결론</h2><button class="btn" data-copy="rep">📋 복사</button></div>
+    <p class="stepnote" style="margin:0 0 10px">표에서 2020년 → 2023년 숫자를 찾아 넣어요. 맞으면 초록!</p>
+    <div class="rlines"><div>① 자급제 사용자 ${f('a')} → ${f('b')} 십만 대</div><div>② 자급제 비중 ${f('c')}% → ${f('d')}%</div><div>③ 전체 가입자 ${f('e')} → ${f('f')} 십만 대</div>
+    <div>결론 <input class="ri wide" data-r="g" value="${esc(S.rep.g)}" placeholder="예: 통신사는 요금·서비스 경쟁을 준비해야 합니다" aria-label="결론"></div></div></section>
+    <section class="card extra gx"><div class="xhead"><h2>🎤 30초 보고 대본</h2></div><div class="copyzone" id="script">${esc(scriptText())}</div>
+    <p class="stepnote">숫자와 결론을 채우면 대본이 완성돼요. <b>결론 → 근거 → 이상입니다</b> 순서!</p></section>`;}
   case 'finish':{const n=doneCount(),r=rankOf(n);return `<section class="card cert" style="margin-top:14px"><small style="font-weight:800;color:#a16207">상공일보 인사팀</small><h1>수습 평가 결과</h1>
     <div class="big">${r[2]} ${r[1]}</div><p style="margin:0;color:var(--muted)">16개 업무 중 <b style="color:var(--ink)">${n}개</b> 완료</p>
-    <div class="stamps">${Array.from({length:16},(_,j)=>`<span class="${S.done[j+1]?'ok':''}" title="${M[j+1].title}">${S.done[j+1]?'완료':j+1}</span>`).join('')}</div>
+    <div class="stamps">${Array.from({length:16},(_,j)=>`<span class="${S.done[j+2]?'ok':''}" title="${M[j+2].title}">${S.done[j+2]?'완료':j+1}</span>`).join('')}</div>
     <p style="font-size:.85rem;color:var(--muted);margin:8px 0 0">${n===16?'모든 업무를 해냈어요. 이제 진짜 문서 전문가! 🎉':'빈 칸 번호를 누르면 그 조건으로 돌아가요.'}</p></section>`}
   }return '';
 }
@@ -624,25 +708,25 @@ function render(){
   let html='';
   if(i===0){
     const n=doneCount(),r=rankOf(n);
-    html+=`<section class="card hero"><div><small>상공일보 · 입사 첫날</small><h1>신입사원 님,<br>첫 보고서를 완성해 주세요!</h1><p>16개 업무를 하나씩 끝낼 때마다 <b>결재 도장</b>을 받고 <b>승진</b>해요.</p>
-      <div class="chips"><span>⏱ 한 조건씩</span><span>🖼 그림 보고 따라 하기</span><span>✅ 직접 체크</span></div></div>
+    html+=`<section class="card hero"><div><small>상공일보 · 입사 첫날</small><h1>신입사원의<br>첫 업무 보고</h1><p>조건을 하나 끝낼 때마다 <b>결재 도장</b>, 3개마다 <b>승진</b>해요.</p>
+      <div class="flowline"><span>💬 모호한 지시 명확히</span><i>→</i><span>📝 한글로 문서 만들기</span><i>→</i><span>📢 PPT로 보고</span></div></div>
       <button class="thumb" data-goal aria-label="완성 예시 크게 보기"><img src="img/goal-thumb.webp" alt="완성 문서 미리 보기" width="420" height="594"></button></section>
       <div class="ranks" aria-label="승진 단계">${RANKS.map(x=>`<span class="${x===r?'me':''}">${x[2]} ${x[1]}${x[0]?` · ${x[0]}개`:''}</span>`).join('')}</div>`;
   }
-  html+=`<section class="card head" style="margin-top:${i===0?14:0}px"><div class="num ${done?'ok':''}">${i===0?'🏢':i===17?'🏆':String(i).padStart(2,'0')}</div>
-    <div><h1>${i>=1&&i<=16?`${m.icon} `:''}${m.title}</h1><p>${m.sub}</p></div>${done?'<span class="tag">✔ 결재 완료</span>':''}</section>`;
-  const left=`<div class="card ga"><p class="lab"><i class="l1">🖼</i>${i===0||i===17?'오늘 완성할 문서':'완성하면 이렇게!'}</p>${imgs?`<div class="goal ${m.tall?'tall':''}">${imgs}</div>`:''}${mascot(m.tip)}
-    <p class="lab" style="margin-top:16px"><i class="l2">🧭</i>어디서? (한글 메뉴)</p><div class="paths">${m.paths.map(pathHTML).join('')}</div></div>`;
+  html+=`<section class="card head" style="margin-top:${i===0?14:0}px"><div class="num ${done?'ok':''}">${m.cond?String(m.cond).padStart(2,'0'):m.icon}</div>
+    <div><h1>${m.cond?`${m.icon} `:''}${m.title}</h1><p>${m.sub}</p></div>${done?'<span class="tag">✔ 결재 완료</span>':''}</section>`;
+  const left=`<div class="card ga">${imgs?`<p class="lab"><i class="l1">🖼</i>${m.goalLabel||(m.cond?'완성하면 이렇게!':'오늘 완성할 문서')}</p><div class="goal ${m.tall?'tall':''}">${imgs}</div>`:''}${mascot(m.tip)}
+    ${m.paths.length?`<p class="lab" style="margin-top:16px"><i class="l2">🧭</i>어디서? (${m.app||'한글'} 메뉴)</p><div class="paths">${m.paths.map(pathHTML).join('')}</div>`:''}</div>`;
   const todo=`<div class="card gb"><p class="lab"><i class="l4">✓</i>지금 할 일 · 한 줄씩 체크</p>${stepsHTML(i,m)}</div>`;
-  const flow=FLOW[i]?`<p class="lab"><i class="l5">🖱</i>이 순서로 누르세요 <span class="labn">실제 화면을 단순화한 그림</span></p><div class="flow">${FLOW[i]}</div>`:'';
+  const flow=FLOW[m.cond]?`<p class="lab"><i class="l5">🖱</i>이 순서로 누르세요 <span class="labn">실제 화면을 단순화한 그림</span></p><div class="flow">${FLOW[m.cond]}</div>`:'';
   const vals=m.dlg.length?`<p class="lab" ${flow?'style="margin-top:16px"':''}><i class="l3">✎</i>이 값으로 설정 <span class="labn">(노란 칸)</span></p>${m.dlg.map(dlgHTML).join('')}`:'';
   const setv=flow||vals?`<div class="card gd">${flow}${vals}</div>`:'';
   const help=m.help&&m.help.length?`<details class="card help gh"><summary>막혔어요</summary>${m.help.map(h=>`<div class="qa"><b>${h[0]}</b><span>${h[1]}</span></div>`).join('')}</details>`:'';
-  if(i===17)html+=extraHTML('finish');
-  html+=`<div class="grid"><div class="col">${left}${i!==17&&m.extra?extraHTML(m.extra):''}${help}</div><div class="col">${todo}${setv}</div></div>`;
+  html+=`<div class="grid"><div class="col">${left}${m.extra?extraHTML(m.extra):''}${help}</div><div class="col">${todo}${setv}</div></div>`;
+  if(m.extra==='report')html+=extraHTML('finish');
   $('#main').innerHTML=html;
   // 상단 지도
-  $('#map').innerHTML=M.map((x,j)=>`<button class="dot ${S.done[j]?'done':''} ${j===i?'cur':''}" data-go="${j}" title="${j}. ${x.title}" aria-label="${j}. ${x.title}${S.done[j]?' 완료':''}">${j===0?'🏢':j===17?'🏆':S.done[j]&&j!==i?'✓':j}</button>`).join('');
+  $('#map').innerHTML=M.map((x,j)=>`<button class="dot ${S.done[j]?'done':''} ${j===i?'cur':''}" data-go="${j}" title="${x.cond?x.cond+'. ':''}${x.title}" aria-label="${x.cond?x.cond+'번 ':''}${x.title}${S.done[j]?' 완료':''}">${!x.cond?x.icon:S.done[j]&&j!==i?'✓':x.cond}</button>`).join('');
   const cur=$('#map .cur');if(cur)cur.scrollIntoView({block:'nearest',inline:'center'});
   const n=doneCount(),r=rankOf(n);
   $('#rank').innerHTML=`<span class="em">${r[2]}</span>${r[1]} · ${n}/16`;
@@ -654,9 +738,9 @@ function bottom(){
   $('#meterText').textContent=`체크 ${c}/${m.steps.length}`;
   $('#meterBar').style.width=(c/m.steps.length*100)+'%';
   const nb=$('#next');
-  if(i===M.length-1){nb.textContent=all?'🎉 제출 완료!':'체크하고 제출';nb.className='bnext'+(all?' go':'')}
+  if(i===M.length-1){nb.textContent=all?m.next:'체크하고 보고';nb.className='bnext'+(all?' go':'')}
   else if(S.done[i]){nb.textContent='다음 →';nb.className='bnext go'}
-  else if(all){nb.textContent=i===0?'출근 완료! 시작 →':'결재 받기 →';nb.className='bnext go'}
+  else if(all){nb.textContent=m.next||'결재 받기 →';nb.className='bnext go'}
   else{nb.textContent='건너뛰기 →';nb.className='bnext'}
 }
 function go(i){S.cur=Math.min(M.length-1,Math.max(0,i));render();window.scrollTo({top:0});$('#main').focus({preventScroll:true})}
@@ -675,8 +759,18 @@ $('#main').addEventListener('click',e=>{
     st.classList.toggle('on',t[j]);st.setAttribute('aria-checked',t[j]);st.querySelector('.box').textContent=t[j]?'✓':j+1;bottom();save();return}
   const g=e.target.closest('[data-goal]');if(g){openGoal(g.dataset.goal);return}
   const cp=e.target.closest('[data-copy]');if(cp){copy(cp.dataset.copy);return}
-  const sp=e.target.closest('.stamps span');if(sp){go([...sp.parentNode.children].indexOf(sp)+1)}
+  const sp=e.target.closest('.stamps span');if(sp){go([...sp.parentNode.children].indexOf(sp)+2);return}
+  const vb=e.target.closest('[data-v]');if(vb){const n=+vb.dataset.v;if(!S.bv.includes(n))S.bv.push(n);if(S.bv.length===3)ticks(S.cur)[0]=true;render();return}
+  const qb=e.target.closest('[data-q]');if(qb){const n=+qb.dataset.q;if(!S.bq.includes(n))S.bq.push(n);if(S.bq.filter(x=>QS[x].ok).length===4)ticks(S.cur)[1]=true;render();if(!QS[n].ok)toast('앗, 그 질문은 다시 생각해 봐요!');return}
 });
+$('#main').addEventListener('input',e=>{
+  const r=e.target.closest('[data-r]');if(!r)return;
+  S.rep[r.dataset.r]=r.value;if(r.dataset.r!=='g')r.className='ri '+repOk(r.dataset.r);
+  const sc=$('#script');if(sc)sc.textContent=scriptText();save();
+});
+function repText(){const v=k=>S.rep[k]||'___';return `① 자급제 사용자 ${v('a')} → ${v('b')} 십만 대\n② 자급제 비중 ${v('c')}% → ${v('d')}%\n③ 전체 가입자 ${v('e')} → ${v('f')} 십만 대\n결론: ${v('g')}`}
+function scriptText(){const v=k=>S.rep[k]||'___',g=(S.rep.g||'(결론)').replace(/[.\s]+$/,'');
+  return `팀장님, 자급제 폰 시장 자료 보고드립니다.\n결론부터 말씀드리면, ${g}.\n근거는 세 가지입니다.\n첫째, 자급제 사용자가 ${v('a')}에서 ${v('b')}십만 대로 늘었습니다.\n둘째, 자급제 비중이 ${v('c')}%에서 ${v('d')}%로 커졌습니다.\n셋째, 전체 가입자는 ${v('e')}에서 ${v('f')}십만 대로 거의 그대로입니다.\n이상입니다.`}
 $('#main').addEventListener('keydown',e=>{const st=e.target.closest('[data-step]');if(st&&(e.key===' '||e.key==='Enter')){e.preventDefault();st.click()}});
 $('#map').addEventListener('click',e=>{const b=e.target.closest('[data-go]');if(b)go(+b.dataset.go)});
 $('#prev').onclick=()=>go(S.cur-1);
@@ -684,10 +778,10 @@ let busy=false;
 $('#next').onclick=()=>{
   if(busy)return;
   const i=S.cur,m=M[i],t=ticks(i),all=m.steps.every((_,j)=>t[j]);
-  if(i===M.length-1){if(all){S.done[i]=true;stamp('제출','완료');confetti(120);render()}else toast('체크를 모두 하면 제출할 수 있어요');return}
+  if(i===M.length-1){if(all){S.done[i]=true;stamp('보고','완료');confetti(120);render()}else toast('체크를 모두 하면 보고할 수 있어요');return}
   if(all&&!S.done[i]){
     const before=rankOf(doneCount());S.done[i]=true;const after=rankOf(doneCount());
-    if(i===0){stamp('출근','완료')}else stamp('결재','완료');
+    stamp(m.stamp||'결재','완료');
     busy=true;setTimeout(()=>{busy=false;go(i+1);if(after!==before)rankUp(after)},650);return;
   }
   go(i+1);
@@ -697,7 +791,7 @@ function rankUp(r){
   $('#upDlg').showModal();confetti();
 }
 async function copy(key){
-  try{await navigator.clipboard.writeText(COPY[key]);toast('복사 완료! 한글에서 Ctrl+V')}
+  try{await navigator.clipboard.writeText(key==='rep'?repText():COPY[key]);toast(key==='rep'?'복사 완료! PPT에서 Ctrl+V':'복사 완료! 한글에서 Ctrl+V')}
   catch(e){toast('복사가 안 돼요. 직접 보고 입력해 주세요')}
 }
 let zoom=100;
@@ -716,7 +810,7 @@ $('#goalBtn').onclick=()=>openGoal();
 $('#helpBtn').onclick=()=>{$('#dlsHelp').innerHTML=DLS;$('#helpDlg').showModal()};
 $('#fsUp').onclick=()=>{S.fs=Math.min(20,S.fs+1);render()};
 $('#fsDown').onclick=()=>{S.fs=Math.max(14,S.fs-1);render()};
-$('#resetBtn').onclick=()=>{if(confirm('체크와 완료 기록을 모두 지울까요?')){S={cur:0,tick:{},done:{},fs:S.fs};$('#helpDlg').close();go(0)}};
+$('#resetBtn').onclick=()=>{if(confirm('체크와 완료 기록을 모두 지울까요?')){S={cur:0,tick:{},done:{},fs:S.fs,bv:[],bq:[],rep:{}};$('#helpDlg').close();go(0)}};
 render();
 </script>
 </body>
