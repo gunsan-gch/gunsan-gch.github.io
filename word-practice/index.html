@@ -185,6 +185,8 @@ main:focus{outline:none}
 .tbl td.r{text-align:right;padding-right:14px}
 .tbl tr.sum td{background:#d9d9d9;border-top:3px double #555;font-weight:800}
 .tbl td.pick{background:#dbe5ff;outline:2px solid var(--brand);outline-offset:-2px}
+.tbl th.pick{background:#2f5bea}
+.tbl tr.skip td{color:#b0b7c3;text-decoration:line-through}
 .tbl td.res{background:var(--hi);outline:2px dashed var(--hi-b);outline-offset:-2px}
 .dls{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
 .dl{display:flex;gap:10px;align-items:center;border:1px solid var(--line);border-radius:12px;padding:10px 12px;text-decoration:none;color:inherit;background:#fff;font-weight:800;font-size:.88rem}
@@ -501,12 +503,12 @@ const M=[
  help:[['캡션이 표 위에 생겼어요','표/셀 속성 → <b>여백/캡션</b> → 위치 <b>아래</b>.']]},
 
 {icon:'📊',title:'혼합형 차트',sub:'막대 + 꺾은선 이중 축 차트',imgs:['c13'],
- paths:[['입력','차트'],['비중 계열 우클릭','차트 종류 변경'],['비중 계열 우클릭','계열 속성','보조 축']],
- dlg:[{t:'차트 설정',tabs:['계열'],rows:[['자급제 사용자','묶은 세로 막대'],['전체 가입자','묶은 세로 막대'],['비중','표식 있는 꺾은선 + 보조 축'],['데이터','2021~2023년 (합계 ✕)'],['축 · 범례 글자','9pt · 범례 아래']]},
+ paths:[['표에서 영역 블록','차트 만들기'],['비중 계열 우클릭','차트 종류 변경'],['비중 계열 우클릭','계열 속성','보조 축'],['제목 · 축 · 범례 클릭','글자 크기']],
+ dlg:[{t:'차트 설정',tabs:['계열'],rows:[['데이터','제목 행 + 2021~2023년 (2020 · 합계 ✕)'],['자급제 사용자','묶은 세로 막대'],['전체 가입자','묶은 세로 막대'],['비중','표식 있는 꺾은선 + 보조 축'],['차트 제목','자급제 이용 현황'],['값 축 · 항목 축 · 보조 값 축 · 범례','9pt · 범례 아래']]},
       {t:'개체 속성 (차트 바깥 테두리)',tabs:['기본','여백/캡션'],on:['기본','여백/캡션'],rows:[['너비 × 높이','80mm × 75mm · 크기 고정'],['본문과의 배치','자리 차지'],['가로','단 · 가운데 · 0mm'],['세로','문단 · 위 · 0mm'],['바깥 여백','위 5mm · 아래 8mm']]}],
- steps:['표 아래 빈 줄 클릭 → <b>입력 → 차트</b>','차트 데이터 편집 → <b>아래 데이터 붙여넣기</b> (3년 · 3계열)','<b>비중</b>만 꺾은선으로 바꾸고 <b>보조 축</b> 연결','제목 · 범례(아래) · 축 글자 9pt','차트 <b>바깥 테두리</b> → 개체 속성 크기 · 위치'],
+ steps:['표에서 <b>제목 행 + 2021~2023년</b> 블록 (2020 · 합계 빼기)','블록 그대로 <b>차트 만들기</b> → 묶은 세로 막대형','<b>비중</b>만 꺾은선으로 바꾸고 <b>보조 축</b> 연결','차트 제목에 <b>자급제 이용 현황</b> 입력 → 글자 크기 조절','값 축 · 항목 축 · 보조 값 축 · 범례를 하나씩 → <b>9pt</b> · 범례 아래','차트 <b>바깥 테두리</b> → 개체 속성 크기 · 위치'],
  tip:'차트 <b>안쪽</b> = 계열·축 / <b>바깥 테두리</b> = 크기·위치!',
- help:[['막대까지 다 꺾은선이 됐어요',K('Ctrl+Z')+' 후 <b>비중 계열 하나만</b> 클릭하고 바꾸세요.'],['선이 바닥에 붙어 있어요','비중을 <b>보조 축</b>에 연결하지 않았어요.']],
+ help:[['2020년이나 합계가 차트에 들어갔어요',K('Ctrl+Z')+' 후 블록을 다시! <b>2020년 행과 합계 행은 빼고</b> 선택해요.'],['떨어진 행을 같이 고르고 싶어요','제목 행을 블록한 뒤 '+K('Ctrl')+'을 누른 채 2021~2023년 행을 드래그해요.'],['차트 데이터 편집에 붙여넣기가 안 돼요','붙여넣기 대신 <b>표에서 영역을 블록</b>하고 차트 만들기로 해요.'],['막대까지 다 꺾은선이 됐어요',K('Ctrl+Z')+' 후 <b>비중 계열 하나만</b> 클릭하고 바꾸세요.'],['선이 바닥에 붙어 있어요','비중을 <b>보조 축</b>에 연결하지 않았어요.'],['글자 크기가 한꺼번에 안 바뀌어요','값 축 → 항목 축 → 보조 값 축 → 범례 <b>하나씩</b> 클릭해서 바꿔요.']],
  extra:'chart'},
 
 {icon:'🔢',title:'쪽 번호',sub:'오른쪽 아래에 - 3 -',imgs:['c14'],
@@ -597,12 +599,18 @@ const FLOW={
   <div class="mrow">${tbl(['s','','',''])}<span>제목 행 블록 → ${k('L')} → <b>배경</b> 탭 → 면 색 <span class="sw" style="display:inline-block;vertical-align:-3px;background:${C.purple25}"></span> 보라 25% 어둡게</span></div>
   <p>합계 행도 같은 방법으로 <b>하양 15% 어둡게</b></p></div>`,
 
-13:`<div class="fp"><h4><b>A</b>차트 넣기</h4>
-  <div class="rib"><span>파일</span><span>편집</span><span>보기</span><span class="act tgt" data-p="1">입력</span><span>서식</span><span>쪽</span><span>표</span></div>
-  <div class="mrow" style="margin-top:8px"><span class="mbtn">표</span><span class="mbtn tgt" data-p="2">📊 차트</span><span class="mbtn">그림</span><span>→ 묶은 세로 막대형</span></div></div>
-<div class="fp"><h4><b>B</b>차트 데이터 편집</h4>
-  <div class="mrow"><table class="mgrid"><tr><td class="tgt" data-p="1"></td><td>사용자</td><td>가입자</td><td>비중</td></tr><tr><td>2021</td><td>44.58</td><td>562</td><td>7.93</td></tr><tr><td>2022</td><td>48.22</td><td>561.2</td><td>8.59</td></tr><tr><td>2023</td><td>53.49</td><td>560.7</td><td>9.54</td></tr></table>
-  <span>① 왼쪽 위 칸 클릭 → 붙여넣기<br>남는 행·열은 삭제</span></div></div>
+13:`<div class="fp"><h4><b>A</b>표에서 영역 지정 → 차트 만들기</h4>
+  <div class="mrow">${tbl(['s','','s','s','s',''])}<span>① <b>제목 행</b> 블록<br>② ${k('Ctrl')} 누른 채 <b>2021~2023년</b> 행 드래그<br><small style="color:var(--muted)">2020년 · 합계 행은 빼요</small></span>
+  <span class="mbtn tgt" data-p="3">📊 차트 만들기</span></div></div>
+<div class="fp"><h4><b>B</b>제목 · 글자 크기</h4>
+  <div class="mrow"><span style="position:relative;display:inline-grid;grid-template-columns:auto 96px auto;grid-template-rows:auto 56px auto auto;gap:4px 6px;align-items:center;justify-items:center;border:1px solid #c9d1e0;background:#fff;border-radius:6px;padding:8px 10px;font-size:.7rem">
+    <span class="tgt" data-p="1" style="grid-column:1/4;font-size:.82rem;font-weight:800;padding:0 4px">자급제 이용 현황</span>
+    <span class="tgt" data-p="2" style="line-height:1.2;text-align:right;padding:0 2px">600<br>300<br>0</span>
+    <span style="width:96px;height:56px;background:linear-gradient(90deg,#fff 12%,#f97316 12% 22%,#fff 22% 45%,#f97316 45% 55%,#fff 55% 78%,#f97316 78% 88%,#fff 88%) bottom/100% 85% no-repeat;border-bottom:1px solid #98a2b3"></span>
+    <span class="tgt" data-p="4" style="line-height:1.2;padding:0 2px">10<br>8<br>6</span>
+    <span class="tgt" data-p="3" style="grid-column:2;padding:0 2px">2021 2022 2023</span>
+    <span class="tgt" data-p="5" style="grid-column:1/4;padding:0 4px">■ 사용자 ■ 가입자 ▲ 비중</span></span>
+  <span>① 제목 클릭 → <b>자급제 이용 현황</b> 입력 · 크기 조절<br>②~⑤ 하나씩 클릭 → 글자 크기 <b>9pt</b><br><small style="color:var(--muted)">② 값 축 ③ 항목 축 ④ 보조 값 축 ⑤ 범례(아래)</small></span></div></div>
 <div class="fp"><h4><b>C</b>비중만 꺾은선 + 보조 축</h4>
   <div class="mrow"><svg width="150" height="92" viewBox="0 0 150 92" role="img" aria-label="비중 막대가 선택된 차트"><rect x=".5" y=".5" width="149" height="91" fill="#fff" stroke="#c9d1e0"/>
     <g><rect x="14" y="70" width="9" height="10" fill="#5b7cf7"/><rect x="23" y="16" width="9" height="64" fill="#f97316"/><rect x="32" y="78" width="9" height="2" fill="#98a2b3"/>
@@ -618,8 +626,7 @@ const FLOW={
 
 const RANKS=[[0,'인턴','🎒'],[3,'수습사원','🌱'],[6,'사원','💼'],[9,'주임','⭐'],[12,'대리','🏅'],[15,'과장','👔'],[16,'팀장','👑']];
 const COPY={title:'커지는 자급제 폰 시장\n작성자: 김동욱 기자\n작성일: ',
- table:'구분\t자급제 사용자\t전체 가입자\t비중\n2020\t38.33\t556\t6.89\n2021\t44.58\t562\t7.93\n2022\t48.22\t561.2\t8.59\n2023\t53.49\t560.7\t9.54\n합계\t\t\t',
- chart:'구분\t자급제 사용자\t전체 가입자\t비중\n2021\t44.58\t562\t7.93\n2022\t48.22\t561.2\t8.59\n2023\t53.49\t560.7\t9.54'};
+ table:'구분\t자급제 사용자\t전체 가입자\t비중\n2020\t38.33\t556\t6.89\n2021\t44.58\t562\t7.93\n2022\t48.22\t561.2\t8.59\n2023\t53.49\t560.7\t9.54\n합계\t\t\t'};
 
 const $=s=>document.querySelector(s);
 const KEY='gunsan-word-mission-v3';
@@ -680,7 +687,11 @@ function extraHTML(x){
   case 'pic':return `<section class="card extra gx"><div class="xhead"><h2>실습 그림</h2><a class="btn" href="img/business.png" download="비즈니스.PNG">⬇ 그림 저장</a></div><img src="img/mascot.webp" alt="건물을 안고 오른쪽을 가리키는 회사원 그림" style="width:150px" width="482" height="360"></section>`;
   case 'table':return `<section class="card extra gx"><div class="xhead"><h2>표 데이터</h2><button class="btn" data-copy="table">📋 복사</button></div>${tableHTML()}<p class="stepnote">합계 칸은 비워 두고, 11번에서 계산식으로 채워요.</p></section>`;
   case 'sum':return `<section class="card extra gx"><div class="xhead"><h2>🖱 이만큼 선택하세요</h2></div>${tableHTML('sum')}<p class="stepnote"><span style="background:#dbe5ff;padding:0 4px">파란 칸</span> + <span style="background:var(--hi);padding:0 4px">노란 빈 칸</span>을 한 열씩 같이 선택 → 노란 칸에 합계가 들어가요.</p></section>`;
-  case 'chart':return `<section class="card extra gx"><div class="xhead"><h2>차트 데이터</h2><button class="btn" data-copy="chart">📋 복사</button></div>${tableHTML('chart')}<p class="stepnote">2020년과 합계는 넣지 않아요.</p></section>`;
+  case 'chart':return `<section class="card extra gx"><div class="xhead"><h2>🖱 이만큼 블록하세요</h2></div>
+    <table class="tbl"><thead><tr><th class="pick">구분</th><th class="pick">자급제 사용자</th><th class="pick">전체 가입자</th><th class="pick">비중</th></tr></thead><tbody>
+    ${[[2020,38.33,556,6.89,0],[2021,44.58,562,7.93,1],[2022,48.22,561.2,8.59,1],[2023,53.49,560.7,9.54,1]].map(x=>`<tr class="${x[4]?'':'skip'}">${x.slice(0,4).map((c,j)=>`<td class="${j===1||j===2?'r ':''}${x[4]?'pick':''}">${c}</td>`).join('')}</tr>`).join('')}
+    <tr class="sum skip"><td>합계</td><td class="r">184.62</td><td class="r">2,239.9</td><td></td></tr></tbody></table>
+    <p class="stepnote"><span style="background:#dbe5ff;padding:0 4px">파란 칸</span>만 선택 → 차트 만들기. 2020년과 합계는 빼요.</p></section>`;
   case 'brief':{
     const v=S.bv,q=S.bq,good=q.filter(n=>QS[n].ok).length,w=n=>`<button class="vg ${v.includes(n)?'found':''}" data-v="${n}">${VAGUE[n][0]}</button>`;
     return `<section class="card extra gx"><div class="xhead"><h2>💬 사내 메신저</h2><span class="labn">김 팀장 · 오전 9:02</span></div>
