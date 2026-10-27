@@ -113,7 +113,7 @@ main:focus{outline:none}
 .goal img{width:100%;height:auto}
 .goal.tall img{max-height:300px;object-fit:cover;object-position:top}
 
-/* 김 대리 */
+/* 염 대리 */
 .mascot{display:flex;align-items:flex-end;gap:4px;margin-top:12px}
 .mascot img{width:74px;height:auto;flex:none}
 .bubble{position:relative;background:#fff8d6;border:2px solid #ffd84d;border-radius:14px;padding:9px 12px;font-size:.92rem;font-weight:600}
@@ -643,7 +643,7 @@ function stepsHTML(i,m){
   return `<ol class="steps">${m.steps.map((s,j)=>`<li class="step ${t[j]?'on':''}" data-step="${j}" role="checkbox" aria-checked="${!!t[j]}" tabindex="0"><span class="box">${t[j]?'✓':j+1}</span><span class="tx">${s}</span></li>`).join('')}</ol>
   <p class="stepnote">${m.note||'한글에서 한 동작 하고 → 여기서 한 줄 체크!'}</p>`;
 }
-function mascot(tip){return `<div class="mascot"><img src="img/mascot.webp" alt="" width="482" height="360"><div class="bubble"><small>김 대리의 꿀팁</small>${tip}</div></div>`}
+function mascot(tip){return `<div class="mascot"><img src="img/mascot.webp" alt="" width="482" height="360"><div class="bubble"><small>염 대리의 꿀팁</small>${tip}</div></div>`}
 
 function tableHTML(mode){
   const rows=[[2020,38.33,556,6.89],[2021,44.58,562,7.93],[2022,48.22,561.2,8.59],[2023,53.49,560.7,9.54]];
@@ -672,7 +672,7 @@ function extraHTML(x){
     return `<section class="card extra gx"><div class="xhead"><h2>💬 사내 메신저</h2><span class="labn">김 팀장 · 오전 9:02</span></div>
     <div class="chat"><div class="msg"><span class="who">김 팀장</span>신입 씨, 내일 회의 때 쓸 자급제 폰 시장 자료 ${w(0)} ${w(1)} 만들어 줘요. 다 되면 ${w(2)}해 주고요.</div>
     ${v.map(n=>`<div class="note">🤔 “${VAGUE[n][0]}” — ${VAGUE[n][1]}</div>`).join('')}
-    ${q.map(n=>`<div class="msg me">${QS[n].q}</div><div class="msg ${QS[n].ok?'':'warn'}"><span class="who">${QS[n].ok?'김 팀장':'김 대리 (속닥)'}</span>${QS[n].a}</div>`).join('')}</div>
+    ${q.map(n=>`<div class="msg me">${QS[n].q}</div><div class="msg ${QS[n].ok?'':'warn'}"><span class="who">${QS[n].ok?'김 팀장':'염 대리 (속닥)'}</span>${QS[n].a}</div>`).join('')}</div>
     <p class="lab" style="margin:14px 0 8px">애매한 말 ${v.length}/3 · 좋은 질문 ${good}/4 — 팀장님께 뭐라고 물어볼까요?</p>
     <div class="qs">${QS.map((x,n)=>`<button class="qbtn ${q.includes(n)?(x.ok?'ok':'no'):''}" data-q="${n}" ${q.includes(n)?'disabled':''}>${x.q}</button>`).join('')}</div>
     ${good===4?`<div class="order"><h3>📋 업무 지시서 · 명확해졌어요!</h3><table>
