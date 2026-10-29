@@ -248,6 +248,26 @@ dialog::backdrop{background:rgba(17,24,39,.55)}
 .zoom img{width:100%;max-width:none;transition:width .15s}
 .up{text-align:center;padding:26px 22px}
 .up img{width:150px;margin:0 auto 6px}
+/* 출근 카드: 반·번호 고르기 */
+#whoDlg{max-width:min(460px,calc(100vw - 24px))}
+.who{padding:24px 22px;text-align:center}
+.who>img{width:96px;height:96px;border-radius:50%;margin:0 auto 8px}
+.who h2{margin:0 0 4px;font-size:1.35rem}
+.who>p{margin:0 0 14px;color:var(--muted);font-size:.9rem}
+.whocont{display:block;width:100%;padding:14px;border-radius:14px;background:var(--brand);color:#fff;font-weight:900;font-size:1.05rem;margin-bottom:14px}
+.whocont small{display:block;font-weight:600;opacity:.85;font-size:.8rem}
+.whosel{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:12px}
+.whosel label{display:grid;gap:4px;font-size:.78rem;font-weight:800;color:var(--muted);text-align:left}
+.whosel select{font:inherit;font-size:1rem;font-weight:800;padding:9px 8px;border:1.5px solid #c9d1e0;border-radius:10px;background:#fff;color:var(--ink)}
+#whoGo{width:100%}
+#whoGo:disabled{opacity:.45;cursor:default;animation:none}
+.wholist{margin-top:14px;text-align:left;font-size:.85rem}
+.wholist summary{cursor:pointer;font-weight:800;color:var(--muted)}
+.wholist div{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+.wholist button{padding:6px 10px;border-radius:999px;background:#f1f3f8;font-weight:700;font-size:.82rem}
+.wholist button:hover{background:#e2e7f1}
+.whonote{margin:14px 0 0;font-size:.78rem;color:var(--muted)}
+.tbtn.whob{background:#fff3b0;color:#7a5b00}
 .up h2{margin:0;font-size:1.5rem}
 .up .r{font-size:2.4rem;font-weight:900;color:var(--brand);margin:6px 0}
 .keys{display:grid;grid-template-columns:auto 1fr;gap:6px 12px;font-size:.9rem;align-items:center}
@@ -352,6 +372,7 @@ dialog::backdrop{background:rgba(17,24,39,.55)}
   .bnext{padding:12px 14px}
   .tbtn.fs{display:none}
   .tbtn.reset{font-size:0}
+  .tbtn.whob .wl{display:none}
   .tbtn.reset::before{content:"↺";font-size:.95rem}
 }
 @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
@@ -361,6 +382,7 @@ dialog::backdrop{background:rgba(17,24,39,.55)}
 <header class="top">
   <div class="topin">
     <div class="logo"><span class="mark" aria-hidden="true">📄</span><strong>신입사원의 첫 업무 보고</strong></div>
+    <button class="tbtn whob" id="whoBtn" aria-label="학생 바꾸기">👤 <span id="whoChip">출근 전</span><span class="wl"> · 바꾸기</span></button>
     <div class="rank" id="rank" title="완료한 조건 수에 따라 승진해요"></div>
     <button class="tbtn" id="goalBtn">🖼 완성 예시</button>
     <button class="tbtn fs" id="fsDown" aria-label="글자 작게">가−</button>
@@ -405,12 +427,27 @@ dialog::backdrop{background:rgba(17,24,39,.55)}
     <p style="font-size:.85rem;color:var(--muted)"><kbd>Ctrl</kbd>+<kbd>N</kbd>,<kbd>P</kbd> 처럼 쉼표가 있으면 <b>Ctrl+N을 눌렀다 떼고</b> P를 누르세요.</p>
     <h3 style="margin:18px 0 8px;font-size:1rem">실습 파일</h3>
     <div class="dls" id="dlsHelp"></div>
-    <p style="font-size:.82rem;color:var(--muted);margin-top:14px">진행 기록은 이 브라우저에만 저장돼요. 다음 사람을 위해 수업이 끝나면 초기화해 주세요.</p>
-    <button class="btn" id="resetBtn" style="background:#fdecec;color:#b42318">↺ 처음부터 다시 하기</button>
+    <p style="font-size:.82rem;color:var(--muted);margin-top:14px">진행 기록은 <b>반·번호별로 이 PC</b>에 저장돼요. 다른 PC에서는 이어지지 않아요. 다음 시간에 같은 PC에서 내 반·번호를 고르면 이어서 할 수 있어요.</p>
+    <button class="btn" id="resetBtn" style="background:#fdecec;color:#b42318">↺ 내 기록 처음부터</button>
+    <button class="btn" id="wipeBtn" style="margin-top:8px;background:#f1f3f8;color:#475467">🧹 이 PC의 학생 기록 모두 지우기 (선생님용)</button>
   </div>
 </dialog>
 
 <dialog id="upDlg"><div class="up" id="upBody"></div></dialog>
+<dialog id="whoDlg" aria-labelledby="whoTitle"><div class="who">
+  <img src="img/avatar-me.webp" alt="" width="256" height="256">
+  <h2 id="whoTitle">누구의 업무일지인가요?</h2>
+  <p>반과 번호를 고르면 이 PC에 내 진도가 따로 저장돼요.</p>
+  <div id="whoLast"></div>
+  <div class="whosel">
+    <label>학년<select id="wG" autofocus></select></label>
+    <label>반<select id="wC"></select></label>
+    <label>번호<select id="wN"></select></label>
+  </div>
+  <button class="bnext go" id="whoGo" disabled>출근하기 →</button>
+  <div id="whoList"></div>
+  <p class="whonote">이름은 받지 않아요. 기록은 이 PC에만 남고 다른 PC에서는 이어지지 않아요.</p>
+</div></dialog>
 <div class="toast hidden" id="toast" role="status" aria-live="polite"></div>
 
 <script>
@@ -670,12 +707,29 @@ const COPY={title:'커지는 자급제 폰 시장\n작성자: 김동욱 기자\n
  table:'구분\t자급제 사용자\t전체 가입자\t비중\n2020\t38.33\t556\t6.89\n2021\t44.58\t562\t7.93\n2022\t48.22\t561.2\t8.59\n2023\t53.49\t560.7\t9.54\n합계\t\t\t'};
 
 const $=s=>document.querySelector(s);
-const KEY='gunsan-word-mission-v3';
-let S={cur:0,tick:{},done:{},fs:16,bv:[],bq:[],rep:{}};
-try{const p=JSON.parse(localStorage.getItem(KEY)||'null');if(p&&typeof p==='object')S={...S,...p}}catch(e){}
-S.cur=Math.min(M.length-1,Math.max(0,+S.cur||0));
-const save=()=>{try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}};
-const doneCount=()=>M.reduce((n,m,i)=>n+(m.cond&&S.done[i]?1:0),0);
+/* 진도는 반·번호(학생)별로 이 PC의 localStorage에 따로 저장합니다. 이름은 받지 않습니다.
+   공용 PC라서 페이지를 새로 열 때마다 누구인지 먼저 확인합니다 (같은 탭에서 새로고침할 때는 그대로). */
+const KEY='gunsan-word-mission-v4:';            // + '1-2-07'
+const WHO='gunsan-word-mission-who';            // 이 PC에서 마지막으로 고른 학생
+const WHO_TAB='gunsan-word-mission-who-tab';    // 이 탭에서 확인한 학생 (sessionStorage)
+const fresh=()=>({cur:0,tick:{},done:{},fs:16,bv:[],bq:[],rep:{}});
+const store={get:(st,k)=>{try{return st.getItem(k)}catch(e){return null}},set:(st,k,v)=>{try{st.setItem(k,v)}catch(e){}},del:(st,k)=>{try{st.removeItem(k)}catch(e){}}};
+function loadState(id){
+  let s=fresh();
+  try{const p=JSON.parse(store.get(localStorage,KEY+id)||'null');if(p&&typeof p==='object')s={...s,...p}}catch(e){}
+  s.cur=Math.min(M.length-1,Math.max(0,+s.cur||0));
+  return s;
+}
+let who=null,S=fresh();
+const save=()=>{if(who)store.set(localStorage,KEY+who,JSON.stringify(S))};
+const doneCount=(s=S)=>M.reduce((n,m,i)=>n+(m.cond&&s.done[i]?1:0),0);
+const whoLabel=id=>{const [g,c,n]=id.split('-');return `${+g}학년 ${+c}반 ${+n}번`};
+const whoShort=id=>{const [g,c,n]=id.split('-');return `${+g}-${+c} · ${+n}번`};
+function savedStudents(){
+  const out=[];
+  try{for(let i=0;i<localStorage.length;i++){const k=localStorage.key(i);if(k&&k.startsWith(KEY))out.push(k.slice(KEY.length))}}catch(e){}
+  return out.filter(id=>/^\d-\d{1,2}-\d{2}$/.test(id)).sort((a,b)=>a.localeCompare(b,'ko',{numeric:true}));
+}
 const esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const repOk=k=>{const v=String(S.rep[k]??'').replace(/[,\s]/g,'');return v===''?'':v===REP[k]||(+v===+REP[k]&&!isNaN(parseFloat(v)))?'good':'bad'};
 const rankOf=n=>RANKS.filter(r=>n>=r[0]).pop();
@@ -807,6 +861,7 @@ function render(){
   const cur=$('#map .cur');if(cur)cur.scrollIntoView({block:'nearest',inline:'center'});
   const n=doneCount(),r=rankOf(n);
   $('#rank').innerHTML=`<span class="em">${r[2]}</span>${r[1]} · ${n}/16`;
+  $('#whoChip').textContent=who?whoShort(who):'출근 전';
   bottom();save();
 }
 function bottom(){
@@ -896,19 +951,55 @@ function openGoal(part){
 $('#wholeBtn').onclick=()=>openGoal();
 document.querySelectorAll('[data-z]').forEach(b=>b.onclick=()=>{zoom=Math.max(50,Math.min(250,zoom+ +b.dataset.z));$('#goalImg').style.width=$('#goalHtml').style.width=zoom+'%'});
 document.addEventListener('click',e=>{if(e.target.closest('[data-close]')){e.target.closest('dialog').close()}});
-document.querySelectorAll('dialog').forEach(d=>d.addEventListener('click',e=>{if(e.target===d)d.close()}));
+document.querySelectorAll('dialog').forEach(d=>d.addEventListener('click',e=>{if(e.target===d&&(d.id!=='whoDlg'||who))d.close()}));
 $('#goalBtn').onclick=()=>openGoal();
 $('#helpBtn').onclick=()=>{$('#dlsHelp').innerHTML=DLS;$('#helpDlg').showModal()};
 $('#fsUp').onclick=()=>{S.fs=Math.min(20,S.fs+1);render()};
 $('#fsDown').onclick=()=>{S.fs=Math.max(14,S.fs-1);render()};
 function resetAll(){
-  if(!confirm('체크 · 결재 · 승진 · 지시 해독 · 보고 입력을 모두 지우고 처음부터 할까요?'))return;
-  S={cur:0,tick:{},done:{},fs:S.fs,bv:[],bq:[],rep:{}};
+  if(!who)return openWho();
+  if(!confirm(`${whoLabel(who)}의 체크 · 결재 · 승진 · 지시 해독 · 보고 입력을 모두 지우고 처음부터 할까요?`))return;
+  S={...fresh(),fs:S.fs};
   if($('#helpDlg').open)$('#helpDlg').close();
   go(0);toast('처음 상태로 돌아갔어요');
 }
 $('#resetBtn').onclick=$('#resetTop').onclick=resetAll;
+$('#wipeBtn').onclick=()=>{
+  const list=savedStudents();
+  if(!confirm(`이 PC에 저장된 학생 기록 ${list.length}명분을 모두 지울까요? 되돌릴 수 없어요.`))return;
+  list.forEach(id=>store.del(localStorage,KEY+id));store.del(localStorage,WHO);store.del(sessionStorage,WHO_TAB);
+  who=null;S=fresh();$('#helpDlg').close();go(0);openWho();toast('이 PC의 학생 기록을 모두 지웠어요');
+};
+
+/* 출근 카드 */
+const opts=(n,unit)=>`<option value="" disabled selected>선택</option>`+Array.from({length:n},(_,i)=>`<option value="${i+1}">${i+1}${unit}</option>`).join('');
+$('#wG').innerHTML=opts(3,'학년');$('#wC').innerHTML=opts(12,'반');$('#wN').innerHTML=opts(40,'번');
+const pickId=()=>{const g=$('#wG').value,c=$('#wC').value,n=$('#wN').value;return g&&c&&n?`${g}-${c}-${String(n).padStart(2,'0')}`:null};
+['#wG','#wC','#wN'].forEach(q=>$(q).onchange=()=>{const id=pickId();$('#whoGo').disabled=!id;$('#whoGo').textContent=id?`${whoLabel(id)} 출근하기 →`:'출근하기 →'});
+function openWho(){
+  const last=store.get(localStorage,WHO),list=savedStudents();
+  $('#whoLast').innerHTML=last&&list.includes(last)?`<button class="whocont" data-who="${last}">▶ ${whoLabel(last)}으로 이어하기<small>결재 ${doneCount(loadState(last))}/16 · 이 PC에 저장된 진도</small></button><p style="margin:0 0 10px;font-size:.82rem;color:var(--muted)">내가 아니면 아래에서 반·번호를 골라요.</p>`:'';
+  const others=list.filter(id=>id!==last);
+  $('#whoList').innerHTML=others.length?`<details class="wholist"><summary>이 PC에 저장된 다른 학생 (${others.length}명)</summary><div>${others.map(id=>`<button data-who="${id}">${whoShort(id)} · ${doneCount(loadState(id))}/16</button>`).join('')}</div></details>`:'';
+  ['#wG','#wC','#wN'].forEach(q=>$(q).selectedIndex=0);$('#whoGo').disabled=true;$('#whoGo').textContent='출근하기 →';
+  if(!$('#whoDlg').open)$('#whoDlg').showModal();
+}
+function useStudent(id,quiet){
+  who=id;S=loadState(id);
+  store.set(localStorage,WHO,id);store.set(sessionStorage,WHO_TAB,id);
+  if($('#whoDlg').open)$('#whoDlg').close();
+  go(S.cur);save();
+  if(!quiet)toast(`${whoLabel(id)} 업무일지를 열었어요`);
+}
+$('#whoDlg').addEventListener('click',e=>{const b=e.target.closest('[data-who]');if(b)useStudent(b.dataset.who)});
+$('#whoGo').onclick=()=>{const id=pickId();if(id)useStudent(id)};
+$('#whoDlg').addEventListener('cancel',e=>{if(!who)e.preventDefault()});   // 학생을 고르기 전에는 닫을 수 없음
+$('#whoBtn').onclick=openWho;
+
 render();
+const tabWho=store.get(sessionStorage,WHO_TAB);
+if(tabWho&&tabWho===store.get(localStorage,WHO))useStudent(tabWho,true);   // 같은 탭 새로고침: 바로 이어서
+else openWho();
 </script>
 </body>
 </html>
