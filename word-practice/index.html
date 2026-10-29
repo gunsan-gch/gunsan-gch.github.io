@@ -256,7 +256,7 @@ dialog::backdrop{background:rgba(17,24,39,.55)}
 .who>p{margin:0 0 14px;color:var(--muted);font-size:.9rem}
 .whocont{display:block;width:100%;padding:14px;border-radius:14px;background:var(--brand);color:#fff;font-weight:900;font-size:1.05rem;margin-bottom:14px}
 .whocont small{display:block;font-weight:600;opacity:.85;font-size:.8rem}
-.whosel{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:12px}
+.whosel{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin-bottom:12px}
 .whosel label{display:grid;gap:4px;font-size:.78rem;font-weight:800;color:var(--muted);text-align:left}
 .whosel select{font:inherit;font-size:1rem;font-weight:800;padding:9px 8px;border:1.5px solid #c9d1e0;border-radius:10px;background:#fff;color:var(--ink)}
 #whoGo{width:100%}
@@ -440,8 +440,7 @@ dialog::backdrop{background:rgba(17,24,39,.55)}
   <p>반과 번호를 고르면 이 PC에 내 진도가 따로 저장돼요.</p>
   <div id="whoLast"></div>
   <div class="whosel">
-    <label>학년<select id="wG" autofocus></select></label>
-    <label>반<select id="wC"></select></label>
+    <label>반 (1학년)<select id="wC" autofocus></select></label>
     <label>번호<select id="wN"></select></label>
   </div>
   <button class="bnext go" id="whoGo" disabled>출근하기 →</button>
@@ -973,15 +972,16 @@ $('#wipeBtn').onclick=()=>{
 
 /* 출근 카드 */
 const opts=(n,unit)=>`<option value="" disabled selected>선택</option>`+Array.from({length:n},(_,i)=>`<option value="${i+1}">${i+1}${unit}</option>`).join('');
-$('#wG').innerHTML=opts(3,'학년');$('#wC').innerHTML=opts(12,'반');$('#wN').innerHTML=opts(40,'번');
-const pickId=()=>{const g=$('#wG').value,c=$('#wC').value,n=$('#wN').value;return g&&c&&n?`${g}-${c}-${String(n).padStart(2,'0')}`:null};
-['#wG','#wC','#wN'].forEach(q=>$(q).onchange=()=>{const id=pickId();$('#whoGo').disabled=!id;$('#whoGo').textContent=id?`${whoLabel(id)} 출근하기 →`:'출근하기 →'});
+// 1학년 1~7반, 번호 1~20번
+$('#wC').innerHTML=opts(7,'반');$('#wN').innerHTML=opts(20,'번');
+const pickId=()=>{const c=$('#wC').value,n=$('#wN').value;return c&&n?`1-${c}-${String(n).padStart(2,'0')}`:null};
+['#wC','#wN'].forEach(q=>$(q).onchange=()=>{const id=pickId();$('#whoGo').disabled=!id;$('#whoGo').textContent=id?`${whoLabel(id)} 출근하기 →`:'출근하기 →'});
 function openWho(){
   const last=store.get(localStorage,WHO),list=savedStudents();
   $('#whoLast').innerHTML=last&&list.includes(last)?`<button class="whocont" data-who="${last}">▶ ${whoLabel(last)}으로 이어하기<small>결재 ${doneCount(loadState(last))}/16 · 이 PC에 저장된 진도</small></button><p style="margin:0 0 10px;font-size:.82rem;color:var(--muted)">내가 아니면 아래에서 반·번호를 골라요.</p>`:'';
   const others=list.filter(id=>id!==last);
   $('#whoList').innerHTML=others.length?`<details class="wholist"><summary>이 PC에 저장된 다른 학생 (${others.length}명)</summary><div>${others.map(id=>`<button data-who="${id}">${whoShort(id)} · ${doneCount(loadState(id))}/16</button>`).join('')}</div></details>`:'';
-  ['#wG','#wC','#wN'].forEach(q=>$(q).selectedIndex=0);$('#whoGo').disabled=true;$('#whoGo').textContent='출근하기 →';
+  ['#wC','#wN'].forEach(q=>$(q).selectedIndex=0);$('#whoGo').disabled=true;$('#whoGo').textContent='출근하기 →';
   if(!$('#whoDlg').open)$('#whoDlg').showModal();
 }
 function useStudent(id,quiet){
