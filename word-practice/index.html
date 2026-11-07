@@ -67,7 +67,7 @@ main:focus{outline:none}
 .lab .l1{background:#7c3aed}.lab .l2{background:var(--orange)}.lab .l3{background:var(--brand)}.lab .l4{background:var(--ok)}.lab .l5{background:var(--red)}
 .labn{font-weight:600;color:#98a2b3;letter-spacing:0}
 
-/* 클릭 순서 그림 */
+/* 클릭 순서 안내 */
 .flow{display:grid;gap:10px}
 .fp{border:1.5px solid #f5c2c2;background:#fffafa;border-radius:12px;padding:10px 12px}
 .fp h4{margin:0 0 8px;font-size:.9rem;display:flex;gap:7px;align-items:center}
@@ -155,6 +155,7 @@ main:focus{outline:none}
 .steps{list-style:none;margin:0;padding:0;display:grid;gap:8px}
 .step{display:flex;gap:11px;align-items:flex-start;padding:11px 12px;border-radius:12px;border:1.5px solid var(--line);background:#fff;cursor:pointer;transition:.15s;font-size:.97rem;user-select:none}
 .step:hover{border-color:#b9c7f5;background:#fafbff}
+.step:focus-visible{outline:3px solid #ffb020;outline-offset:2px}
 .step .box{flex:none;width:26px;height:26px;border-radius:8px;border:2px solid #b6bfd0;display:grid;place-items:center;font-weight:900;font-size:.85rem;color:#8a94a6;background:#fff;transition:.15s}
 .step.on{border-color:#9ddbb2;background:var(--ok-l)}
 .step.on .box{background:var(--ok);border-color:var(--ok);color:#fff}
@@ -163,11 +164,13 @@ main:focus{outline:none}
 .stepbody{list-style:none;margin:-2px 0 4px;padding:12px;border-radius:12px;background:#f5f8ff;border:1.5px solid #c7d4ff;display:grid;gap:10px;animation:open .2s ease-out}
 .stepbody .dlg{margin:0}
 .stepbody .card{box-shadow:none;margin:0}
-.stepbody .bodylab{margin:0;font-size:.78rem;font-weight:900;color:var(--brand-d)}
+.stepbody .bodyhead{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.stepbody .bodylab{flex:1;margin:0;font-size:.78rem;font-weight:900;color:var(--brand-d)}
+.stepbody .complete{justify-content:center}
 @keyframes open{from{opacity:0;transform:translateY(-4px)}}
 .step.cur{border-color:var(--brand);box-shadow:0 0 0 3px #dbe5ff}
-.step .peek{margin-left:auto;align-self:center;flex:none;padding:3px 9px;border-radius:8px;background:#eef2ff;color:var(--brand-d);font-size:.75rem;font-weight:800}
-.step .peek:hover{background:#dbe5ff}
+.step .peek,.stepbody .peek{margin-left:auto;align-self:center;flex:none;padding:3px 9px;border-radius:8px;background:#eef2ff;color:var(--brand-d);font-size:.75rem;font-weight:800}
+.step .peek:hover,.stepbody .peek:hover{background:#dbe5ff}
 .allvals{margin-top:12px;border-top:1px dashed var(--line);padding-top:8px}
 .allvals>summary{cursor:pointer;font-size:.85rem;font-weight:800;color:var(--muted);padding:4px 0}
 .allvals[open]>summary{margin-bottom:8px}
@@ -484,7 +487,7 @@ const M=[
       {t:'단 설정',tabs:['단'],rows:[['단 개수','2'],['간격','8mm'],['구분선','실선 0.12mm']]}],
  steps:[`이 창 ${K('Win+←')}, 한글 창 ${K('Win+→')} 로 화면 반씩 나누기`,
         `한글에서 <b>다른 이름으로 저장</b> → 내 이름으로 저장`,
-        `${K('F7')} 편집 용지 값이 아래 그림과 같은지 확인`,
+        `${K('F7')} 편집 용지 값이 아래 입력 내용과 같은지 확인`,
         `<b>쪽 → 다단 설정</b>: 2단 · 간격 8mm · 구분선 실선 0.12mm`],
  tip:'단축키가 안 먹으면? 먼저 <b>한글 창을 한 번 클릭</b>하세요!',
  help:[['타이핑 파일이 없어요','아래 <b>본문 원본 HWP</b>를 받아서 쓰세요.'],['이미 2단이에요','그럼 다시 나누지 말고 값만 확인!']],
@@ -504,7 +507,7 @@ const M=[
    ['#여백/캡션'],['바깥 여백 아래쪽','8mm'],
    ['#선'],['선','검정 · 실선 · 0.2mm',C.black],
    ['#채우기'],['면 색','초록 80% 밝게',C.green80]]}],
- steps:['<b>입력 → 글상자</b>로 문서 위쪽에 상자 그리기','아래 <b>제목 3줄 복사</b> → 상자 안에 붙여넣기','상자 <b>테두리</b>를 클릭 → 우클릭 → <b>개체 속성</b>','네 탭의 값을 아래 그림대로 입력 → 설정'],
+ steps:['<b>입력 → 글상자</b>로 문서 위쪽에 상자 그리기','아래 <b>제목 3줄 복사</b> → 상자 안에 붙여넣기','상자 <b>테두리</b>를 클릭 → 우클릭 → <b>개체 속성</b>','네 탭의 값을 아래 입력 내용대로 입력 → 설정'],
  tip:'상자 안 글자 말고 <b>테두리</b>를 클릭해야 개체 속성이 나와요.',
  help:[['가로·세로 위치가 회색이에요','<b>글자처럼 취급</b>을 먼저 끄세요.'],['초록 80% 밝게가 어디 있어요?','색 고르기에서 <b>기본</b> 테마 → 초록 아래 칸에 마우스를 올리면 “80% 밝게”가 떠요.']],
  extra:'title'},
@@ -642,7 +645,7 @@ const QS=[
  {q:'네, 알겠습니다!',a:'바로 “네” 하면 나중에 다시 만들 수도 있어요. <b>먼저 물어봐요!</b>',ok:0},
  {q:'보고는 어떤 형식으로 할까요?',a:'<b>PPT 1장</b>이요. 차트 + 핵심 숫자 3줄, 말로는 <b>30초</b>!',ok:1}];
 const WO=[['무엇을',0,'자급제 폰 시장 자료 · 한글 · A4 세로 1쪽<br><small style="font-weight:600">기준: 세부지시사항 16개 (이 페이지 1~16번)</small>'],['누구에게',2,'영업팀 회의 · 표와 차트 필수'],['언제까지',3,'수업 끝나기 10분 전'],['어떻게 보고',5,'PPT 1장 (차트 + 숫자 3줄) · 30초 말하기']];
-/* 단계마다 그 단계 바로 아래에 펼칠 그림 (미션 번호: 단계별 목록) */
+/* 단계마다 그 단계 바로 아래에 펼칠 입력 내용 (미션 번호: 단계별 목록) */
 const SHOW={
   1:[[],[],['d0'],['d1']],
   2:[[],['d0'],['d0'],['d0']],
@@ -665,8 +668,22 @@ const SHOW={
 /* 업무 보고: 숫자 칸 정답 */
 const REP={a:'38.33',b:'53.49',c:'6.89',d:'9.54',e:'556',f:'560.7'};
 
-/* 어려운 단계(6·10·13)의 클릭 순서 그림 — 실제 한글 화면을 단순화한 것 */
+/* 어려운 단계(6·10·13)의 클릭 순서 안내 — 실제 한글 화면을 단순화한 것 */
 const tbl=(rows,cls='')=>`<table class="mtab ${cls}">${rows.map(r=>`<tr class="${r}">${'<td></td>'.repeat(4)}</tr>`).join('')}</table>`;
+function styleAddHTML(n=0){
+  const [name,kind,how]=[
+    ['표제목','문단','문단 모양: <b>가운데</b> → ⑤ 글자 모양: <b>한컴돋움 · 진하게</b>'],
+    ['참고문헌 1','문단','문단 모양: <b>내어쓰기 20pt</b>'],
+    ['참고문헌 2','글자','글자 모양: <b>기울임</b>']][n],char=kind==='글자';
+  return `<div class="fp"><h4><b>B</b>${name} · ${kind} 새로 만들기</h4>
+  <div class="mw"><div class="mt">스타일 ${k('F6')}</div><div class="mb"><span class="mbtn tgt" data-p="1">＋ 스타일 추가하기</span></div></div>
+  <div class="dn">▼</div>
+  <div class="mw"><div class="mt">스타일 추가하기</div><div class="mb mcol">
+    <div class="mrow">스타일 이름 <span class="minp tgt" data-p="2">${name}</span></div>
+    <div class="mrow">스타일 종류 <span class="tgt" data-p="3"><span class="rad ${char?'':'on'}"></span>문단 <span class="rad ${char?'on':''}"></span>글자</span></div>
+    <div class="mrow">${char?'':'<span class="mbtn tgt" data-p="4">문단 모양…</span>&nbsp;'}<span class="mbtn ${n===0||char?'tgt':''}" ${n===0?'data-p="5"':char?'data-p="4"':''}>글자 모양…</span>&nbsp;<span class="mbtn pri tgt" data-p="${n===0?6:5}">추가</span></div></div></div>
+  <p>② 이름 <b>${name}</b> · ③ 종류 <b>${kind}</b><br>④ ${how} → ${n===0?'⑥':'⑤'} 추가</p></div>`;
+}
 const FLOW={
 6:`<div class="fp"><h4><b>A</b>개요 1 · 개요 2 고치기</h4>
   <div class="mw"><div class="mt">스타일 ${k('F6')}</div><div class="mb">
@@ -677,14 +694,7 @@ const FLOW={
     <div class="mrow">스타일 이름 <span class="minp">개요 1</span></div>
     <div class="mrow"><span class="mbtn tgt" data-p="3">문단 모양…</span>&nbsp;<span class="mbtn tgt" data-p="4">글자 모양…</span>&nbsp;<span class="mbtn pri tgt" data-p="5">설정</span></div></div></div>
   <p>③ 문단 모양: 왼쪽 여백 <b>0pt</b> → ④ 글자 모양: <b>한컴 윤고딕 740 · 11pt · 진하게</b> → ⑤ 설정<br>개요 2도 똑같이 (왼쪽 여백 <b>15pt</b>만 바꾸기)</p></div>
-<div class="fp"><h4><b>B</b>표제목 · 참고문헌 1 · 2 새로 만들기</h4>
-  <div class="mw"><div class="mt">스타일 ${k('F6')}</div><div class="mb"><span class="mbtn tgt" data-p="1">＋ 스타일 추가하기</span></div></div>
-  <div class="dn">▼</div>
-  <div class="mw"><div class="mt">스타일 추가하기</div><div class="mb mcol">
-    <div class="mrow">스타일 이름 <span class="minp tgt" data-p="2">표제목</span></div>
-    <div class="mrow">스타일 종류 <span class="tgt" data-p="3"><span class="rad on"></span>문단 <span class="rad"></span>글자</span></div>
-    <div class="mrow"><span class="mbtn tgt" data-p="4">문단 모양…</span>&nbsp;<span class="mbtn">글자 모양…</span>&nbsp;<span class="mbtn pri tgt" data-p="5">추가</span></div></div></div>
-  <p>참고문헌 2만 ③에서 <b>글자</b>를 고르세요!</p></div>
+${styleAddHTML()}
 <div class="fp"><h4><b>C</b>문단에 적용하기</h4>
   <div class="mrow">적용할 문단 클릭 → ${k('F6')} → 목록에서 스타일 클릭 → <span class="mbtn pri">설정</span></div>
   <p>참고문헌 2는 <i>Marketer, 13</i> 글자만 드래그한 뒤 적용!</p></div>`,
@@ -780,27 +790,28 @@ function fieldVal(v,sw){
 }
 function dlgHTML(d){
   const on=d.on||d.tabs.slice(0,1);
-  return `<div class="dlg" role="img" aria-label="${d.t} 설정 창 그림"><div class="bar">${d.t}<span>✕</span></div>
+  return `<div class="dlg" role="img" aria-label="${d.t} 입력 내용"><div class="bar">${d.t}<span>✕</span></div>
   ${d.tabs.length?`<div class="tabs">${d.tabs.map(t=>`<span class="tab ${on.includes(t)?'on':''}">${t}</span>`).join('')}</div>`:''}
   <div class="body">${d.rows.map(r=>r[0][0]==='#'?`<div class="sec">${r[0].slice(1)}</div>`:`<div class="fld"><span class="fl">${r[0]}</span><span class="fv">${fieldVal(r[1],r[2])}</span></div>`).join('')}</div>
   <div class="foot"><span>${d.btn||'설정'}</span><span>취소</span></div></div>`;
 }
 const flowPanels=cond=>FLOW[cond]?FLOW[cond].split('<div class="fp">').slice(1).map(x=>'<div class="fp">'+x):[];
-function panelHTML(m,tok){
+function panelHTML(m,tok,j){
   if(tok==='x')return extraHTML(m.extra);
+  if(m.cond===6&&tok==='f1')return styleAddHTML(j-2);
   const n=+tok.slice(1);
   return tok[0]==='d'?dlgHTML(m.dlg[n]):flowPanels(m.cond)[n]||'';
 }
-let peek=null;   // 다른 단계 그림을 잠깐 펼쳐 볼 때의 단계 번호
-const activeStep=(i,m)=>{const t=ticks(i),show=SHOW[i]||[];
+let peek=null,folded=false;   // 미리 보는 단계 번호 · 지금 단계의 입력 내용을 접었는지
+const activeStep=(i,m)=>{const t=ticks(i);
   if(peek!==null&&peek<m.steps.length)return peek;
   const j=m.steps.findIndex((_,k)=>!t[k]);return j};
 function stepsHTML(i,m){
   const t=ticks(i),show=SHOW[i]||[],a=activeStep(i,m);
   const body=j=>{const toks=show[j]||[];if(!toks.length)return '';
     const hasF=toks.some(x=>x[0]==='f');
-    return `<li class="stepbody" aria-label="${j+1}번 단계 그림"><p class="bodylab">▲ ${j+1}번 단계 그림${hasF?' · 실제 화면을 단순화한 그림':''} — 노란 칸 값으로 설정</p>${toks.map(x=>panelHTML(m,x)).join('')}</li>`};
-  return `<ol class="steps">${m.steps.map((s,j)=>`<li class="step ${t[j]?'on':''} ${j===a?'cur':''}" data-step="${j}" role="checkbox" aria-checked="${!!t[j]}" tabindex="0"><span class="box">${t[j]?'✓':j+1}</span><span class="tx">${s}</span>${j!==a&&(show[j]||[]).length?`<button class="peek" data-peek="${j}" aria-label="${j+1}번 단계 그림 보기">그림</button>`:''}</li>${j===a?body(j):''}`).join('')}</ol>
+    return `<li class="stepbody" aria-label="${j+1}번 단계 입력 내용"><div class="bodyhead"><p class="bodylab">▲ ${j+1}번 단계 입력 내용${hasF?' · 클릭 순서':''} — 노란 칸 값으로 설정</p><button class="peek" data-hide="${j}" aria-expanded="true" aria-label="${j+1}번 단계 입력 내용 숨기기">숨기기 ▴</button></div>${toks.map(x=>panelHTML(m,x,j)).join('')}${!t[j]?`<button class="btn complete" data-complete="${j}">✓ 이 단계 완료</button>`:''}</li>`};
+  return `<ol class="steps">${m.steps.map((s,j)=>`<li class="step ${t[j]?'on':''} ${j===a?'cur':''}" data-step="${j}" role="checkbox" aria-checked="${!!t[j]}" tabindex="0"><span class="box">${t[j]?'✓':j+1}</span><span class="tx">${s}</span>${(j!==a||folded)&&(show[j]||[]).length?`<button class="peek" data-peek="${j}" aria-expanded="false" aria-label="${j+1}번 단계 입력 내용 보기">입력 내용 ▾</button>`:''}</li>${j===a&&!folded?body(j):''}`).join('')}</ol>
   <p class="stepnote">${m.note||'한글에서 한 동작 하고 → 여기서 한 줄 체크!'}</p>`;
 }
 const YEOM={base:'img/avatar-yeom.webp',cheer:'img/avatar-yeom-cheer.webp',worry:'img/avatar-yeom-worry.webp'};
@@ -890,11 +901,11 @@ function render(){
     <div><h1>${m.cond?`${m.icon} `:''}${m.title}</h1><p>${m.sub}</p></div>${done?'<span class="tag">✔ 결재 완료</span>':''}</section>`;
   const left=`<div class="card ga">${imgs?`<p class="lab"><i class="l1">🖼</i>${m.goalLabel||(m.cond?'완성하면 이렇게!':'오늘 완성할 문서')}</p><div class="goal ${m.tall?'tall':''}">${imgs}</div>`:''}${mascot(m.tip)}
     ${m.paths.length?`<p class="lab" style="margin-top:16px"><i class="l2">🧭</i>어디서? (${m.app||'한글'} 메뉴)</p><div class="paths">${m.paths.map(pathHTML).join('')}</div>`:''}</div>`;
-  const flow=FLOW[m.cond]?`<p class="lab"><i class="l5">🖱</i>클릭 순서 <span class="labn">실제 화면을 단순화한 그림</span></p><div class="flow">${FLOW[m.cond]}</div>`:'';
-  const vals=m.dlg.length?`<p class="lab" ${flow?'style="margin-top:16px"':''}><i class="l3">✎</i>설정값 <span class="labn">(노란 칸)</span></p>${m.dlg.map(dlgHTML).join('')}`:'';
+  const flow=FLOW[m.cond]?`<p class="lab"><i class="l5">🖱</i>클릭 순서 <span class="labn">실제 화면을 단순화한 안내</span></p><div class="flow">${FLOW[m.cond]}</div>`:'';
+  const vals=m.dlg.length?`<p class="lab" ${flow?'style="margin-top:16px"':''}><i class="l3">✎</i>입력 내용 <span class="labn">(노란 칸)</span></p>${m.dlg.map(dlgHTML).join('')}`:'';
   const inlineX=(SHOW[i]||[]).some(x=>x.includes('x'));   // 부가 자료를 단계 아래에 펼치면 왼쪽에서는 뺌
-  const todo=`<div class="card gb"><p class="lab"><i class="l4">✓</i>지금 할 일 · 한 줄씩 체크 <span class="labn">지금 단계 바로 아래에 그림이 펼쳐져요</span></p>${stepsHTML(i,m)}
-    ${flow||vals?`<details class="allvals"><summary>📋 이 조건의 설정값 한눈에 보기</summary>${flow}${vals}</details>`:''}</div>`;
+  const todo=`<div class="card gb"><p class="lab"><i class="l4">✓</i>지금 할 일 · 한 줄씩 체크 <span class="labn">지금 단계 바로 아래에 입력 내용이 펼쳐져요</span></p>${stepsHTML(i,m)}
+    ${flow||vals?`<details class="allvals"><summary>📋 이 조건의 입력 내용 한눈에 보기</summary>${flow}${vals}</details>`:''}</div>`;
   const setv='';
   const help=m.help&&m.help.length?`<details class="card help gh"><summary>막혔어요</summary>${m.help.map(h=>`<div class="qa"><b>${h[0]}</b><span>${h[1]}</span></div>`).join('')}</details>`:'';
   html+=`<div class="grid"><div class="col">${left}${m.extra&&!inlineX?extraHTML(m.extra):''}${help}</div><div class="col">${todo}${setv}</div></div>`;
@@ -921,14 +932,15 @@ function bottom(){
   else if(all){nb.textContent=m.next||'결재 받기 →';nb.className='bnext go'}
   else{nb.textContent='건너뛰기 →';nb.className='bnext'}
 }
-/* 지금 단계와 그 그림이 화면에 보이도록 (위아래로 찾지 않게) */
-function focusStep(){
-  const cur=$('.step.cur');if(!cur)return;
+/* 입력 내용이 보이도록 스크롤하고, 다시 그린 단계 줄에 키보드 포커스 복원 */
+function focusStep(j){
+  const cur=$('.step.cur')||(j!=null?$(`.step[data-step="${j}"]`):null);if(!cur)return;
+  cur.focus({preventScroll:true});
   const body=cur.nextElementSibling&&cur.nextElementSibling.classList.contains('stepbody')?cur.nextElementSibling:null;
   const top=cur.getBoundingClientRect().top,bottomEdge=(body||cur).getBoundingClientRect().bottom,head=$('.top').offsetHeight+8,foot=$('.bottom').offsetHeight+8;
   if(top<head||bottomEdge>innerHeight-foot)window.scrollBy({top:top-head,behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth'});
 }
-function go(i){S.cur=Math.min(M.length-1,Math.max(0,i));peek=null;render();window.scrollTo({top:0});$('#main').focus({preventScroll:true})}
+function go(i){S.cur=Math.min(M.length-1,Math.max(0,i));peek=null;folded=false;render();window.scrollTo({top:0});$('#main').focus({preventScroll:true})}
 function toast(s){const t=$('#toast');t.textContent=s;t.classList.remove('hidden');clearTimeout(toast.t);toast.t=setTimeout(()=>t.classList.add('hidden'),2000)}
 function confetti(n=70){
   if(matchMedia('(prefers-reduced-motion: reduce)').matches)return;
@@ -939,11 +951,13 @@ function stamp(text,sub){const s=document.createElement('div');s.className='stam
 
 $('#main').addEventListener('click',e=>{
   const pk=e.target.closest('[data-peek]');
-  if(pk){peek=+pk.dataset.peek;render();focusStep();return}
-  const st=e.target.closest('[data-step]');
-  if(st){const t=ticks(S.cur),j=+st.dataset.step;t[j]=!t[j];peek=null;
-    if(!t[j]&&S.done[S.cur]){delete S.done[S.cur];render();toast('체크를 풀어서 결재가 취소됐어요');return}
-    render();focusStep();return}
+  if(pk){peek=+pk.dataset.peek;folded=false;render();focusStep();return}
+  const hd=e.target.closest('[data-hide]');
+  if(hd){const j=+hd.dataset.hide;peek=null;folded=j===activeStep(S.cur,M[S.cur]);render();focusStep(j);return}
+  const st=e.target.closest('[data-step], [data-complete]');
+  if(st){const t=ticks(S.cur),j=+(st.dataset.step??st.dataset.complete);t[j]=!t[j];peek=null;folded=false;
+    if(!t[j]&&S.done[S.cur]){delete S.done[S.cur];toast('체크를 풀어서 결재가 취소됐어요')}
+    render();focusStep(j);return}
   const g=e.target.closest('[data-goal]');if(g){openGoal(g.dataset.goal);return}
   const cp=e.target.closest('[data-copy]');if(cp){copy(cp.dataset.copy);return}
   const sp=e.target.closest('.stamps span');if(sp){go([...sp.parentNode.children].indexOf(sp)+2);return}
@@ -968,7 +982,7 @@ function slideHTML(done){
 function repText(){const v=k=>S.rep[k]||'___';return `① 자급제 사용자 ${v('a')} → ${v('b')} 십만 대\n② 자급제 비중 ${v('c')}% → ${v('d')}%\n③ 전체 가입자 ${v('e')} → ${v('f')} 십만 대\n결론: ${v('g')}`}
 function scriptText(){const v=k=>S.rep[k]||'___',g=(S.rep.g||'(결론)').replace(/[.\s]+$/,'');
   return `팀장님, 자급제 폰 시장 자료 보고드립니다.\n결론부터 말씀드리면, ${g}.\n근거는 세 가지입니다.\n첫째, 자급제 사용자가 ${v('a')}에서 ${v('b')}십만 대로 늘었습니다.\n둘째, 자급제 비중이 ${v('c')}%에서 ${v('d')}%로 커졌습니다.\n셋째, 전체 가입자는 ${v('e')}에서 ${v('f')}십만 대로 거의 그대로입니다.\n이상입니다.`}
-$('#main').addEventListener('keydown',e=>{const st=e.target.closest('[data-step]');if(st&&(e.key===' '||e.key==='Enter')){e.preventDefault();st.click()}});
+$('#main').addEventListener('keydown',e=>{const st=e.target.closest('[data-step]');if(st&&e.target===st&&(e.key===' '||e.key==='Enter')){e.preventDefault();st.click()}});
 $('#map').addEventListener('click',e=>{const b=e.target.closest('[data-go]');if(b)go(+b.dataset.go)});
 $('#prev').onclick=()=>go(S.cur-1);
 let busy=false;
