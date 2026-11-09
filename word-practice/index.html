@@ -797,6 +797,7 @@ function loadState(id){
   let s=fresh();
   try{const p=JSON.parse(store.get(localStorage,KEY+id)||'null');if(p&&typeof p==='object')s={...s,...p}}catch(e){}
   s.cur=Math.min(M.length-1,Math.max(0,+s.cur||0));
+  M.forEach((m,i)=>{if(s.done[i])s.tick[i]=m.steps.map(()=>true)});   // 단계가 늘어도 결재받은 조건은 완료 상태 유지
   return s;
 }
 let who=null,S=fresh();
@@ -1066,7 +1067,7 @@ $('#fsDown').onclick=()=>{S.fs=Math.max(14,S.fs-1);render()};
 function resetAll(){
   if(!who)return openWho();
   if(!confirm(`${whoLabel(who)}의 체크 · 결재 · 승진 · 지시 해독 · 보고 입력을 모두 지우고 처음부터 할까요?`))return;
-  S={...fresh(),fs:S.fs};
+  S={...fresh(),fs:S.fs};quiz=null;
   if($('#helpDlg').open)$('#helpDlg').close();
   go(0);toast('처음 상태로 돌아갔어요');
 }
@@ -1075,7 +1076,7 @@ $('#wipeBtn').onclick=()=>{
   const list=savedStudents();
   if(!confirm(`이 PC에 저장된 학생 기록 ${list.length}명분을 모두 지울까요? 되돌릴 수 없어요.`))return;
   list.forEach(id=>store.del(localStorage,KEY+id));store.del(localStorage,WHO);store.del(sessionStorage,WHO_TAB);
-  who=null;S=fresh();$('#helpDlg').close();go(0);openWho();toast('이 PC의 학생 기록을 모두 지웠어요');
+  who=null;S=fresh();quiz=null;$('#helpDlg').close();go(0);openWho();toast('이 PC의 학생 기록을 모두 지웠어요');
 };
 
 /* 출근 카드 */
@@ -1093,7 +1094,7 @@ function openWho(){
   if(!$('#whoDlg').open)$('#whoDlg').showModal();
 }
 function useStudent(id,quiet){
-  who=id;S=loadState(id);
+  who=id;S=loadState(id);quiz=null;
   store.set(localStorage,WHO,id);store.set(sessionStorage,WHO_TAB,id);
   if($('#whoDlg').open)$('#whoDlg').close();
   go(S.cur);save();
@@ -1119,7 +1120,7 @@ const EXAM=[
  ['표','크기: 너비 78~80mm, 높이 33~34mm · 위치: 글자처럼 취급\n모든 셀의 안 여백: 왼쪽·오른쪽 2mm · 전체 행: 셀 높이를 같게\n테두리: 안쪽 실선 0.12mm, 바깥 위·아래 실선 0.4mm, 바깥 왼쪽·오른쪽 없음, 합계 행 위쪽 이중 실선 0.5mm\n제목 행: 보라 25% 어둡게, 한컴 윤고딕 760, 하양\n합계 행: 하양 15% 어둡게, 진하게 · 문단 정렬: 가운데',11],
  ['블록 계산식','표의 합계 행에 블록 계산식을 이용하여 블록 합계 산출',12],
  ['캡션','표 아래에 삽입 후 오른쪽 정렬',13],
- ['차트','모양: 이중 축 혼합형(묶은 세로 막대형, 표식이 있는 꺾은선형)\n크기: 너비 80mm, 높이 75mm, 크기 고정\n위치: 자리 차지, 가로-단의 가운데 0mm, 세로-문단의 위 0mm\n바깥 여백: 위쪽 5mm, 아래쪽 8mm\n값 축, 항목 축, 보조 값 축, 범례 글꼴: 9pt · 표의 아래 단락에 배치',14],
+ ['차트','모양: 이중 축 혼합형(묶은 세로 막대형, 표식이 있는 꺾은선형)\n크기: 너비 80mm, 높이 75mm, 크기 고정\n위치: 자리 차지, 가로-단의 가운데 0mm, 세로-문단의 위 0mm\n바깥 여백: 위쪽 5mm, 아래쪽 8mm\n값 축, 항목 축, 보조 값 축, 범례 글꼴: 9pt · 표의 아래 단락에 배치\n※ 차트 종류 변경과 계열 속성 설정으로 혼합형 차트를 구성',14],
  ['쪽 번호','번호 위치: 오른쪽 아래, 번호 모양: 아라비아 숫자, 줄표 넣기, 시작 번호 지정(3)',15],
  ['머리말','한컴 윤고딕 740, 10pt, 진하게, 보라 25% 어둡게, 오른쪽 정렬',16],
  ['꼬리말','한컴산뜻돋움, 10pt, 진하게, 하늘색 25% 어둡게, 가운데 정렬',17]];
@@ -1130,9 +1131,9 @@ let mtab='info',quiz=null,examTimer=null;
 const shuffle=a=>{a=[...a];for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a};
 const mmss=ms=>{const t=Math.max(0,Math.floor(ms/1000));return String(Math.floor(t/60)).padStart(2,'0')+':'+String(t%60).padStart(2,'0')};
 function infoHTML(){return `<div class="minfo">
-  <section><h3>🕒 시험은 이렇게 나와요</h3><ul><li>워드프로세서 실기 · <b>30분</b> · 한글 2022</li><li>문서 한 쪽을 주고 <b>세부 지시사항</b>(이 페이지의 1~16번 같은 것)대로 편집</li><li>본문은 입력되어 있고, <b>편집 기능</b>을 정확히 쓰는지 봐요</li><li>파일 이름·저장 위치를 바꾸면 <b>실격</b></li></ul></section>
+  <section><h3>🕒 시험은 이렇게 나와요</h3><ul><li>워드프로세서 실기 · <b>30분</b> · 한글 2022</li><li>문서 한 쪽을 주고 <b>세부 지시사항</b>(이 페이지의 1~16번 같은 것)대로 편집</li><li>실제 시험은 <b>본문 입력 + 편집</b>을 모두 해요. 이 페이지는 편집 연습용이라 본문을 미리 넣어 뒀어요</li><li>파일 이름·저장 위치를 바꾸면 <b>실격</b></li></ul></section>
   <section><h3>📐 문제지 첫 장 · 공통 지시</h3><ul><li>용지 A4 세로 · 왼쪽·오른쪽 20mm · 위·아래·머리말·꼬리말 10mm · 기타 0mm</li><li>본문 <b>2단</b> · 간격 8mm · 구분선 실선 0.12mm</li><li>색은 <b>‘기본’ 테마</b> 색상표에서</li><li>지시가 없는 것은 <b>기본값 그대로</b> (마음대로 꾸미지 않기)</li></ul></section>
-  <section><h3>🔢 표 정렬 규칙 (외우기!)</h3><ul><li>제목 행 · ‘합계’ 칸 → <b>가운데</b></li><li>길이가 <b>같은</b> 글자·숫자 → <b>가운데</b></li><li>길이가 <b>다른 숫자</b> → <b>오른쪽</b></li><li>길이가 <b>다른 글자</b> → <b>왼쪽</b></li></ul></section>
+  <section><h3>🔢 표 정렬 규칙 (외우기!)</h3><ul><li>제목 행 · ‘합계’ 칸 → <b>가운데</b></li><li>나머지는 <b>열(세로줄)마다</b> 따로 비교해요</li><li>길이가 <b>같은</b> 글자·숫자 → <b>가운데</b></li><li>길이가 <b>다른 숫자</b> → <b>오른쪽</b></li><li>길이가 <b>다른 글자</b> → <b>왼쪽</b></li></ul></section>
   <section><h3>⚠️ 자주 틀리는 곳</h3><ul><li>스페이스바로 위치 맞추기 → <b>여백 숫자</b>로</li><li>날짜·쪽 번호·각주 번호를 <b>직접 타이핑</b></li><li>색에서 ‘50% 어둡게’와 ‘25% 어둡게’ 혼동</li><li>글자 스타일(참고문헌 2)을 문단 전체에 적용</li><li>합계 위 이중선을 먼저 해서 덮어씀</li><li>문제지의 <b>지시사항 글자</b>를 문서에 입력</li></ul></section>
   <section class="wide"><h3>🏆 마스터 순서</h3><ul><li><b>1회차</b>: 1~16번을 입력 내용을 보면서 따라 하기</li><li><b>2회차</b>: ↺ 초기화 후, 입력 내용을 <b>숨기고</b> 막힐 때만 펴 보기</li><li><b>3회차</b>: ② 단축키 퀴즈 10점 → ③ 실전 모의를 <b>30분 안에, 힌트 0번</b></li></ul></section></div>
   <p class="mnote">시험 형식은 이 페이지의 문제 PDF(대한상공회의소 워드프로세서 실기 B형) 기준이에요. 실제 시험은 문서와 숫자가 바뀌어 나와요.</p>`}
@@ -1147,12 +1148,12 @@ function startQuiz(){const pick=shuffle(KEYS).slice(0,QUIZ_N);
   quiz={i:0,score:0,miss:[],picked:null,qs:pick.map(([f,a])=>({f,a,opts:shuffle([a,...shuffle(KEYS.map(x=>x[1]).filter(x=>x!==a)).slice(0,3)])}))}}
 function examHTML(){
   const e=S.exam;
-  if(!e)return `<div class="qcard"><p class="qq">실전 모의 30분</p><p style="text-align:left">① 한글에서 <b>본문 원본</b>을 새로 열고 다른 이름으로 저장해요.<br>② 시작을 누르면 <b>시험지의 지시사항만</b> 보여요. 입력 내용·그림은 없어요.<br>③ 끝낸 항목을 체크해요. 막히면 <b>힌트</b>(그 조건 화면)를 볼 수 있지만 기록에 남아요.<br>④ 목표: <b>30분 안에 16개, 힌트 0번</b></p>
-    ${S.examLog.length?`<p><b>지난 기록</b><br>${S.examLog.slice(-3).map(x=>`${x.d} · ${x.n}/16 · ${mmss(x.ms)} · 힌트 ${x.h}번`).join('<br>')}</p>`:''}<button class="bnext go" data-exam="start">시작 →</button></div>`;
+  if(!e)return `<div class="qcard"><p class="qq">실전 모의 30분</p><p style="text-align:left">① 한글에서 <b>본문 원본</b>을 새로 열고 다른 이름으로 저장해요.<br>② 시작을 누르면 <b>시험지의 지시사항만</b> 보여요(색의 RGB 값만 줄였어요). 입력 내용·그림은 없어요.<br>③ 끝낸 항목을 체크해요. 막히면 <b>힌트</b>(그 조건 화면)를 볼 수 있지만 기록에 남아요.<br>④ 30분이 지나도 계속할 수 있어요(시계가 빨간색으로 넘은 시간을 보여 줘요).<br>⑤ 목표: <b>30분 안에 16개, 힌트 0개</b></p>
+    ${S.examLog.length?`<p><b>지난 기록</b><br>${S.examLog.slice(-3).map(x=>`${x.d} · ${x.n}/16 · ${mmss(x.ms)} · 힌트 본 조건 ${x.h}개`).join('<br>')}</p>`:''}<button class="bnext go" data-exam="start">시작 →</button></div>`;
   const n=e.c.filter(Boolean).length,h=e.h.filter(Boolean).length,ms=(e.end||Date.now())-e.start,left=30*60e3-ms;
-  return `<div class="examhead"><span class="timer ${left<0?'late':''}" id="examClock">${left<0?'+'+mmss(-left):mmss(left)}</span><span><b>${n}/16</b> 완료 · 힌트 ${h}번</span>
+  return `<div class="examhead"><span class="timer ${left<0?'late':''}" id="examClock">${left<0?'+'+mmss(-left):mmss(left)}</span><span><b>${n}/16</b> 완료 · 힌트 본 조건 ${h}개</span>
     <span style="margin-left:auto">${e.end?'<button class="btn" data-exam="reset">새로 하기</button>':'<button class="btn" data-exam="finish">제출하기</button> <button class="btn" data-exam="reset" style="background:#f1f3f8;color:#475467">그만두기</button>'}</span></div>
-  ${e.end?`<div class="exres"><b>${n===16&&left>=0&&h===0?'🏆 마스터! 30분 안에 힌트 없이 다 했어요.':n===16&&left>=0?'👍 시간 안에 완성! 다음엔 힌트 없이 도전해요.':n===16?'✅ 다 했어요. 다음엔 30분 안에 도전!':'💪 '+(16-n)+'개가 남았어요. 노란 항목부터 다시 연습해요.'}</b><br>걸린 시간 ${mmss(ms)} · 완료 ${n}/16 · 힌트 ${h}번</div>`:`<p class="mnote">공통: A4 세로, 왼쪽·오른쪽 20mm, 위·아래·머리말·꼬리말 10mm, 2단(간격 8mm, 구분선 실선 0.12mm)부터 맞추고 시작해요.</p>`}
+  ${e.end?`<div class="exres"><b>${n===16&&left>=0&&h===0?'🏆 마스터! 30분 안에 힌트 없이 다 했어요.':n===16&&left>=0?'👍 시간 안에 완성! 다음엔 힌트 없이 도전해요.':n===16?'✅ 다 했어요. 다음엔 30분 안에 도전!':'💪 '+(16-n)+'개가 남았어요. 노란 항목부터 다시 연습해요.'}</b><br>걸린 시간 ${mmss(ms)} · 완료 ${n}/16 · 힌트 본 조건 ${h}개</div>`:`<p class="mnote">공통: A4 세로, 왼쪽·오른쪽 20mm, 위·아래·머리말·꼬리말 10mm, 2단(간격 8mm, 구분선 실선 0.12mm)부터 맞추고 시작해요.</p>`}
   <ol class="exlist">${EXAM.map((x,j)=>`<li class="${e.c[j]?'ok':e.h[j]?'hint':''}"><input type="checkbox" data-ex="${j}" ${e.c[j]?'checked':''} ${e.end?'disabled':''} aria-label="${j+1}번 ${x[0]} 완료"><span><b class="t">${j+1}. ${x[0]}</b><span class="d">${esc(x[1])}</span></span><button class="peek" data-exhint="${j}">${e.h[j]?'힌트 봄':'힌트'}</button></li>`).join('')}</ol>`}
 function renderMaster(){
   document.querySelectorAll('[data-mt]').forEach(b=>b.classList.toggle('on',b.dataset.mt===mtab));
