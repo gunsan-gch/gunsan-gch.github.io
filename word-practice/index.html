@@ -36,6 +36,36 @@ b{font-weight:800}
 .tbtn{padding:7px 11px;border-radius:10px;font-size:.85rem;font-weight:700;background:#f1f3f8;white-space:nowrap}
 .tbtn:hover{background:#e6eaf3}
 .tbtn.reset{background:#fdecec;color:#b42318}
+.tbtn.master{background:#ede9fe;color:#5b21b6}
+.mtabsbar{display:flex;gap:6px;padding:10px 16px 0;position:sticky;top:53px;background:#fff;z-index:2;border-bottom:1px solid var(--line)}
+.mtabsbar button{padding:9px 12px;border-radius:10px 10px 0 0;font-weight:800;font-size:.9rem;color:var(--muted)}
+.mtabsbar button.on{background:#ede9fe;color:#5b21b6}
+.minfo{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.minfo section{border:1px solid var(--line);border-radius:12px;padding:12px 14px}
+.minfo h3{margin:0 0 6px;font-size:.98rem}
+.minfo ul{margin:0;padding-left:18px;font-size:.9rem;line-height:1.7}
+.minfo .wide{grid-column:1/-1}
+.mnote{font-size:.8rem;color:var(--muted);margin:10px 0 0}
+.qcard{max-width:520px;margin:0 auto;text-align:center}
+.qcard .qn{font-size:.82rem;font-weight:800;color:var(--muted)}
+.qcard .qq{font-size:1.35rem;font-weight:900;margin:8px 0 14px;line-height:1.4}
+.qopts{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.qopt{padding:14px 10px;border:1.5px solid var(--line);border-radius:12px;background:#fff;font-weight:800}
+.qopt:hover:not(:disabled){border-color:#b9c7f5;background:#fafbff}
+.qopt.right{background:var(--ok-l);border-color:var(--ok);color:#2f6b45}
+.qopt.wrong{background:#fdecec;border-color:var(--red);color:#b42318}
+.qfb{min-height:1.6em;margin:12px 0;font-weight:700}
+.examhead{display:flex;align-items:center;gap:12px;flex-wrap:wrap;position:sticky;top:96px;background:#fff;padding:8px 0;z-index:1}
+.timer{font-size:1.7rem;font-weight:900;font-variant-numeric:tabular-nums;color:var(--brand)}
+.timer.late{color:var(--red)}
+.exlist{list-style:none;margin:8px 0 0;padding:0;display:grid;gap:8px}
+.exlist li{border:1.5px solid var(--line);border-radius:12px;padding:10px 12px;display:grid;grid-template-columns:auto 1fr auto;gap:10px;align-items:start}
+.exlist li.ok{background:var(--ok-l);border-color:#9ddbb2}
+.exlist li.hint{background:#fff8d6;border-color:#ffd84d}
+.exlist input{width:22px;height:22px;margin-top:2px;accent-color:var(--ok)}
+.exlist b.t{display:block}
+.exlist span.d{font-size:.86rem;color:#475467;white-space:pre-line}
+.exres{border:2px solid var(--ok);border-radius:14px;padding:14px;margin-top:12px;background:#f6fef9}
 .tbtn.reset:hover{background:#fbd5d5}
 .map{max-width:980px;margin:auto;padding:2px 16px 10px;display:flex;gap:5px;overflow-x:auto;scrollbar-width:none}
 .map::-webkit-scrollbar{display:none}
@@ -387,6 +417,8 @@ dialog::backdrop{background:rgba(17,24,39,.55)}
   .bnext{padding:12px 14px}
   .tbtn.fs{display:none}
   .tbtn.reset{font-size:0}
+  .minfo{grid-template-columns:1fr}
+  .qopts{grid-template-columns:1fr}
   .tbtn.whob .wl{display:none}
   .tbtn.reset::before{content:"↺";font-size:.95rem}
 }
@@ -403,6 +435,7 @@ dialog::backdrop{background:rgba(17,24,39,.55)}
     <button class="tbtn fs" id="fsDown" aria-label="글자 작게">가−</button>
     <button class="tbtn fs" id="fsUp" aria-label="글자 크게">가+</button>
     <button class="tbtn reset" id="resetTop" aria-label="처음부터 다시 하기">↺ 초기화</button>
+    <button class="tbtn master" id="masterBtn">🎓 실기 마스터</button>
     <button class="tbtn" id="helpBtn" aria-label="도움말">?</button>
   </div>
   <nav class="map" id="map" aria-label="조건 바로 가기"></nav>
@@ -424,6 +457,11 @@ dialog::backdrop{background:rgba(17,24,39,.55)}
   <div class="db"><div class="zoom"><img id="goalImg" src="img/goal.webp" alt="완성 예시 확대"><div id="goalHtml" class="hidden"></div></div></div>
 </dialog>
 
+<dialog id="masterDlg" aria-labelledby="masterTitle">
+  <div class="dh"><h2 id="masterTitle">🎓 실기 마스터</h2><button class="tbtn" data-close>닫기 ✕</button></div>
+  <div class="mtabsbar" role="tablist"><button data-mt="info" role="tab">① 시험 알기</button><button data-mt="quiz" role="tab">② 단축키 퀴즈</button><button data-mt="exam" role="tab">③ 실전 모의 30분</button></div>
+  <div class="db" id="masterBody"></div>
+</dialog>
 <dialog id="helpDlg" aria-labelledby="helpTitle">
   <div class="dh"><h2 id="helpTitle">도움말</h2><button class="tbtn" data-close>닫기 ✕</button></div>
   <div class="db">
@@ -487,7 +525,7 @@ const M=[
       {t:'단 설정',tabs:['단'],rows:[['단 개수','2'],['간격','8mm'],['구분선','실선 0.12mm']]}],
  steps:[`이 창 ${K('Win+←')}, 한글 창 ${K('Win+→')} 로 화면 반씩 나누기`,
         `한글에서 <b>다른 이름으로 저장</b> → 내 이름으로 저장`,
-        `${K('F7')} 편집 용지 값이 아래 입력 내용과 같은지 확인`,
+        `${K('F7')} 편집 용지 → 아래 값과 <b>다르면 바꾸고</b> 설정`,
         `<b>쪽 → 다단 설정</b>: 2단 · 간격 8mm · 구분선 실선 0.12mm`],
  tip:'단축키가 안 먹으면? 먼저 <b>한글 창을 한 번 클릭</b>하세요!',
  help:[['타이핑 파일이 없어요','아래 <b>본문 원본 HWP</b>를 받아서 쓰세요.'],['이미 2단이에요','그럼 다시 나누지 말고 값만 확인!']],
@@ -530,8 +568,8 @@ const M=[
 {icon:'🧑‍💼',title:'그림 넣기',sub:'로고 그림을 정확한 자리에',imgs:['c5'],
  paths:[['입력','그림'],['그림 우클릭','개체 속성']],
  dlg:[{t:'그림 넣기',tabs:[],rows:[['파일','비즈니스.PNG'],['문서에 포함',ON+' 켜기']]},
-      {t:'개체 속성',tabs:['기본'],on:['기본'],rows:[['너비 × 높이','28mm × 18mm'],['본문과의 배치','글 앞으로'],['가로','종이 · 왼쪽 · 23mm'],['세로','종이 · 위 · 23mm']]}],
- steps:['아래 <b>그림 저장</b> 버튼으로 비즈니스.PNG 받기','<b>입력 → 그림</b> → <b>문서에 포함</b> 체크 → 넣기','그림 우클릭 → <b>개체 속성</b> → 크기 · 배치 · 위치 입력'],
+      {t:'개체 속성',tabs:['기본'],on:['기본'],rows:[['글자처럼 취급',OFF+' 끄기'],['너비 × 높이','28mm × 18mm'],['본문과의 배치','글 앞으로'],['가로','종이 · 왼쪽 · 23mm'],['세로','종이 · 위 · 23mm']]}],
+ steps:['아래 <b>그림 저장</b> 버튼으로 비즈니스.PNG 받기','<b>글상자 밖 본문</b> 클릭 → <b>입력 → 그림</b> → <b>문서에 포함</b> 체크 → 넣기','그림 우클릭 → <b>개체 속성</b> → 크기 · 배치 · 위치 입력'],
  tip:'너비를 넣었더니 높이가 바뀌나요? <b>크기 비율 고정</b>을 꺼 주세요.',
  help:[['그림이 제목 상자에 가려요','배치가 <b>글 앞으로</b>인지 확인!'],['시험장에선요?','실제 시험은 C:\\WP\\비즈니스.PNG 에서 불러와요.']],
  extra:'pic'},
@@ -541,7 +579,7 @@ const M=[
  dlg:[{t:'스타일',tabs:['스타일 목록'],rows:[
    ['#고치기 (스타일 편집)'],['개요 1','왼쪽 여백 0pt · 한컴 윤고딕 740 · 11pt · 진하게'],['개요 2','왼쪽 여백 15pt'],
    ['#새로 만들기 (스타일 추가)'],['표제목 · 문단','가운데 · 한컴돋움 · 진하게'],['참고문헌 1 · 문단','내어쓰기 20pt'],['참고문헌 2 · 글자','기울임']]}],
- steps:[`${K('F6')} → 개요 1 <b>스타일 편집</b> → 큰 제목 3곳(1. 2. 3.)에 적용`,'개요 2 편집 → <b>가. 나. 다.</b> 문단에 적용','<b>스타일 추가</b> 표제목 → “자급제 이용 현황”에 적용','참고문헌 1 → 영문 참고문헌 문단에 적용','참고문헌 2(<b>글자</b>) → <i>Marketer, 13</i> 만 선택해 적용'],
+ steps:[`${K('F6')} → 개요 1 <b>스타일 편집</b> → 큰 제목 3곳(1. 2. 3.)에 적용`,'개요 2 편집(<b>왼쪽 여백 15pt만</b>) → 그 아래 설명 문단 5곳에 적용','<b>스타일 추가</b> 표제목 → “자급제 이용 현황”에 적용','참고문헌 1 → 영문 참고문헌 문단에 적용','참고문헌 2(<b>글자</b>) → <i>Marketer, 13</i> 만 선택해 적용',`“Reference” 앞 클릭 → ${K('Ctrl+F10')} 문자표 → <b>전각 기호(일반)</b>에서 ◆ 넣기`],
  tip:'적용 방법: 문단에 커서 → '+K('F6')+' → 스타일 고르고 <b>설정</b>!',
  help:[['번호가 두 번 보여요','직접 쳐 놓은 “1.”, “가.”를 지우세요. 번호는 개요가 자동으로 붙여요.'],['참고문헌 전체가 기울어졌어요','참고문헌 2는 <b>글자</b> 스타일! Marketer, 13 만 선택하고 적용해요.']]},
 
@@ -556,14 +594,14 @@ const M=[
 {icon:'📝',title:'각주',sub:'표 제목 끝에 출처 달기',imgs:['c8a','c8b'],
  paths:[['입력','주석','각주','Ctrl+N,N']],
  dlg:[{t:'각주 내용',tabs:[],rows:[['내용','자료: 정보통신부'],['글꼴','돋움체'],['번호 모양','1, 2, 3 (아라비아 숫자)']]}],
- steps:['“자급제 이용 현황” 끝, <b>황</b> 바로 뒤 클릭',`각주 넣기 ${K('Ctrl+N,N')}`,'아래 칸에 <b>자료: 정보통신부</b> → 돋움체',`${K('Shift+Esc')} 로 본문 복귀`],
+ steps:['“자급제 이용 현황” 끝, <b>황</b> 바로 뒤 클릭',`각주 넣기 ${K('Ctrl+N,N')}`,`아래 칸에 <b>자료: 정보통신부</b> 입력 → 그 글자 블록 → ${K('Alt+L')} 돋움체`,`${K('Shift+Esc')} 로 본문 복귀`],
  tip:'번호 <b>1)</b>을 직접 치지 마세요. 자동으로 생겨요!',
  help:[['번호 모양을 바꾸고 싶어요','<b>입력 → 주석 → 각주/미주 모양</b>에서 1,2,3 을 고르세요.']]},
 
 {icon:'🔗',title:'하이퍼링크',sub:'“정보통신부”에 주소 연결',imgs:['c9'],
  paths:[['입력','하이퍼링크','Ctrl+K,H']],
  dlg:[{t:'하이퍼링크',tabs:[],rows:[['연결 대상','웹 주소'],['주소','http://sanggong.com']]}],
- steps:['각주의 <b>정보통신부</b> 다섯 글자만 드래그','<b>입력 → 하이퍼링크</b> → 주소 입력 → 넣기','파란 밑줄이 생겼는지 확인'],
+ steps:['쪽 아래 각주 안을 클릭 → <b>정보통신부</b> 다섯 글자만 드래그','<b>입력 → 하이퍼링크</b> → 주소 입력 → 넣기','파란 밑줄이 생겼는지 확인'],
  tip:'“자료:”까지 선택하면 틀려요. <b>정보통신부</b>만!',
  help:[['주소가 맞는지 다시 보고 싶어요','링크 글자 우클릭 → <b>하이퍼링크 고치기</b>.']]},
 
@@ -581,15 +619,15 @@ const M=[
 {icon:'➕',title:'블록 계산식',sub:'합계는 계산기 말고 한글이!',imgs:['c11'],
  paths:[['셀 블록','우클릭','블록 계산식','블록 합계','Ctrl+Shift+S']],
  dlg:[],
- steps:[`38.33 칸에서 ${K('F5')} → ${K('Shift+↓')} 로 <b>빈 합계 칸까지</b> 선택`,`${K('Ctrl+Shift+S')} → <b>184.62</b> 확인`,'556 부터 빈 칸까지 같은 방법 → <b>2,239.9</b>','비중 합계 칸은 <b>비워 두기</b>'],
+ steps:[`38.33 칸부터 <b>빈 합계 칸까지</b> 마우스로 드래그 (또는 ${K('F5')} 두 번 → ${K('↓')} 4번)`,`${K('Ctrl+Shift+S')} → <b>184.62</b> 확인`,'556 부터 빈 칸까지 같은 방법 → <b>2,239.9</b>','비중 합계 칸은 <b>비워 두기</b>'],
  tip:'결과가 들어갈 <b>빈 칸까지</b> 같이 선택해야 해요.',
- help:[['저장 창이 떠요','셀 블록이 안 된 상태예요. '+K('F5')+'로 셀을 먼저 선택!'],['쉼표가 안 나와요','우클릭 → <b>1,000 단위 구분 쉼표 → 자릿점 넣기</b>.'],['2,269.9 가 나와요','2022년 가입자가 <b>561.2</b> 인지 확인하세요.']],
+ help:[['표 칸 크기가 변했어요','셀 블록에서 '+K('Shift+↓')+'를 누르면 칸 크기가 바뀌어요. '+K('Ctrl+Z')+' 후 <b>드래그</b>로 선택하세요.'],['저장 창이 떠요','셀 블록이 안 된 상태예요. 숫자 칸들을 먼저 드래그로 선택!'],['쉼표가 안 나와요','우클릭 → <b>1,000 단위 구분 쉼표 → 자릿점 넣기</b>.'],['2,269.9 가 나와요','2022년 가입자가 <b>561.2</b> 인지 확인하세요.']],
  extra:'sum'},
 
 {icon:'🏷️',title:'캡션',sub:'표 아래 단위 설명 붙이기',imgs:['c12'],
  paths:[['표 선택','입력','캡션 넣기','Ctrl+N,C']],
  dlg:[{t:'표/셀 속성',tabs:['기본','여백/캡션'],on:['여백/캡션'],rows:[['캡션 위치','아래'],['내용','(단위: 십만 대, %)'],['정렬','오른쪽']]}],
- steps:[`표 선택 → 캡션 넣기 ${K('Ctrl+N,C')}`,'“표 1” 지우고 <b>(단위: 십만 대, %)</b> 입력',`오른쪽 정렬 ${K('Ctrl+Shift+R')}`],
+ steps:[`표 선택 → 캡션 넣기 ${K('Ctrl+N,C')}`,'“표 1” 지우고 <b>(단위: 십만 대, %)</b> 입력',`오른쪽 정렬 ${K('Ctrl+Shift+R')} → ${K('Shift+Esc')} 로 캡션에서 나오기`],
  tip:'표 밑에 그냥 타이핑하면 캡션이 아니에요!',
  help:[['캡션이 표 위에 생겼어요','표/셀 속성 → <b>여백/캡션</b> → 위치 <b>아래</b>.']]},
 
@@ -597,7 +635,7 @@ const M=[
  paths:[['표에서 영역 블록','차트 만들기'],['비중 계열 우클릭','차트 종류 변경'],['비중 계열 우클릭','계열 속성','보조 축'],['제목 · 축 · 범례 클릭','글자 크기']],
  dlg:[{t:'차트 설정',tabs:['계열'],rows:[['데이터','제목 행 + 2021~2023년 (2020 · 합계 ✕)'],['자급제 사용자','묶은 세로 막대'],['전체 가입자','묶은 세로 막대'],['비중','표식 있는 꺾은선 + 보조 축'],['차트 제목','자급제 이용 현황'],['값 축 · 항목 축 · 보조 값 축 · 범례','9pt · 범례 아래']]},
       {t:'개체 속성 (차트 바깥 테두리)',tabs:['기본','여백/캡션'],on:['기본','여백/캡션'],rows:[['너비 × 높이','80mm × 75mm · 크기 고정'],['본문과의 배치','자리 차지'],['가로','단 · 가운데 · 0mm'],['세로','문단 · 위 · 0mm'],['바깥 여백','위 5mm · 아래 8mm']]}],
- steps:['표에서 <b>제목 행 + 2021~2023년</b> 블록 (2020 · 합계 빼기)','블록 그대로 <b>차트 만들기</b> → 묶은 세로 막대형','<b>비중</b>만 꺾은선으로 바꾸고 <b>보조 축</b> 연결','차트 제목에 <b>자급제 이용 현황</b> 입력 → 글자 크기 조절','값 축 · 항목 축 · 보조 값 축 · 범례를 하나씩 → <b>9pt</b> · 범례 아래','차트 <b>바깥 테두리</b> → 개체 속성 크기 · 위치'],
+ steps:['캡션 밖으로 나와서, 표에서 <b>제목 행 + 2021~2023년</b> 블록 (2020 · 합계 빼기)','블록 그대로 <b>차트 만들기</b> → 묶은 세로 막대형','<b>비중</b>만 꺾은선으로 바꾸고 <b>보조 축</b> 연결','차트 제목에 <b>자급제 이용 현황</b> 입력 → 글자 크기 조절','값 축 · 항목 축 · 보조 값 축 · 범례를 하나씩 → <b>9pt</b> · 범례 아래','차트를 <b>표 아래 줄</b>에 두고 <b>바깥 테두리</b> → 개체 속성 크기 · 위치'],
  tip:'차트 <b>안쪽</b> = 계열·축 / <b>바깥 테두리</b> = 크기·위치!',
  help:[['2020년이나 합계가 차트에 들어갔어요',K('Ctrl+Z')+' 후 블록을 다시! <b>2020년 행과 합계 행은 빼고</b> 선택해요.'],['떨어진 행을 같이 고르고 싶어요','제목 행을 블록한 뒤 '+K('Ctrl')+'을 누른 채 2021~2023년 행을 드래그해요.'],['차트 데이터 편집에 붙여넣기가 안 돼요','붙여넣기 대신 <b>표에서 영역을 블록</b>하고 차트 만들기로 해요.'],['막대까지 다 꺾은선이 됐어요',K('Ctrl+Z')+' 후 <b>비중 계열 하나만</b> 클릭하고 바꾸세요.'],['선이 바닥에 붙어 있어요','비중을 <b>보조 축</b>에 연결하지 않았어요.'],['글자 크기가 한꺼번에 안 바뀌어요','값 축 → 항목 축 → 보조 값 축 → 범례 <b>하나씩</b> 클릭해서 바꿔요.']],
  extra:'chart'},
@@ -606,21 +644,21 @@ const M=[
  paths:[['쪽','쪽 번호 매기기','Ctrl+N,P'],['쪽','새 번호로 시작']],
  dlg:[{t:'쪽 번호 매기기',tabs:[],rows:[['번호 위치','오른쪽 아래'],['번호 모양','1, 2, 3'],['줄표 넣기',ON+' 켜기']]},
       {t:'새 번호로 시작',tabs:[],rows:[['번호 종류','쪽 번호'],['시작 번호','3']]}],
- steps:[`쪽 번호 매기기 ${K('Ctrl+N,P')} → 오른쪽 아래 · 줄표`,'<b>쪽 → 새 번호로 시작</b> → 3','오른쪽 아래에 <b>- 3 -</b> 확인'],
+ steps:[`본문 클릭 → 쪽 번호 매기기 ${K('Ctrl+N,P')} → 오른쪽 아래 · 줄표`,'<b>쪽 → 새 번호로 시작</b> → 3','오른쪽 아래에 <b>- 3 -</b> 확인'],
  tip:'꼬리말에 숫자를 직접 치면 틀려요!',
  help:[['1이 계속 보여요','<b>새 번호로 시작</b>에서 시작 번호 3을 넣었는지 확인!']]},
 
 {icon:'⬆️',title:'머리말',sub:'오른쪽 위에 보라색 글씨',imgs:['c15'],
  paths:[['쪽','머리말/꼬리말','Ctrl+N,H']],
  dlg:[{t:'머리말/꼬리말',tabs:[],rows:[['종류','머리말'],['위치','양 쪽']],btn:'만들기'},{t:'글자 모양 · 정렬',tabs:[],rows:[['내용','국내 통신시장 동향'],['글꼴','한컴 윤고딕 740'],['크기 · 속성','10pt · 진하게'],['글자 색','보라 25% 어둡게',C.purple25],['정렬','오른쪽']]}],
- steps:[`${K('Ctrl+N,H')} → 종류 <b>머리말</b> · 위치 <b>양 쪽</b> → <b>만들기</b>`,'<b>국내 통신시장 동향</b> 입력 → 글자 모양',`오른쪽 정렬 → ${K('Shift+Esc')} 로 나오기`],
+ steps:[`${K('Ctrl+N,H')} → 종류 <b>머리말</b> · 위치 <b>양 쪽</b> → <b>만들기</b>`,`<b>국내 통신시장 동향</b> 입력 → 그 글자 블록 → ${K('Alt+L')}`,`오른쪽 정렬 → ${K('Shift+Esc')} 로 나오기`],
  tip:'이미 머리말이 있으면 그 자리를 <b>더블클릭</b>해서 고쳐요.',
  help:[['본문 첫 줄에 써 버렸어요','그건 본문이에요. 지우고 <b>쪽 → 머리말</b>로 다시!']]},
 
 {icon:'⬇️',title:'꼬리말',sub:'아래 가운데에 파란 글씨',imgs:['c16'],
  paths:[['쪽','머리말/꼬리말','Ctrl+N,H']],
  dlg:[{t:'머리말/꼬리말',tabs:[],rows:[['종류','꼬리말'],['위치','양 쪽']],btn:'만들기'},{t:'글자 모양 · 정렬',tabs:[],rows:[['내용','상공일보'],['글꼴','한컴산뜻돋움'],['크기 · 속성','10pt · 진하게'],['글자 색','하늘색 25% 어둡게',C.sky25],['정렬','가운데']]}],
- steps:[`${K('Ctrl+N,H')} → 종류를 <b>꼬리말</b>로 바꾸고 · 위치 <b>양 쪽</b> → <b>만들기</b>`,'<b>상공일보</b> 입력 → 글자 모양',`가운데 정렬 → ${K('Shift+Esc')} → ${K('Ctrl+S')} 저장`],
+ steps:[`${K('Ctrl+N,H')} → 종류를 <b>꼬리말</b>로 바꾸고 · 위치 <b>양 쪽</b> → <b>만들기</b>`,`<b>상공일보</b> 입력 → 그 글자 블록 → ${K('Alt+L')}`,`가운데 정렬 → ${K('Shift+Esc')} → ${K('Ctrl+S')} 저장`],
  tip:'제목은 50%, 꼬리말은 <b>25%</b> 어둡게! 헷갈리지 마세요.',
  help:[['머리말이 만들어졌어요','창에서 종류를 <b>꼬리말</b>로 바꿨는지 확인! '+K('Ctrl+Z')+' 후 다시 해요.'],['쪽 번호가 가운데로 갔어요','쪽 번호 위치를 다시 <b>오른쪽 아래</b>로 지정하세요.']]},
 
@@ -653,7 +691,7 @@ const SHOW={
   4:[['d0'],[],['d1']],
   5:[[],['d0'],[]],
   6:[['x'],['d0'],['d1']],
-  7:[['f0','f2'],['f0','f2'],['f1','d0','f2'],['f1','d0','f2'],['f1','d0','f2']],
+  7:[['f0','f2'],['f0','f2'],['f1','d0','f2'],['f1','d0','f2'],['f1','d0','f2'],[]],
   8:[[],['d0'],['d1']],
   9:[[],[],['d0'],[]],
   10:[[],['d0'],[]],
@@ -693,7 +731,7 @@ const FLOW={
   <div class="mw"><div class="mt">스타일 편집하기</div><div class="mb mcol">
     <div class="mrow">스타일 이름 <span class="minp">개요 1</span></div>
     <div class="mrow"><span class="mbtn tgt" data-p="3">문단 모양…</span>&nbsp;<span class="mbtn tgt" data-p="4">글자 모양…</span>&nbsp;<span class="mbtn pri tgt" data-p="5">설정</span></div></div></div>
-  <p>③ 문단 모양: 왼쪽 여백 <b>0pt</b> → ④ 글자 모양: <b>한컴 윤고딕 740 · 11pt · 진하게</b> → ⑤ 설정<br>개요 2도 똑같이 (왼쪽 여백 <b>15pt</b>만 바꾸기)</p></div>
+  <p>③ 문단 모양: 왼쪽 여백 <b>0pt</b> → ④ 글자 모양: <b>한컴 윤고딕 740 · 11pt · 진하게</b> → ⑤ 설정<br>개요 2는 <b>③ 왼쪽 여백 15pt만</b> 바꾸고 글자 모양은 건드리지 않아요 (15pt만 바꾸기)</p></div>
 ${styleAddHTML()}
 <div class="fp"><h4><b>C</b>문단에 적용하기</h4>
   <div class="mrow">적용할 문단 클릭 → ${k('F6')} → 목록에서 스타일 클릭 → <span class="mbtn pri">설정</span></div>
@@ -753,12 +791,13 @@ const $=s=>document.querySelector(s);
 const KEY='gunsan-word-mission-v4:';            // + '1-2-07'
 const WHO='gunsan-word-mission-who';            // 이 PC에서 마지막으로 고른 학생
 const WHO_TAB='gunsan-word-mission-who-tab';    // 이 탭에서 확인한 학생 (sessionStorage)
-const fresh=()=>({cur:0,tick:{},done:{},fs:16,bv:[],bq:[],rep:{}});
+const fresh=()=>({cur:0,tick:{},done:{},fs:16,bv:[],bq:[],rep:{},quizBest:0,exam:null,examLog:[]});
 const store={get:(st,k)=>{try{return st.getItem(k)}catch(e){return null}},set:(st,k,v)=>{try{st.setItem(k,v)}catch(e){}},del:(st,k)=>{try{st.removeItem(k)}catch(e){}}};
 function loadState(id){
   let s=fresh();
   try{const p=JSON.parse(store.get(localStorage,KEY+id)||'null');if(p&&typeof p==='object')s={...s,...p}}catch(e){}
   s.cur=Math.min(M.length-1,Math.max(0,+s.cur||0));
+  M.forEach((m,i)=>{if(s.done[i])s.tick[i]=m.steps.map(()=>true)});   // 단계가 늘어도 결재받은 조건은 완료 상태 유지
   return s;
 }
 let who=null,S=fresh();
@@ -1028,7 +1067,7 @@ $('#fsDown').onclick=()=>{S.fs=Math.max(14,S.fs-1);render()};
 function resetAll(){
   if(!who)return openWho();
   if(!confirm(`${whoLabel(who)}의 체크 · 결재 · 승진 · 지시 해독 · 보고 입력을 모두 지우고 처음부터 할까요?`))return;
-  S={...fresh(),fs:S.fs};
+  S={...fresh(),fs:S.fs};quiz=null;
   if($('#helpDlg').open)$('#helpDlg').close();
   go(0);toast('처음 상태로 돌아갔어요');
 }
@@ -1037,7 +1076,7 @@ $('#wipeBtn').onclick=()=>{
   const list=savedStudents();
   if(!confirm(`이 PC에 저장된 학생 기록 ${list.length}명분을 모두 지울까요? 되돌릴 수 없어요.`))return;
   list.forEach(id=>store.del(localStorage,KEY+id));store.del(localStorage,WHO);store.del(sessionStorage,WHO_TAB);
-  who=null;S=fresh();$('#helpDlg').close();go(0);openWho();toast('이 PC의 학생 기록을 모두 지웠어요');
+  who=null;S=fresh();quiz=null;$('#helpDlg').close();go(0);openWho();toast('이 PC의 학생 기록을 모두 지웠어요');
 };
 
 /* 출근 카드 */
@@ -1055,7 +1094,7 @@ function openWho(){
   if(!$('#whoDlg').open)$('#whoDlg').showModal();
 }
 function useStudent(id,quiet){
-  who=id;S=loadState(id);
+  who=id;S=loadState(id);quiz=null;
   store.set(localStorage,WHO,id);store.set(sessionStorage,WHO_TAB,id);
   if($('#whoDlg').open)$('#whoDlg').close();
   go(S.cur);save();
@@ -1065,6 +1104,82 @@ $('#whoDlg').addEventListener('click',e=>{const b=e.target.closest('[data-who]')
 $('#whoGo').onclick=()=>{const id=pickId();if(id)useStudent(id)};
 $('#whoDlg').addEventListener('cancel',e=>{if(!who)e.preventDefault()});   // 학생을 고르기 전에는 닫을 수 없음
 $('#whoBtn').onclick=openWho;
+
+/* ---------- 실기 마스터: 시험 알기 · 단축키 퀴즈 · 실전 모의 ---------- */
+// 실전 모의의 지시사항은 시험지(문제 PDF) 문구 그대로. go: 막혔을 때 돌아갈 미션 번호
+const EXAM=[
+ ['쪽 테두리','선의 종류 및 굵기: 이중 실선 0.5mm, 모두\n위치: 쪽 기준, 왼쪽·오른쪽·위쪽·아래쪽 모두 5mm',2],
+ ['글상자','크기: 너비 170mm, 높이 24mm, 크기 고정\n위치: 자리 차지, 가로-종이의 가운데 0mm, 세로-종이의 위 20mm\n바깥 여백: 아래쪽 8mm · 선: 검정 실선 0.2mm · 채우기: 초록 80% 밝게',3],
+ ['제목','제목(1): 한컴산뜻돋움, 16pt, 장평 105%, 자간 -4%, 진하게, 하늘색 50% 어둡게, 가운데 정렬\n제목(2): 여백-왼쪽 360pt',4],
+ ['누름틀','입력할 내용의 안내문: ‘0000. 0. 0.’, 입력 데이터: ‘2024. 5. 28.’',5],
+ ['그림','경로: C:\\WP\\비즈니스.PNG, 문서에 포함\n크기: 너비 28mm, 높이 18mm\n위치: 글 앞으로, 가로-종이의 왼쪽 23mm, 세로-종이의 위 23mm',6],
+ ['스타일 (2개 수정, 3개 등록)','개요 1(수정): 여백-왼쪽 0pt, 한컴 윤고딕 740, 11pt, 진하게\n개요 2(수정): 여백-왼쪽 15pt\n표제목(등록): 문단, 가운데 정렬, 한컴돋움, 진하게\n참고문헌 1(등록): 문단, 내어쓰기 20pt\n참고문헌 2(등록): 글자, 기울임',7],
+ ['문단 첫 글자 장식','모양: 3줄, 글꼴: 한컴산뜻돋움, 면 색: 노랑, 본문과의 간격: 3mm\n글자 색: 하늘색 50% 어둡게',8],
+ ['각주','글자 모양: 돋움체, 번호 모양: 아라비아 숫자',9],
+ ['하이퍼링크','‘정보통신부’에 하이퍼링크 설정\n연결 대상: 웹 주소-‘http://sanggong.com’',10],
+ ['표','크기: 너비 78~80mm, 높이 33~34mm · 위치: 글자처럼 취급\n모든 셀의 안 여백: 왼쪽·오른쪽 2mm · 전체 행: 셀 높이를 같게\n테두리: 안쪽 실선 0.12mm, 바깥 위·아래 실선 0.4mm, 바깥 왼쪽·오른쪽 없음, 합계 행 위쪽 이중 실선 0.5mm\n제목 행: 보라 25% 어둡게, 한컴 윤고딕 760, 하양\n합계 행: 하양 15% 어둡게, 진하게 · 문단 정렬: 가운데',11],
+ ['블록 계산식','표의 합계 행에 블록 계산식을 이용하여 블록 합계 산출',12],
+ ['캡션','표 아래에 삽입 후 오른쪽 정렬',13],
+ ['차트','모양: 이중 축 혼합형(묶은 세로 막대형, 표식이 있는 꺾은선형)\n크기: 너비 80mm, 높이 75mm, 크기 고정\n위치: 자리 차지, 가로-단의 가운데 0mm, 세로-문단의 위 0mm\n바깥 여백: 위쪽 5mm, 아래쪽 8mm\n값 축, 항목 축, 보조 값 축, 범례 글꼴: 9pt · 표의 아래 단락에 배치\n※ 차트 종류 변경과 계열 속성 설정으로 혼합형 차트를 구성',14],
+ ['쪽 번호','번호 위치: 오른쪽 아래, 번호 모양: 아라비아 숫자, 줄표 넣기, 시작 번호 지정(3)',15],
+ ['머리말','한컴 윤고딕 740, 10pt, 진하게, 보라 25% 어둡게, 오른쪽 정렬',16],
+ ['꼬리말','한컴산뜻돋움, 10pt, 진하게, 하늘색 25% 어둡게, 가운데 정렬',17]];
+// 단축키 퀴즈: 이 페이지 안내에 나온 것만
+const KEYS=[['글자 모양','Alt+L'],['문단 모양','Alt+T'],['스타일','F6'],['편집 용지','F7'],['각주 넣기','Ctrl+N, N'],['캡션 넣기','Ctrl+N, C'],['쪽 번호 매기기','Ctrl+N, P'],['머리말/꼬리말','Ctrl+N, H'],['하이퍼링크','Ctrl+K, H'],['블록 합계','Ctrl+Shift+S'],['가운데 정렬','Ctrl+Shift+C'],['오른쪽 정렬','Ctrl+Shift+R'],['머리말·각주에서 본문으로 나오기','Shift+Esc'],['표 전체를 셀 블록으로','F5 세 번'],['(셀 블록에서) 표/셀 속성','P'],['(셀 블록에서) 셀 테두리/배경','L'],['(셀 블록에서) 셀 높이를 같게','H'],['문자표 (◆ 같은 전각 기호)','Ctrl+F10'],['되돌리기','Ctrl+Z']];
+const QUIZ_N=10;
+let mtab='info',quiz=null,examTimer=null;
+const shuffle=a=>{a=[...a];for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a};
+const mmss=ms=>{const t=Math.max(0,Math.floor(ms/1000));return String(Math.floor(t/60)).padStart(2,'0')+':'+String(t%60).padStart(2,'0')};
+function infoHTML(){return `<div class="minfo">
+  <section><h3>🕒 시험은 이렇게 나와요</h3><ul><li>워드프로세서 실기 · <b>30분</b> · 한글 2022</li><li>문서 한 쪽을 주고 <b>세부 지시사항</b>(이 페이지의 1~16번 같은 것)대로 편집</li><li>실제 시험은 <b>본문 입력 + 편집</b>을 모두 해요. 이 페이지는 편집 연습용이라 본문을 미리 넣어 뒀어요</li><li>파일 이름·저장 위치를 바꾸면 <b>실격</b></li></ul></section>
+  <section><h3>📐 문제지 첫 장 · 공통 지시</h3><ul><li>용지 A4 세로 · 왼쪽·오른쪽 20mm · 위·아래·머리말·꼬리말 10mm · 기타 0mm</li><li>본문 <b>2단</b> · 간격 8mm · 구분선 실선 0.12mm</li><li>색은 <b>‘기본’ 테마</b> 색상표에서</li><li>지시가 없는 것은 <b>기본값 그대로</b> (마음대로 꾸미지 않기)</li></ul></section>
+  <section><h3>🔢 표 정렬 규칙 (외우기!)</h3><ul><li>제목 행 · ‘합계’ 칸 → <b>가운데</b></li><li>나머지는 <b>열(세로줄)마다</b> 따로 비교해요</li><li>길이가 <b>같은</b> 글자·숫자 → <b>가운데</b></li><li>길이가 <b>다른 숫자</b> → <b>오른쪽</b></li><li>길이가 <b>다른 글자</b> → <b>왼쪽</b></li></ul></section>
+  <section><h3>⚠️ 자주 틀리는 곳</h3><ul><li>스페이스바로 위치 맞추기 → <b>여백 숫자</b>로</li><li>날짜·쪽 번호·각주 번호를 <b>직접 타이핑</b></li><li>색에서 ‘50% 어둡게’와 ‘25% 어둡게’ 혼동</li><li>글자 스타일(참고문헌 2)을 문단 전체에 적용</li><li>합계 위 이중선을 먼저 해서 덮어씀</li><li>문제지의 <b>지시사항 글자</b>를 문서에 입력</li></ul></section>
+  <section class="wide"><h3>🏆 마스터 순서</h3><ul><li><b>1회차</b>: 1~16번을 입력 내용을 보면서 따라 하기</li><li><b>2회차</b>: ↺ 초기화 후, 입력 내용을 <b>숨기고</b> 막힐 때만 펴 보기</li><li><b>3회차</b>: ② 단축키 퀴즈 10점 → ③ 실전 모의를 <b>30분 안에, 힌트 0번</b></li></ul></section></div>
+  <p class="mnote">시험 형식은 이 페이지의 문제 PDF(대한상공회의소 워드프로세서 실기 B형) 기준이에요. 실제 시험은 문서와 숫자가 바뀌어 나와요.</p>`}
+function quizHTML(){
+  if(!quiz)return `<div class="qcard"><p class="qq">단축키 퀴즈 ${QUIZ_N}문제</p><p>기능을 보고 맞는 단축키를 골라요.<br>내 최고 점수: <b>${S.quizBest||0}/${QUIZ_N}</b></p><button class="bnext go" data-quiz="start">시작 →</button></div>`;
+  if(quiz.i>=QUIZ_N)return `<div class="qcard"><p class="qq">${quiz.score}/${QUIZ_N}점 ${quiz.score===QUIZ_N?'🎉 완벽해요!':quiz.score>=7?'👍 거의 다 왔어요':'💪 한 번 더!'}</p>${quiz.miss.length?`<p style="text-align:left"><b>다시 볼 것</b><br>${quiz.miss.map(x=>`${x[0]} → ${K(x[1].replace(/, /g,','))}`).join('<br>')}</p>`:''}<p>내 최고 점수: <b>${S.quizBest}/${QUIZ_N}</b></p><button class="bnext go" data-quiz="start">다시 하기 →</button></div>`;
+  const q=quiz.qs[quiz.i];
+  return `<div class="qcard"><p class="qn">${quiz.i+1} / ${QUIZ_N} · 점수 ${quiz.score}</p><p class="qq">${q.f}</p>
+  <div class="qopts">${q.opts.map(o=>`<button class="qopt ${quiz.picked?(o===q.a?'right':o===quiz.picked?'wrong':''):''}" data-qopt="${o}" ${quiz.picked?'disabled':''}>${o}</button>`).join('')}</div>
+  <p class="qfb">${quiz.picked?(quiz.picked===q.a?'⭕ 정답!':`❌ 정답은 ${q.a}`):''}</p>${quiz.picked?`<button class="bnext go" data-quiz="next">${quiz.i+1===QUIZ_N?'결과 보기 →':'다음 →'}</button>`:''}</div>`}
+function startQuiz(){const pick=shuffle(KEYS).slice(0,QUIZ_N);
+  quiz={i:0,score:0,miss:[],picked:null,qs:pick.map(([f,a])=>({f,a,opts:shuffle([a,...shuffle(KEYS.map(x=>x[1]).filter(x=>x!==a)).slice(0,3)])}))}}
+function examHTML(){
+  const e=S.exam;
+  if(!e)return `<div class="qcard"><p class="qq">실전 모의 30분</p><p style="text-align:left">① 한글에서 <b>본문 원본</b>을 새로 열고 다른 이름으로 저장해요.<br>② 시작을 누르면 <b>시험지의 지시사항만</b> 보여요(색의 RGB 값만 줄였어요). 입력 내용·그림은 없어요.<br>③ 끝낸 항목을 체크해요. 막히면 <b>힌트</b>(그 조건 화면)를 볼 수 있지만 기록에 남아요.<br>④ 30분이 지나도 계속할 수 있어요(시계가 빨간색으로 넘은 시간을 보여 줘요).<br>⑤ 목표: <b>30분 안에 16개, 힌트 0개</b></p>
+    ${S.examLog.length?`<p><b>지난 기록</b><br>${S.examLog.slice(-3).map(x=>`${x.d} · ${x.n}/16 · ${mmss(x.ms)} · 힌트 본 조건 ${x.h}개`).join('<br>')}</p>`:''}<button class="bnext go" data-exam="start">시작 →</button></div>`;
+  const n=e.c.filter(Boolean).length,h=e.h.filter(Boolean).length,ms=(e.end||Date.now())-e.start,left=30*60e3-ms;
+  return `<div class="examhead"><span class="timer ${left<0?'late':''}" id="examClock">${left<0?'+'+mmss(-left):mmss(left)}</span><span><b>${n}/16</b> 완료 · 힌트 본 조건 ${h}개</span>
+    <span style="margin-left:auto">${e.end?'<button class="btn" data-exam="reset">새로 하기</button>':'<button class="btn" data-exam="finish">제출하기</button> <button class="btn" data-exam="reset" style="background:#f1f3f8;color:#475467">그만두기</button>'}</span></div>
+  ${e.end?`<div class="exres"><b>${n===16&&left>=0&&h===0?'🏆 마스터! 30분 안에 힌트 없이 다 했어요.':n===16&&left>=0?'👍 시간 안에 완성! 다음엔 힌트 없이 도전해요.':n===16?'✅ 다 했어요. 다음엔 30분 안에 도전!':'💪 '+(16-n)+'개가 남았어요. 노란 항목부터 다시 연습해요.'}</b><br>걸린 시간 ${mmss(ms)} · 완료 ${n}/16 · 힌트 본 조건 ${h}개</div>`:`<p class="mnote">공통: A4 세로, 왼쪽·오른쪽 20mm, 위·아래·머리말·꼬리말 10mm, 2단(간격 8mm, 구분선 실선 0.12mm)부터 맞추고 시작해요.</p>`}
+  <ol class="exlist">${EXAM.map((x,j)=>`<li class="${e.c[j]?'ok':e.h[j]?'hint':''}"><input type="checkbox" data-ex="${j}" ${e.c[j]?'checked':''} ${e.end?'disabled':''} aria-label="${j+1}번 ${x[0]} 완료"><span><b class="t">${j+1}. ${x[0]}</b><span class="d">${esc(x[1])}</span></span><button class="peek" data-exhint="${j}">${e.h[j]?'힌트 봄':'힌트'}</button></li>`).join('')}</ol>`}
+function renderMaster(){
+  document.querySelectorAll('[data-mt]').forEach(b=>b.classList.toggle('on',b.dataset.mt===mtab));
+  $('#masterBody').innerHTML=mtab==='info'?infoHTML():mtab==='quiz'?quizHTML():examHTML();
+  clearInterval(examTimer);
+  if(mtab==='exam'&&S.exam&&!S.exam.end)examTimer=setInterval(()=>{const c=$('#examClock');if(!c||!$('#masterDlg').open)return clearInterval(examTimer);
+    const left=30*60e3-(Date.now()-S.exam.start);c.textContent=left<0?'+'+mmss(-left):mmss(left);c.classList.toggle('late',left<0)},1000);
+}
+$('#masterBtn').onclick=()=>{if(!who)return openWho();if(S.exam&&!S.exam.end)mtab='exam';renderMaster();$('#masterDlg').showModal()};
+$('#masterDlg').addEventListener('click',e=>{
+  const t=e.target.closest('[data-mt]');if(t){mtab=t.dataset.mt;renderMaster();return}
+  const q=e.target.closest('[data-quiz]');
+  if(q){if(q.dataset.quiz==='start')startQuiz();else{quiz.i++;quiz.picked=null;if(quiz.i>=QUIZ_N&&quiz.score>(S.quizBest||0)){S.quizBest=quiz.score;save()}}renderMaster();return}
+  const o=e.target.closest('[data-qopt]');
+  if(o&&quiz&&!quiz.picked){const cur=quiz.qs[quiz.i];quiz.picked=o.dataset.qopt;if(quiz.picked===cur.a)quiz.score++;else quiz.miss.push([cur.f,cur.a]);renderMaster();return}
+  const x=e.target.closest('[data-exam]');
+  if(x){const a=x.dataset.exam;
+    if(a==='start')S.exam={start:Date.now(),c:[],h:[],end:0};
+    else if(a==='finish'){const E=S.exam;E.end=Date.now();S.examLog.push({d:new Date().toLocaleDateString('ko-KR'),n:E.c.filter(Boolean).length,ms:E.end-E.start,h:E.h.filter(Boolean).length});S.examLog=S.examLog.slice(-10);
+      if(E.c.filter(Boolean).length===16&&E.end-E.start<=30*60e3)confetti(120)}
+    else if(a==='reset'){if(S.exam&&!S.exam.end&&!confirm('진행 중인 실전 모의를 그만둘까요?'))return;S.exam=null}
+    save();renderMaster();return}
+  const c=e.target.closest('[data-ex]');if(c&&S.exam&&!S.exam.end){S.exam.c[+c.dataset.ex]=c.checked;save();renderMaster();return}
+  const hbtn=e.target.closest('[data-exhint]');
+  if(hbtn&&S.exam){const j=+hbtn.dataset.exhint;if(!S.exam.end)S.exam.h[j]=true;save();$('#masterDlg').close();go(EXAM[j][2]);toast('힌트: 이 조건의 입력 내용을 확인하고 🎓에서 이어 하세요')}
+});
 
 render();
 const tabWho=store.get(sessionStorage,WHO_TAB);
