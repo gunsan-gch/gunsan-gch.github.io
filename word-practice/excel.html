@@ -1,0 +1,1552 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="ITQ 엑셀(MS 엑셀 2021) 실기를 3개 회차로 한 단계씩 따라 하며 연습해요.">
+<title>ITQ 엑셀 연습 · 군산여상</title>
+<link rel="preconnect" href="https://cdn.jsdelivr.net">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pretendard@1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<style>
+:root{
+  --bg:#f3f5fa;--card:#fff;--ink:#1d2433;--muted:#667085;--line:#e3e7ef;
+  --brand:#2f5bea;--brand-d:#1f43c0;--brand-l:#eaf0ff;
+  --ok:#16a34a;--ok-l:#e7f7ec;--hi:#fff1a8;--hi-b:#f2b705;--red:#e5484d;--orange:#f97316;
+  --r:16px;--sh:0 1px 2px rgba(16,24,40,.06),0 4px 14px rgba(16,24,40,.06);
+}
+*{box-sizing:border-box}
+html{font-size:var(--fs,16px)}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:'Pretendard Variable',Pretendard,'Malgun Gothic','Apple SD Gothic Neo',system-ui,sans-serif;line-height:1.55;word-break:keep-all;-webkit-font-smoothing:antialiased}
+button{font:inherit;color:inherit;cursor:pointer;border:0;background:none}
+button:focus-visible,a:focus-visible,summary:focus-visible,label:focus-within{outline:3px solid #ffb020;outline-offset:2px;border-radius:8px}
+img{max-width:100%;height:auto;display:block}
+kbd{display:inline-block;font:inherit;font-size:.82em;font-weight:700;line-height:1.3;padding:1px 7px;margin:0 1px;border:1px solid #c9d1e0;border-bottom-width:3px;border-radius:6px;background:#fff;color:#27324a;white-space:nowrap}
+.k{white-space:nowrap}
+b{font-weight:800}
+.hidden{display:none!important}
+
+/* ── 상단 ── */
+.top{position:sticky;top:0;z-index:30;background:rgba(255,255,255,.96);backdrop-filter:blur(6px);border-bottom:1px solid var(--line)}
+.topin{max-width:980px;margin:auto;padding:8px 16px 6px;display:flex;align-items:center;gap:12px}
+.logo{display:flex;align-items:center;gap:8px;min-width:0}
+.logo .mark{width:34px;height:34px;border-radius:10px;background:var(--brand);display:grid;place-items:center;color:#fff;font-size:18px;flex:none}
+.logo strong{font-size:1rem;letter-spacing:-.03em;white-space:nowrap}
+.rank{margin-left:auto;display:flex;align-items:center;gap:6px;background:var(--brand-l);color:var(--brand-d);border-radius:999px;padding:4px 12px 4px 6px;font-size:.85rem;font-weight:800;white-space:nowrap}
+.rank .em{width:26px;height:26px;border-radius:50%;background:#fff;display:grid;place-items:center;font-size:15px}
+.tbtn{padding:7px 11px;border-radius:10px;font-size:.85rem;font-weight:700;background:#f1f3f8;white-space:nowrap}
+.tbtn:hover{background:#e6eaf3}
+.tbtn.reset{background:#fdecec;color:#b42318}
+.tbtn.master{background:#ede9fe;color:#5b21b6}
+.mtabsbar{display:flex;gap:6px;padding:10px 16px 0;position:sticky;top:53px;background:#fff;z-index:2;border-bottom:1px solid var(--line)}
+.mtabsbar button{padding:9px 12px;border-radius:10px 10px 0 0;font-weight:800;font-size:.9rem;color:var(--muted)}
+.mtabsbar button.on{background:#ede9fe;color:#5b21b6}
+.minfo{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.minfo section{border:1px solid var(--line);border-radius:12px;padding:12px 14px}
+.minfo h3{margin:0 0 6px;font-size:.98rem}
+.minfo ul{margin:0;padding-left:18px;font-size:.9rem;line-height:1.7}
+.minfo .wide{grid-column:1/-1}
+.mnote{font-size:.8rem;color:var(--muted);margin:10px 0 0}
+.qcard{max-width:520px;margin:0 auto;text-align:center}
+.qcard .qn{font-size:.82rem;font-weight:800;color:var(--muted)}
+.qcard .qq{font-size:1.35rem;font-weight:900;margin:8px 0 14px;line-height:1.4}
+.qopts{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.qopt{padding:14px 10px;border:1.5px solid var(--line);border-radius:12px;background:#fff;font-weight:800}
+.qopt:hover:not(:disabled){border-color:#b9c7f5;background:#fafbff}
+.qopt.right{background:var(--ok-l);border-color:var(--ok);color:#2f6b45}
+.qopt.wrong{background:#fdecec;border-color:var(--red);color:#b42318}
+.qfb{min-height:1.6em;margin:12px 0;font-weight:700}
+.examhead{display:flex;align-items:center;gap:12px;flex-wrap:wrap;position:sticky;top:96px;background:#fff;padding:8px 0;z-index:1}
+.timer{font-size:1.7rem;font-weight:900;font-variant-numeric:tabular-nums;color:var(--brand)}
+.timer.late{color:var(--red)}
+.exlist{list-style:none;margin:8px 0 0;padding:0;display:grid;gap:8px}
+.exlist li{border:1.5px solid var(--line);border-radius:12px;padding:10px 12px;display:grid;grid-template-columns:auto 1fr auto;gap:10px;align-items:start}
+.exlist li.ok{background:var(--ok-l);border-color:#9ddbb2}
+.exlist li.hint{background:#fff8d6;border-color:#ffd84d}
+.exlist input{width:22px;height:22px;margin-top:2px;accent-color:var(--ok)}
+.exlist b.t{display:block}
+.exlist span.d{font-size:.86rem;color:#475467;white-space:pre-line}
+.exres{border:2px solid var(--ok);border-radius:14px;padding:14px;margin-top:12px;background:#f6fef9}
+.tbtn.reset:hover{background:#fbd5d5}
+.map{max-width:980px;margin:auto;padding:2px 16px 10px;display:flex;gap:5px;overflow-x:auto;scrollbar-width:none}
+.map::-webkit-scrollbar{display:none}
+.dot{flex:1 0 30px;max-width:46px;height:30px;border-radius:9px;background:#eef1f6;color:#7a869a;font-size:.78rem;font-weight:800;display:grid;place-items:center;position:relative;transition:.15s}
+.dot:hover{background:#e2e7f1}
+.dot.done{background:var(--ok);color:#fff}
+.dot.cur{background:var(--brand);color:#fff;box-shadow:0 0 0 3px #b9c9ff}
+.dot.done.cur{background:var(--ok);box-shadow:0 0 0 3px #a6e3b8}
+
+/* ── 본문 ── */
+main{max-width:980px;margin:auto;padding:18px 16px 110px}
+.card{background:var(--card);border-radius:var(--r);box-shadow:var(--sh);border:1px solid var(--line)}
+.head{display:flex;gap:14px;align-items:center;padding:18px 20px}
+.num{flex:none;width:56px;height:56px;border-radius:16px;background:var(--brand);color:#fff;display:grid;place-items:center;font-size:1.6rem;font-weight:900;letter-spacing:-.04em}
+.num.ok{background:var(--ok)}
+.head h1{margin:0;font-size:1.5rem;letter-spacing:-.04em;line-height:1.25}
+.head p{margin:2px 0 0;color:var(--muted);font-size:.95rem}
+.head .tag{margin-left:auto;align-self:flex-start;font-size:.75rem;font-weight:800;padding:4px 10px;border-radius:999px;background:var(--ok-l);color:var(--ok)}
+
+main:focus{outline:none}
+.grid{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,1fr);gap:14px;margin-top:14px;align-items:start}
+.col{display:grid;gap:14px;min-width:0}
+.grid .card{padding:16px}
+.grid .extra,.grid .help{margin-top:0}
+.grid .help{padding:6px 16px}
+.grid .dls{grid-template-columns:1fr}
+.lab{display:flex;align-items:center;gap:7px;font-size:.8rem;font-weight:900;letter-spacing:.02em;color:var(--muted);margin:0 0 10px}
+.lab i{font-style:normal;width:22px;height:22px;border-radius:7px;display:grid;place-items:center;color:#fff;font-size:.75rem}
+.lab .l1{background:#7c3aed}.lab .l2{background:var(--orange)}.lab .l3{background:var(--brand)}.lab .l4{background:var(--ok)}.lab .l5{background:var(--red)}
+.labn{font-weight:600;color:#98a2b3;letter-spacing:0}
+
+/* 클릭 순서 안내 */
+.flow{display:grid;gap:10px}
+.fp{border:1.5px solid #f5c2c2;background:#fffafa;border-radius:12px;padding:10px 12px}
+.fp h4{margin:0 0 8px;font-size:.9rem;display:flex;gap:7px;align-items:center}
+.fp h4 b{background:var(--red);color:#fff;border-radius:6px;padding:0 7px;font-size:.75rem}
+.fp p{margin:8px 0 0;font-size:.85rem}
+.fp .dn{text-align:center;color:var(--red);font-size:.8rem;line-height:1;margin:4px 0}
+.mw{border:1px solid #c9d1e0;border-radius:8px;background:#f7f8fb;font-size:.78rem}
+.mw .mt{background:#e6eaf3;padding:4px 9px;font-weight:800;font-size:.76rem;border-bottom:1px solid #d3d9e6;border-radius:8px 8px 0 0}
+.mw .mb{padding:10px;display:flex;gap:12px;flex-wrap:wrap;align-items:center}
+.mtabs{display:flex;gap:2px;padding:5px 7px 0;background:#eef1f7;border-bottom:1px solid #d3d9e6;flex-wrap:wrap}
+.mtabs span{padding:2px 7px;font-size:.72rem;color:#667085;border-radius:5px 5px 0 0}
+.mtabs span.on{background:#f7f8fb;color:var(--ink);font-weight:800}
+.mcol{display:grid;gap:7px}
+.mrow{display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+.ml{background:#fff;border:1px solid #d3d9e6;border-radius:4px;min-width:96px}
+.ml div{padding:2px 8px}
+.ml .sel{background:var(--brand);color:#fff;font-weight:800}
+.mbtn{display:inline-block;border:1px solid #c9d1e0;background:#fff;border-radius:5px;padding:3px 9px;font-size:.76rem;font-weight:700;white-space:nowrap}
+.mbtn.pri{background:var(--brand);border-color:var(--brand);color:#fff}
+.minp{display:inline-block;border:1px solid #c9d1e0;background:#fff;border-radius:4px;padding:1px 7px;min-width:40px;font-weight:800}
+.rad{width:12px;height:12px;border-radius:50%;border:1.5px solid #667085;display:inline-block;margin:0 2px 0 4px;vertical-align:-1px;background:#fff}
+.rad.on{background:radial-gradient(var(--brand) 40%,#fff 46%)}
+.tgt{position:relative;outline:2.5px solid var(--red);outline-offset:2px;border-radius:5px}
+.tgt[data-p]::after{content:attr(data-p);position:absolute;top:-12px;right:-12px;width:20px;height:20px;border-radius:50%;background:var(--red);color:#fff;font-size:.7rem;font-weight:900;display:grid;place-items:center;z-index:1;box-shadow:0 0 0 2px #fff}
+.mtab{border-collapse:collapse}
+.mtab td{width:22px;height:13px;border:1px solid #8a94a6;background:#fff}
+.mtab.all td,.mtab tr.s td{background:#9db4ff}
+.bpick{display:grid;grid-template-columns:auto 52px auto;grid-template-rows:auto 36px auto;gap:3px;align-items:center;justify-items:center}
+.bpick .bp{grid-column:2;grid-row:2;width:52px;height:36px;border:1px solid #667085;background:linear-gradient(#98a2b3,#98a2b3) center/1px 100% no-repeat,linear-gradient(#98a2b3,#98a2b3) center/100% 1px no-repeat,#fff}
+.bpick .t{grid-column:2;grid-row:1}.bpick .l{grid-column:1;grid-row:2}.bpick .r{grid-column:3;grid-row:2}.bpick .b{grid-column:2;grid-row:3}
+.rib{display:flex;gap:2px;background:#eef1f7;padding:3px;border-radius:6px;flex-wrap:wrap}
+.rib span{padding:2px 8px;font-size:.74rem;border-radius:4px}
+.rib .act{background:#fff;font-weight:800}
+.ctx{background:#fff;border:1px solid #c9d1e0;border-radius:6px;box-shadow:0 4px 12px rgba(0,0,0,.12);font-size:.76rem;min-width:118px;padding:3px 0}
+.ctx div{padding:3px 10px}
+.mgrid{border-collapse:collapse;font-size:.7rem;background:#fff}
+.mgrid td{border:1px solid #d3d9e6;padding:1px 5px;text-align:right;min-width:30px}
+.mgrid tr:first-child td,.mgrid td:first-child{background:#eef1f7;font-weight:700;text-align:center}
+
+/* 완성 모습 */
+.goal{display:grid;gap:8px}
+.goal button{display:block;width:100%;border-radius:10px;overflow:hidden;border:1px solid var(--line);background:#fff;position:relative}
+.goal button::after{content:"🔍 크게";position:absolute;right:6px;bottom:6px;background:rgba(29,36,51,.75);color:#fff;font-size:.7rem;font-weight:700;padding:2px 7px;border-radius:6px;opacity:0;transition:.15s}
+.goal button:hover::after{opacity:1}
+.goal img{width:100%;height:auto}
+.goal.tall img{max-height:300px;object-fit:cover;object-position:top}
+
+/* 염 대리 */
+.mascot{display:flex;align-items:flex-end;gap:4px;margin-top:12px}
+.mascot img{width:64px;height:64px;border-radius:50%;object-fit:cover;flex:none;border:2px solid #fff;box-shadow:0 2px 8px rgba(16,24,40,.12)}
+.bubble{position:relative;background:#fff8d6;border:2px solid #ffd84d;border-radius:14px;padding:9px 12px;font-size:.92rem;font-weight:600}
+.bubble::before{content:"";position:absolute;left:-9px;bottom:14px;border:8px solid transparent;border-right-color:#ffd84d;border-left:0}
+.bubble small{display:block;font-size:.72rem;font-weight:900;color:#a16207;margin-bottom:1px}
+
+/* 메뉴 경로 */
+.paths{display:grid;gap:8px}
+.path{display:flex;flex-wrap:wrap;align-items:center;gap:5px;font-size:.88rem}
+.path .seg{background:#fff;border:1px solid #d6dcea;border-radius:8px;padding:4px 9px;font-weight:700}
+.path .seg:first-child{background:#e9efff;border-color:#c7d4ff;color:var(--brand-d)}
+.path .arr{color:#98a2b3;font-weight:900}
+.path .or{font-size:.75rem;color:var(--muted);margin-left:4px}
+
+/* 가짜 대화상자 */
+.dlg{border:1px solid #c9d1e0;border-radius:10px;overflow:hidden;background:#f7f8fb;box-shadow:0 6px 18px rgba(30,40,70,.10);margin-bottom:12px}
+.dlg:last-child{margin-bottom:0}
+.dlg .bar{display:flex;align-items:center;justify-content:space-between;background:linear-gradient(#f4f6fb,#e6eaf3);padding:7px 11px;font-size:.85rem;font-weight:800;border-bottom:1px solid #d3d9e6}
+.dlg .bar span{color:#8a94a6;font-weight:400}
+.dlg .tabs{display:flex;gap:2px;padding:6px 8px 0;border-bottom:1px solid #d3d9e6;background:#eef1f7;overflow-x:auto;scrollbar-width:none}
+.dlg .tab{font-size:.75rem;padding:4px 9px;border:1px solid transparent;border-bottom:0;border-radius:6px 6px 0 0;color:#667085;white-space:nowrap}
+.dlg .tab.on{background:#f7f8fb;border-color:#d3d9e6;color:var(--ink);font-weight:800;margin-bottom:-1px}
+.dlg .body{padding:10px 11px;display:grid;gap:6px}
+.dlg .sec{font-size:.72rem;font-weight:900;color:#5b6b88;margin-top:4px;display:flex;align-items:center;gap:6px}
+.dlg .sec::after{content:"";flex:1;height:1px;background:#d9dfea}
+.fld{display:grid;grid-template-columns:minmax(78px,38%) 1fr;align-items:center;gap:8px;font-size:.84rem}
+.fld .fl{color:#556178;text-align:right;line-height:1.25}
+.fld .fv{display:flex;align-items:center;gap:7px;background:var(--hi);border:1.5px solid var(--hi-b);border-radius:6px;padding:4px 8px;font-weight:800;line-height:1.3;min-height:30px}
+.sw{width:18px;height:18px;border-radius:4px;border:1px solid rgba(0,0,0,.25);flex:none}
+.chk{width:16px;height:16px;border-radius:4px;background:var(--brand);color:#fff;display:inline-grid;place-items:center;font-size:11px;flex:none}
+.chk.off{background:#fff;border:1.5px solid #98a2b3}
+.dlg .foot{display:flex;justify-content:flex-end;gap:6px;padding:0 11px 10px}
+.dlg .foot span{font-size:.75rem;padding:4px 14px;border-radius:6px;border:1px solid #c9d1e0;background:#fff}
+.dlg .foot span:first-child{background:var(--brand);border-color:var(--brand);color:#fff;font-weight:800}
+
+/* 체크리스트 */
+.steps{list-style:none;margin:0;padding:0;display:grid;gap:8px}
+.step{display:flex;gap:11px;align-items:flex-start;padding:11px 12px;border-radius:12px;border:1.5px solid var(--line);background:#fff;cursor:pointer;transition:.15s;font-size:.97rem;user-select:none}
+.step:hover{border-color:#b9c7f5;background:#fafbff}
+.step:focus-visible{outline:3px solid #ffb020;outline-offset:2px}
+.step .box{flex:none;width:26px;height:26px;border-radius:8px;border:2px solid #b6bfd0;display:grid;place-items:center;font-weight:900;font-size:.85rem;color:#8a94a6;background:#fff;transition:.15s}
+.step.on{border-color:#9ddbb2;background:var(--ok-l)}
+.step.on .box{background:var(--ok);border-color:var(--ok);color:#fff}
+.step.on .tx{color:#3d6b4f}
+.step .tx{padding-top:1px}
+.stepbody{list-style:none;margin:-2px 0 4px;padding:12px;border-radius:12px;background:#f5f8ff;border:1.5px solid #c7d4ff;display:grid;gap:10px;animation:open .2s ease-out}
+.stepbody .dlg{margin:0}
+.stepbody .card{box-shadow:none;margin:0}
+.stepbody .bodyhead{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.stepbody .bodylab{flex:1;margin:0;font-size:.78rem;font-weight:900;color:var(--brand-d)}
+.stepbody .complete{justify-content:center}
+@keyframes open{from{opacity:0;transform:translateY(-4px)}}
+.step.cur{border-color:var(--brand);box-shadow:0 0 0 3px #dbe5ff}
+.step .peek,.stepbody .peek{margin-left:auto;align-self:center;flex:none;padding:3px 9px;border-radius:8px;background:#eef2ff;color:var(--brand-d);font-size:.75rem;font-weight:800}
+.step .peek:hover,.stepbody .peek:hover{background:#dbe5ff}
+.allvals{margin-top:12px;border-top:1px dashed var(--line);padding-top:8px}
+.allvals>summary{cursor:pointer;font-size:.85rem;font-weight:800;color:var(--muted);padding:4px 0}
+.allvals[open]>summary{margin-bottom:8px}
+.allvals .dlg{margin-bottom:10px}
+.stepnote{font-size:.8rem;color:var(--muted);margin:8px 2px 0}
+
+/* 막혔어요 */
+.help{margin-top:14px;padding:6px 16px}
+.help summary{cursor:pointer;font-weight:800;padding:8px 0;list-style:none;display:flex;align-items:center;gap:8px}
+.help summary::-webkit-details-marker{display:none}
+.help summary::before{content:"🆘";}
+.help summary::after{content:"펼치기 ▾";margin-left:auto;font-size:.78rem;color:var(--muted);font-weight:600}
+.help[open] summary::after{content:"접기 ▴"}
+.qa{border-top:1px dashed var(--line);padding:9px 0;font-size:.9rem}
+.qa b{display:block;color:#b42318;font-weight:800}
+.qa b::before{content:"Q. "}
+.qa span::before{content:"→ ";color:var(--ok);font-weight:900}
+
+/* 부가 자료 */
+.extra{margin-top:14px;padding:16px}
+.xhead{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:10px}
+.xhead h2{margin:0;font-size:1rem}
+.btn{display:inline-flex;align-items:center;gap:6px;padding:8px 13px;border-radius:10px;font-weight:800;font-size:.86rem;background:var(--brand-l);color:var(--brand-d);text-decoration:none;white-space:nowrap}
+.btn:hover{background:#dbe5ff}
+.copyzone{background:#f6f7fb;border:1px dashed #cfd6e4;border-radius:10px;padding:10px 12px;white-space:pre-wrap;font-size:.9rem}
+.tbl{width:100%;border-collapse:collapse;font-size:.88rem}
+.tbl th{background:#76458c;color:#fff;font-weight:700;padding:6px}
+.tbl td{padding:6px;border-bottom:1px solid #e3e7ef;text-align:center}
+.tbl td.r{text-align:right;padding-right:14px}
+.tbl tr.sum td{background:#d9d9d9;border-top:3px double #555;font-weight:800}
+.tbl td.pick{background:#dbe5ff;outline:2px solid var(--brand);outline-offset:-2px}
+.tbl th.pick{background:#2f5bea}
+.tbl tr.skip td{color:#b0b7c3;text-decoration:line-through}
+.tbl td.res{background:var(--hi);outline:2px dashed var(--hi-b);outline-offset:-2px}
+.dls{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+.dl{display:flex;gap:10px;align-items:center;border:1px solid var(--line);border-radius:12px;padding:10px 12px;text-decoration:none;color:inherit;background:#fff;font-weight:800;font-size:.88rem}
+.dl:hover{border-color:#b9c7f5;background:#fafbff}
+.dl .ic{font-size:1.4rem}
+.dl small{display:block;font-weight:500;color:var(--muted);font-size:.74rem}
+.splitdemo{display:grid;grid-template-columns:1fr 1fr;gap:6px;border:2px solid #1d2433;border-radius:10px;padding:6px;background:#1d2433;max-width:320px}
+.splitdemo div{background:#fff;border-radius:5px;height:70px;display:grid;place-items:center;font-size:.78rem;font-weight:800;text-align:center;line-height:1.3}
+.splitdemo div:last-child{background:#e9efff;color:var(--brand-d)}
+
+/* 시작 화면 */
+.hero{display:grid;grid-template-columns:minmax(0,1fr) 140px;gap:16px;align-items:center;padding:22px;background:linear-gradient(135deg,#2f5bea,#5b7cf7 60%,#7aa0ff);color:#fff;border:0;overflow:hidden;position:relative}
+.hero small{font-weight:800;opacity:.85;letter-spacing:.04em}
+.hero h1{margin:4px 0 6px;font-size:1.65rem;line-height:1.3;letter-spacing:-.04em}
+.hero p{margin:0;opacity:.95}
+.hero .thumb{background:#fff;border-radius:8px;padding:4px;transform:rotate(3deg);box-shadow:0 10px 30px rgba(0,0,0,.25)}
+.hero .chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:12px}
+.hero .chips span{background:rgba(255,255,255,.18);border:1px solid rgba(255,255,255,.35);padding:3px 10px;border-radius:999px;font-size:.8rem;font-weight:700}
+.ranks{display:flex;gap:6px;flex-wrap:wrap;margin-top:10px}
+.ranks span{font-size:.78rem;background:#f1f3f8;border-radius:999px;padding:3px 9px;font-weight:700;color:#475467}
+.ranks span.me{background:var(--brand);color:#fff}
+
+/* 수료증 */
+.cert{padding:26px;text-align:center;background:#fffdf5;border:3px double #c9a227;position:relative;overflow:hidden}
+.cert h1{margin:0;font-size:1.6rem;letter-spacing:.1em}
+.cert .big{font-size:3rem;font-weight:900;color:var(--brand);line-height:1.1;margin:10px 0 2px}
+.stamps{display:grid;grid-template-columns:repeat(8,1fr);gap:6px;max-width:440px;margin:16px auto 6px}
+.stamps span{aspect-ratio:1;border-radius:50%;display:grid;place-items:center;font-size:.8rem;font-weight:900;border:2px dashed #d0d5dd;color:#98a2b3}
+.stamps span.ok{border:2px solid var(--red);color:var(--red);transform:rotate(-12deg);background:#fff5f5}
+
+/* 하단 바 */
+.bottom{position:fixed;left:0;right:0;bottom:0;z-index:30;background:rgba(255,255,255,.97);border-top:1px solid var(--line);backdrop-filter:blur(6px)}
+.bin{max-width:980px;margin:auto;padding:10px 16px;display:flex;align-items:center;gap:10px}
+.bprev{padding:11px 16px;border-radius:12px;background:#f1f3f8;font-weight:800}
+.bprev:disabled{opacity:.4;cursor:default}
+.meter{flex:1;display:flex;align-items:center;gap:8px;min-width:0;font-size:.85rem;color:var(--muted);font-weight:700}
+.meter .bar{flex:1;height:8px;border-radius:9px;background:#e8ebf2;overflow:hidden;max-width:220px}
+.meter .bar i{display:block;height:100%;background:var(--ok);border-radius:9px;transition:width .25s}
+.bnext{padding:12px 20px;border-radius:12px;font-weight:900;background:#e8ebf2;color:#475467;white-space:nowrap}
+.bnext.go{background:var(--ok);color:#fff;box-shadow:0 6px 16px rgba(22,163,74,.35);animation:pulse 1.4s infinite}
+@keyframes pulse{50%{transform:scale(1.04)}}
+
+/* 도장 · 축하 */
+.stamp{position:fixed;inset:0;z-index:60;display:grid;place-items:center;pointer-events:none}
+.stamp div{width:190px;height:190px;border-radius:50%;border:8px solid var(--red);color:var(--red);display:grid;place-items:center;text-align:center;font-size:2.2rem;font-weight:900;line-height:1.1;background:rgba(255,255,255,.88);animation:stamp .55s cubic-bezier(.2,1.6,.4,1) both;transform:rotate(-14deg)}
+.stamp div small{display:block;font-size:.9rem}
+@keyframes stamp{from{transform:scale(2.6) rotate(-14deg);opacity:0}to{transform:scale(1) rotate(-14deg);opacity:1}}
+.confetti{position:fixed;top:-12px;width:9px;height:14px;z-index:70;pointer-events:none;animation:fall linear forwards}
+@keyframes fall{to{transform:translateY(105vh) rotate(720deg)}}
+dialog{border:0;border-radius:18px;padding:0;max-width:min(860px,calc(100vw - 24px));width:100%;max-height:92vh;box-shadow:0 20px 60px rgba(0,0,0,.3);color:var(--ink)}
+#upDlg{max-width:min(420px,calc(100vw - 24px))}
+dialog::backdrop{background:rgba(17,24,39,.55)}
+.dh{position:sticky;top:0;z-index:2;display:flex;align-items:center;justify-content:space-between;gap:8px;padding:12px 16px;background:#fff;border-bottom:1px solid var(--line)}
+.dh h2{margin:0;font-size:1.05rem}
+.db{padding:16px}
+.zoom{overflow:auto;max-height:75vh;background:#eef1f6;border-radius:10px}
+.zoom img{width:100%;max-width:none;transition:width .15s}
+.up{text-align:center;padding:26px 22px}
+.up img{width:150px;margin:0 auto 6px}
+/* 출근 카드: 반·번호 고르기 */
+#whoDlg{max-width:min(460px,calc(100vw - 24px))}
+.who{padding:24px 22px;text-align:center}
+.who>img{width:96px;height:96px;border-radius:50%;margin:0 auto 8px}
+.who h2{margin:0 0 4px;font-size:1.35rem}
+.who>p{margin:0 0 14px;color:var(--muted);font-size:.9rem}
+.whocont{display:block;width:100%;padding:14px;border-radius:14px;background:var(--brand);color:#fff;font-weight:900;font-size:1.05rem;margin-bottom:14px}
+.whocont small{display:block;font-weight:600;opacity:.85;font-size:.8rem}
+.whosel{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin-bottom:12px}
+.whosel label{display:grid;gap:4px;font-size:.78rem;font-weight:800;color:var(--muted);text-align:left}
+.whosel select{font:inherit;font-size:1rem;font-weight:800;padding:9px 8px;border:1.5px solid #c9d1e0;border-radius:10px;background:#fff;color:var(--ink)}
+#whoGo{width:100%}
+#whoGo:disabled{opacity:.45;cursor:default;animation:none}
+.wholist{margin-top:14px;text-align:left;font-size:.85rem}
+.wholist summary{cursor:pointer;font-weight:800;color:var(--muted)}
+.wholist div{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+.wholist button{padding:6px 10px;border-radius:999px;background:#f1f3f8;font-weight:700;font-size:.82rem}
+.wholist button:hover{background:#e2e7f1}
+.whonote{margin:14px 0 0;font-size:.78rem;color:var(--muted)}
+.tbtn.whob{background:#fff3b0;color:#7a5b00}
+.up h2{margin:0;font-size:1.5rem}
+.up .r{font-size:2.4rem;font-weight:900;color:var(--brand);margin:6px 0}
+.keys{display:grid;grid-template-columns:auto 1fr;gap:6px 12px;font-size:.9rem;align-items:center}
+.toast{position:fixed;left:50%;bottom:86px;transform:translateX(-50%);background:#1d2433;color:#fff;padding:10px 16px;border-radius:12px;font-size:.88rem;font-weight:700;z-index:80;box-shadow:0 8px 24px rgba(0,0,0,.25)}
+
+@media(max-width:760px){
+  .grid{display:flex;flex-direction:column;align-items:stretch}
+  .col{display:contents}
+  .gb{order:1}.ga{order:2}.gd{order:3}.gx{order:4}.gh{order:5}
+  .hero{grid-template-columns:1fr}
+  .hero .thumb{display:none}
+  .dls{grid-template-columns:1fr}
+  .logo strong{display:none}
+  .head h1{font-size:1.3rem}
+  .num{width:48px;height:48px;font-size:1.35rem}
+  .meter .bar{display:none}
+  .qs{grid-template-columns:1fr}
+  .bgrid{grid-template-columns:1fr}
+  .stepper li{padding:8px;font-size:.85rem}
+  .stepper li small{display:none}
+  .banner{font-size:1rem}
+}
+@media(max-width:420px){
+  main{padding:14px 12px 110px}
+  .topin,.map,.bin{padding-left:12px;padding-right:12px}
+  .bnext{padding:12px 14px}
+  .tbtn.fs{display:none}
+  .tbtn.reset{font-size:0}
+  .minfo{grid-template-columns:1fr}
+  .qopts{grid-template-columns:1fr}
+  .tbtn.whob .wl{display:none}
+  .tbtn.reset::before{content:"↺";font-size:.95rem}
+}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+/* ── 엑셀판 추가 ── */
+.logo .mark.xl{background:#107c41}
+.tbtn.roundb{background:#e7f6ec;color:#0b5c30}
+.tbtn.subj{background:#eef2ff;color:var(--brand-d);text-decoration:none}
+.topin{flex-wrap:wrap;row-gap:6px;gap:8px}
+.hero.xl{background:linear-gradient(135deg,#107c41,#1f9d57 60%,#3fbf74)}
+.hero .roundnow{display:inline-flex;align-items:center;gap:8px;margin-top:12px;background:#fff;color:#0b5c30;border-radius:12px;padding:8px 14px;font-weight:900}
+.mapg{flex:none;align-self:center;font-size:.68rem;font-weight:900;color:#0b5c30;background:#e7f6ec;border-radius:7px;padding:4px 6px;white-space:nowrap}
+.snote{margin:0;font-size:.86rem;color:#344054}
+.snote.warn{background:#fff8d6;border:1.5px solid #ffd84d;border-radius:10px;padding:7px 10px}
+.snote.good{background:var(--ok-l);border:1.5px solid #9ddbb2;border-radius:10px;padding:7px 10px}
+.fx{display:flex;align-items:center;gap:8px;flex-wrap:wrap;background:#fff;border:1.5px solid #c7d4ff;border-radius:10px;padding:8px 10px}
+.fx .fxc{flex:none;background:#107c41;color:#fff;font-weight:900;font-size:.8rem;border-radius:6px;padding:2px 8px}
+.fx code{flex:1 1 220px;min-width:0;font:700 .95rem/1.4 Consolas,'D2Coding','Courier New',monospace;color:#1d2433;word-break:break-all}
+.fx .btn{margin-left:auto}
+.parts{width:100%;border-collapse:collapse;font-size:.84rem;background:#fff;border-radius:8px}
+.parts td{border-bottom:1px dashed var(--line);padding:5px 6px;vertical-align:top}
+.parts td:first-child{font:700 .82rem/1.4 Consolas,'D2Coding',monospace;color:var(--brand-d);white-space:nowrap}
+.tbl.ok th{background:#107c41}
+.tbl.ok td{text-align:left}
+.tbl.ok td.res{font-weight:900;text-align:left}
+.tbl.res th{background:#2f5bea}
+.xsw{overflow-x:auto;max-width:100%;-webkit-overflow-scrolling:touch}
+.xs{border-collapse:collapse;font-size:.72rem;background:#fff;font-variant-numeric:tabular-nums;line-height:1.3}
+.xs th{background:#eef1f7;color:#667085;font-weight:700;border:1px solid #d3d9e6;padding:1px 5px;min-width:20px}
+.xs td{border:1px solid #d3d9e6;padding:2px 6px;white-space:nowrap;text-align:center;color:#1d2433}
+.xs td.n{text-align:right}
+.xs td.l{text-align:left}
+.xs td.e{color:#c0c6d0}
+.xs td.pick{background:#dbe5ff;box-shadow:inset 0 0 0 1.5px var(--brand)}
+.xs td.or{background:#ffc000}
+.xs td.res{background:var(--hi);box-shadow:inset 0 0 0 1.5px var(--hi-b);font-weight:800}
+.xs td.blue{color:#1d4ed8;font-weight:800}
+.xs tr.skip td{color:#b0b7c3;text-decoration:line-through}
+.xs td.b{font-weight:800}
+.xscap{font-size:.75rem;color:var(--muted);margin:4px 0 0}
+.cbox .xhead{margin-bottom:6px}
+.cbox .copyzone{font:600 .8rem/1.5 Consolas,'D2Coding',monospace;max-height:180px;overflow:auto;white-space:pre;tab-size:14}
+.dlrow{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:8px}
+.alt{font-size:.82rem;color:var(--muted)}
+.tabsdemo{display:flex;align-items:flex-end;gap:2px;border-top:2px solid #c9d1e0;padding:0 4px;flex-wrap:wrap;font-size:.78rem}
+.tabsdemo span{padding:3px 10px;background:#eef1f7;border:1px solid #d3d9e6;border-top:0;border-radius:0 0 6px 6px;color:#475467}
+.tabsdemo span.on{background:#fff;color:#107c41;font-weight:900;border-bottom:3px solid #107c41}
+.tabsdemo b{padding:0 6px;color:#667085}
+.stepbody>*{min-width:0}
+/* 회차 카드 */
+#roundDlg{max-width:min(620px,calc(100vw - 24px))}
+.rcards{display:grid;gap:10px;margin-top:12px;text-align:left}
+.rcard{display:grid;grid-template-columns:auto 1fr auto;gap:12px;align-items:center;width:100%;border:2px solid var(--line);border-radius:14px;padding:12px 14px;background:#fff;text-align:left}
+.rcard:hover{border-color:#86d3a5;background:#f6fef9}
+.rcard.on{border-color:#107c41;box-shadow:0 0 0 3px #c9efd8}
+.rcard .rn{width:46px;height:46px;border-radius:12px;background:#107c41;color:#fff;display:grid;place-items:center;font-weight:900;font-size:1.05rem}
+.rcard b{display:block;font-size:1rem}
+.rcard small{display:block;color:var(--muted);font-size:.78rem;line-height:1.4}
+.rcard .rp{font-size:.8rem;font-weight:900;color:#0b5c30;text-align:right;white-space:nowrap}
+.rcard .rbar{display:block;height:6px;border-radius:9px;background:#e8ebf2;margin-top:6px;overflow:hidden}
+.rcard .rbar i{display:block;height:100%;background:var(--ok)}
+.exw{margin:14px 0 4px;font-size:.9rem;font-weight:900;color:#0b5c30}
+.exlist li .pt{font-size:.75rem;font-weight:900;color:#0b5c30;background:#e7f6ec;border-radius:999px;padding:1px 7px;margin-left:4px}
+.exsel{display:flex;gap:6px;flex-wrap:wrap;justify-content:center;margin:10px 0}
+.exsel button{padding:8px 12px;border-radius:10px;border:1.5px solid var(--line);font-weight:800;background:#fff}
+.exsel button.on{border-color:#107c41;background:#e7f6ec;color:#0b5c30}
+.subjs{display:grid;gap:10px}
+@media(max-width:760px){
+  .rcard{grid-template-columns:auto 1fr}
+  .rcard .rp{grid-column:1/-1;text-align:left}
+}
+@media(max-width:420px){
+  .tbtn .wl{display:none}
+  .rank{padding:4px 8px 4px 4px;font-size:.78rem}
+}
+</style>
+</head>
+<body>
+<header class="top">
+  <div class="topin">
+    <div class="logo"><span class="mark xl" aria-hidden="true">📊</span><strong>ITQ 엑셀</strong></div>
+    <button class="tbtn whob" id="whoBtn" aria-label="학생 바꾸기">👤 <span id="whoChip">학생 선택</span></button>
+    <button class="tbtn roundb" id="roundBtn" aria-label="회차 바꾸기">📚 <span id="roundChip">회차</span> ▾</button>
+    <div class="rank" id="rank" title="완료한 단계 수에 따라 승진해요"></div>
+    <button class="tbtn" id="goalBtn" aria-label="출력형태 크게 보기" title="출력형태 크게 보기">🖼</button>
+    <button class="tbtn fs" id="fsDown" aria-label="글자 작게">가−</button>
+    <button class="tbtn fs" id="fsUp" aria-label="글자 크게">가+</button>
+    <button class="tbtn reset" id="resetTop" aria-label="이 회차 처음부터 다시 하기">↺ 초기화</button>
+    <button class="tbtn master" id="masterBtn" aria-label="실기 마스터">🎓<span class="wl"> 실기 마스터</span></button>
+    <button class="tbtn" id="helpBtn" aria-label="도움말">?</button>
+    <button class="tbtn subj" id="subjBtn" aria-label="과목 바꾸기 (워드프로세서 / ITQ 엑셀)">⇄<span class="wl"> 과목</span></button>
+  </div>
+  <nav class="map" id="map" aria-label="단계 바로 가기"></nav>
+</header>
+
+<main id="main" tabindex="-1"></main>
+
+<footer class="bottom">
+  <div class="bin">
+    <button class="bprev" id="prev" aria-label="이전 단계">←</button>
+    <div class="meter"><span id="meterText"></span><span class="bar"><i id="meterBar"></i></span></div>
+    <button class="bnext" id="next"></button>
+  </div>
+</footer>
+
+<dialog id="goalDlg" aria-labelledby="goalTitle">
+  <div class="dh"><h2 id="goalTitle">출력형태</h2>
+    <div><button class="tbtn" data-z="-25" aria-label="작게">−</button> <button class="tbtn" data-z="25" aria-label="크게">+</button> <button class="tbtn" data-close>닫기 ✕</button></div></div>
+  <div class="db"><div class="dls" id="goalTabs" style="margin-bottom:10px"></div><div class="zoom"><img id="goalImg" src="img/excel/a-t1.webp" alt="출력형태 확대"></div></div>
+</dialog>
+
+<dialog id="masterDlg" aria-labelledby="masterTitle">
+  <div class="dh"><h2 id="masterTitle">🎓 실기 마스터 (ITQ 엑셀)</h2><button class="tbtn" data-close>닫기 ✕</button></div>
+  <div class="mtabsbar" role="tablist"><button data-mt="info" role="tab">① 시험 알기</button><button data-mt="quiz" role="tab">② 단축키 퀴즈</button><button data-mt="exam" role="tab">③ 실전 모의 60분</button></div>
+  <div class="db" id="masterBody"></div>
+</dialog>
+
+<dialog id="helpDlg" aria-labelledby="helpTitle">
+  <div class="dh"><h2 id="helpTitle">도움말</h2><button class="tbtn" data-close>닫기 ✕</button></div>
+  <div class="db">
+    <p style="margin-top:0"><b>엑셀 창을 한 번 클릭</b>한 다음 단축키를 누르세요.</p>
+    <div class="keys">
+      <span><kbd>Ctrl</kbd>+<kbd>Z</kbd></span><span>되돌리기 (실수했을 때 제일 먼저!)</span>
+      <span><kbd>Ctrl</kbd>+<kbd>S</kbd></span><span>저장 (자주자주!)</span>
+      <span><kbd>Ctrl</kbd>+<kbd>1</kbd></span><span>셀 서식 (테두리 · 표시 형식 · 맞춤)</span>
+      <span><kbd>Alt</kbd>+<kbd>Enter</kbd></span><span>셀 안에서 줄 바꾸기</span>
+      <span><kbd>F2</kbd></span><span>셀 고치기 (수식 다시 보기)</span>
+      <span><kbd>F4</kbd></span><span>수식에서 $ 고정 (절대 참조) 바꾸기</span>
+      <span><kbd>Esc</kbd></span><span>입력 취소 · 창 닫기</span>
+    </div>
+    <p style="font-size:.85rem;color:var(--muted)">리본 경로 <b>홈 › 맞춤 › 병합하고 가운데 맞춤</b> = <b>홈</b> 탭을 누르고 → <b>맞춤</b> 묶음에서 → 그 버튼을 눌러요.</p>
+    <h3 style="margin:18px 0 8px;font-size:1rem">문제지 PDF</h3>
+    <div class="dls" id="dlsHelp"></div>
+    <h3 style="margin:18px 0 8px;font-size:1rem">글자 크기</h3>
+    <button class="btn" id="fsDown2">가− 작게</button> <button class="btn" id="fsUp2">가+ 크게</button>
+    <p style="font-size:.82rem;color:var(--muted);margin-top:14px">진행 기록은 <b>반·번호별 · 회차별로 이 PC</b>에 저장돼요. 다른 PC에서는 이어지지 않아요. 다음 시간에 같은 PC에서 내 반·번호를 고르면 이어서 할 수 있어요.</p>
+    <button class="btn" id="resetBtn" style="background:#fdecec;color:#b42318">↺ 이 회차 내 기록 처음부터</button>
+    <button class="btn" id="wipeBtn" style="margin-top:8px;background:#f1f3f8;color:#475467">🧹 이 PC의 엑셀 학생 기록 모두 지우기 (선생님용)</button>
+  </div>
+</dialog>
+
+<dialog id="upDlg"><div class="up" id="upBody"></div></dialog>
+<dialog id="roundDlg" aria-labelledby="roundTitle"><div class="who">
+  <h2 id="roundTitle">어떤 회차를 연습할까요?</h2>
+  <p>회차마다 진도가 따로 저장돼요. 언제든 위의 <b>📚 회차</b> 버튼으로 바꿀 수 있어요.</p>
+  <div class="rcards" id="rcards"></div>
+</div></dialog>
+<dialog id="whoDlg" aria-labelledby="whoTitle"><div class="who">
+  <img src="img/avatar-me.webp" alt="" width="256" height="256">
+  <h2 id="whoTitle">누구의 엑셀 연습인가요?</h2>
+  <p>반과 번호를 고르면 이 PC에 내 진도가 따로 저장돼요.</p>
+  <div id="whoLast"></div>
+  <div class="whosel">
+    <label>반 (1학년)<select id="wC" autofocus></select></label>
+    <label>번호<select id="wN"></select></label>
+  </div>
+  <button class="bnext go" id="whoGo" disabled>시작하기 →</button>
+  <div id="whoList"></div>
+  <p class="whonote">이름은 받지 않아요. 기록은 이 PC에만 남고 다른 PC에서는 이어지지 않아요.</p>
+</div></dialog>
+<div class="toast hidden" id="toast" role="status" aria-live="polite"></div>
+
+<script>
+'use strict';
+const k=s=>s.split(',').map(g=>g.split('+').map(x=>`<kbd>${x}</kbd>`).join('+')).join(', ');
+const K=s=>`<span class="k">${k(s)}</span>`;
+const ON='☑',OFF='☐';
+const SW={yellow:'#ffff00',orange:'#ffc000',blue:'#0070c0',white:'#ffffff',black:'#000000'};
+const esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const COLS='BCDEFGHIJ'.split('');
+const CIRC=['','⑴','⑵','⑶','⑷','⑸','⑹','⑺'];
+
+/* ───────── 회차별 문제 데이터 (문제지 PDF · 모범답안 기준) ───────── */
+const RD={
+A:{id:'A',lc:'a',no:1,type:'A형',title:'2026 신선식료품 판매 현황',emoji:'🍎',
+ shape:'육각형',shapeTip:'양옆이 뾰족한 <b>육각형</b>이에요. 마우스를 올리면 “육각형”이라고 떠요.',
+ appr:['결재','담당','팀장','부장'],
+ head:['제품코드','상품명','분류','입고일자','단가','판매수량(단위:BOX)','재고수량(단위:BOX)','판매순위','공급사'],
+ brk:[['G4','판매수량','(단위:BOX)'],['H4','재고수량','(단위:BOX)']],
+ rows:[['BM-001','사과','과일','2026-02-25',80000,45,50],['EM-002','바나나','과일','2026-01-09',100000,35,30],['DM-003','딸기','과일','2026-01-23',60000,10,20],['BM-004','포도','과일','2026-01-22',70000,3,20],
+       ['DM-005','복숭아','과일','2026-03-01',90000,8,10],['EM-006','우유','유제품','2026-02-23',86000,50,45],['BM-007','치즈','유제품','2026-02-08',80000,25,25],['DM-008','시금치','채소','2026-03-08',75000,20,15]],
+ r13:['단가 전체평균','2026년 최다 판매수량(단위:BOX)'],r14:['유제품 재고수량(단위:BOX) 합계','제품코드','BM-001','입고일자'],
+ numC:'FGH',rightHow:'<b>F5:H12</b> 드래그',comma:null,
+ unit:{rng:'F5:F12',fmt:'#,##0"원"',ex:'80,000원',ch:'원'},
+ name:{rng:'H5:H12',name:'재고수량'},
+ valid:{src:'=$B$5:$B$12',what:'제품코드',pick:'BM-001'},
+ fn:[
+  {title:'판매순위',rng:'I5:I12',f:'=RANK.EQ(G5,$G$5:$G$12)&"위"',use:'RANK.EQ 함수 · & 연산자',
+   say:'판매수량이 <b>많은 순서</b>로 몇 등인지 구하고 뒤에 ‘위’를 붙여요.',
+   parts:[['RANK.EQ(G5, …)','G5(사과 판매수량)가 몇 번째로 큰지 (큰 수가 1등)'],['$G$5:$G$12','비교할 범위. 아래로 채워도 움직이지 않게 $로 고정 ('+K('F4')+')'],['&"위"','결과 숫자 뒤에 글자 ‘위’를 이어 붙여요']],
+   chk:[['I5 (사과)','2위'],['I10 (우유)','1위'],['I8 (포도)','8위']]},
+  {title:'공급사',rng:'J5:J12',f:'=IF(LEFT(B5,1)="B","신선마트",IF(LEFT(B5,1)="D","하나푸드","에덴마켓"))',use:'IF · LEFT 함수',
+   say:'제품코드 <b>첫 글자</b>가 B면 신선마트, D면 하나푸드, 둘 다 아니면 에덴마켓.',
+   parts:[['LEFT(B5,1)','B5 글자의 왼쪽에서 1글자 (BM-001 → B)'],['IF(조건,참,거짓)','조건이 맞으면 앞 값, 아니면 뒤 값'],['IF 안에 IF','B가 아니면 → 다시 D인지 물어봐요']],
+   chk:[['J5 (BM-001)','신선마트'],['J6 (EM-002)','에덴마켓'],['J7 (DM-003)','하나푸드']]},
+  {title:'단가 전체평균',cell:'E13',f:'=ROUNDDOWN(AVERAGE(F5:F12),-3)',use:'ROUNDDOWN · AVERAGE 함수',
+   say:'단가 8개의 평균을 구한 뒤 <b>천 원 아래는 버려요</b> (예: 81,250 → 81,000).',
+   parts:[['AVERAGE(F5:F12)','단가 평균 = 80,125'],['ROUNDDOWN(값,-3)','-3 = 천의 자리 아래를 버림 → 80,000']],
+   chk:[['E13','80,000원 (또는 80,000)']]},
+  {title:'유제품 재고수량 합계',cell:'E14',f:'=SUMIF(D5:D12,"유제품",재고수량)',use:'SUMIF 함수 · 이름(재고수량)',
+   say:'분류가 <b>유제품</b>인 줄의 재고수량만 더해요. 재고수량은 앞에서 <b>이름 정의</b>한 H5:H12예요.',
+   parts:[['D5:D12','조건을 볼 곳 (분류)'],['"유제품"','조건 값'],['재고수량','더할 곳 (H5:H12에 붙인 이름)']],
+   chk:[['E14','70 (우유 45 + 치즈 25)']],help:[['#NAME? 이 나와요','<b>이름 정의</b>(재고수량)가 안 됐거나 글자가 달라요. 이름 정의 단계를 다시 해요.']]},
+  {title:'최다 판매수량',cell:'J13',f:'=MAX(G5:G12)',use:'MAX 함수',
+   say:'판매수량 중 <b>가장 큰 값</b>을 구해요.',parts:[['MAX(G5:G12)','G5:G12 중 가장 큰 수']],
+   chk:[['J13','50']]},
+  {title:'입고일자 찾기',cell:'J14',f:'=VLOOKUP(H14,B5:J12,4,0)',use:'VLOOKUP 함수 · 날짜 서식',
+   say:'H14에서 고른 제품코드를 표에서 찾아 <b>4번째 열(입고일자)</b> 값을 가져와요.',
+   parts:[['H14','찾을 값 (BM-001)'],['B5:J12','찾을 표. 첫 열(B)에서 찾아요'],['4','B=1, C=2, D=3, <b>E=4</b> → 입고일자'],['0','정확히 같은 것만 (FALSE)']],
+   more:[{t:'숫자 <b>46078</b>이 보이면 '+K('Ctrl+1')+' → 표시 형식 › <b>날짜</b> › <b>2012-03-14</b> 모양 → 확인',b:['note:엑셀은 날짜를 숫자로 저장해요. 46078 = 2026-02-25 예요. 서식만 날짜로 바꾸면 돼요.']}],
+   chk:[['J14 (BM-001일 때)','2026-02-25']]}],
+ cf:{f:'=$H5>=30',col:'H',colName:'재고수량',what:'재고수량 30 이상',blue:'사과 · 바나나 · 우유 (3줄)'},
+ t2:{kind:'filter',cond:[['분류','D2'],['판매수량(단위:BOX)','G2']],cv:[['B15','유제품'],['C16','>=40']],or:true,
+     condRange:'$B$14:$C$16',out:[['B2','제품코드'],['C2','상품명'],['E2','입고일자'],['G2','판매수량(단위:BOX)']],
+     res:[['BM-001','사과','2026-02-25','45'],['EM-006','우유','2026-02-23','50'],['BM-007','치즈','2026-02-08','25']],tbl:'B18:E21',
+     say:'분류가 <b>유제품</b>이거나(또는) 판매수량이 <b>40 이상</b>'},
+ t3:{kind:'pivot',rowF:'단가',colF:'분류',cntF:'상품명',avgF:'판매수량(단위:BOX)',grp:[40001,100000,20000],order:'채소 · 유제품 · 과일',comma:false,
+     res:{cols:['채소','유제품','과일'],rows:[['40001-60000','**','**','**','**','1','10'],['60001-80000','1','20','1','25','2','24'],['80001-100000','**','**','1','50','2','22'],['총합계','1','20','2','38','5','20']]}},
+ t4:{title:'과일 및 채소상품 판매 현황',rows:[4,5,6,7,8,9,12],cols:'CFG',
+     selHow:`${K('Ctrl')} 없이 <b>C4:C9</b> 드래그 → ${K('Ctrl')} 누른 채 <b>F4:G9</b> → ${K('Ctrl')} 누른 채 <b>C12</b> → ${K('Ctrl')} 누른 채 <b>F12:G12</b>`,
+     cats:'사과 · 바나나 · 딸기 · 포도 · 복숭아 · 시금치',skip:'우유 · 치즈(유제품)',
+     bar:'단가',line:'판매수량(단위:BOX)',texture:'파랑 박엽지',textureLook:'연한 파란 종이 무늬',marker:'마름모',
+     lineHint:'판매수량은 단가보다 숫자가 아주 작아서 막대가 <b>바닥에 붙어 거의 안 보여요</b>. 그래서 아래처럼 목록에서 골라요.',
+     pickLine:true,labelAt:'꺾은선의 ‘사과’ 점',labelVal:'45',callout:'최대 판매수량',
+     ax:[['왼쪽 세로 축 (단가)','0원 ~ 120,000원 · 주 단위 20,000'],['오른쪽 보조 축 (판매수량)','0 ~ 50 · 주 단위 10']],
+     legend:{from:'판매수량 (단위:BOX)',to:'판매수량(단위:BOX)'},legendOrder:'■ 단가 · ◆ 판매수량(단위:BOX)'}},
+
+B:{id:'B',lc:'b',no:2,type:'B형',title:'바른미소치과 구강관리 예약 현황',emoji:'🦷',
+ shape:'사다리꼴',shapeTip:'아래가 넓은 <b>사다리꼴</b>이에요. 마우스를 올리면 “사다리꼴”이라고 떠요.',
+ appr:['확인','담당','대리','과장'],
+ head:['관리코드','프로그램명','소요시간(분)','구분','예약일자','예약인원(명)','관리비용','관리주기','순위'],
+ brk:[['G4','예약인원','(명)']],
+ rows:[['R-306','레이저치료',50,'집중관리','2026-08-19',390,110000],['R-101','불소도포',20,'예방관리','2026-08-03',856,30000],['A-202','스케일링',30,'예방관리','2026-08-05',1456,65000],['R-104','시린이케어',15,'예방관리','2026-08-12',1106,40000],
+       ['C-205','치아미백',60,'심미관리','2026-08-17',680,150000],['P-303','잇몸치료',45,'집중관리','2026-08-10',452,80000],['R-107','구강유산균',20,'예방관리','2026-08-24',1250,25000],['A-208','착색제거',40,'심미관리','2026-08-26',920,70000]],
+ r13:['예방관리 프로그램 개수','최대 관리비용'],r14:['집중관리 프로그램의 예약인원(명) 합계','프로그램명','레이저치료','구분'],
+ numC:'DGH',rightHow:`<b>D5:D12</b> 드래그 → ${K('Ctrl')} 누른 채 <b>G5:H12</b> 드래그`,comma:{rng:'G5:G12',ex:'1,456'},
+ unit:{rng:'H5:H12',fmt:'#,##0"원"',ex:'110,000원',ch:'원'},
+ name:{rng:'H5:H12',name:'관리비용'},
+ valid:{src:'=$C$5:$C$12',what:'프로그램명',pick:'레이저치료'},
+ fn:[
+  {title:'관리주기',rng:'I5:I12',f:'=CHOOSE(MID(B5,3,1),"3개월","6개월","1년")',use:'CHOOSE · MID 함수',
+   say:'관리코드의 <b>세 번째 글자</b>가 1이면 3개월, 2면 6개월, 3이면 1년.',
+   parts:[['MID(B5,3,1)','B5 글자의 3번째부터 1글자 (R-306 → 3)'],['CHOOSE(번호,①,②,③)','번호가 1이면 ①, 2면 ②, 3이면 ③을 골라요']],
+   chk:[['I5 (R-306)','1년'],['I6 (R-101)','3개월'],['I7 (A-202)','6개월']]},
+  {title:'순위',rng:'J5:J12',f:'=RANK.EQ(G5,$G$5:$G$12)&"위"',use:'RANK.EQ 함수 · & 연산자',
+   say:'예약인원이 <b>많은 순서</b>로 몇 등인지 구하고 ‘위’를 붙여요.',
+   parts:[['RANK.EQ(G5, …)','G5가 몇 번째로 큰지 (큰 수가 1등)'],['$G$5:$G$12','비교할 범위는 $로 고정 ('+K('F4')+')'],['&"위"','뒤에 ‘위’를 붙여요']],
+   chk:[['J5 (레이저치료)','8위'],['J7 (스케일링)','1위'],['J11 (구강유산균)','2위']]},
+  {title:'예방관리 프로그램 개수',cell:'E13',f:'=COUNTIF(E5:E12,"예방관리")',use:'COUNTIF 함수',
+   say:'구분이 <b>예방관리</b>인 칸이 몇 개인지 세요.',parts:[['E5:E12','셀 곳 (구분)'],['"예방관리"','조건']],
+   chk:[['E13','4']]},
+  {title:'집중관리 예약인원 합계',cell:'E14',f:'=ROUND(DSUM(B4:H12,G4,E4:E5),-1)',use:'ROUND · DSUM 함수',
+   say:'구분이 <b>집중관리</b>인 줄의 예약인원을 더한 뒤 <b>일의 자리에서 반올림</b>해요 (예: 754 → 750).',
+   parts:[['B4:H12','제목 줄까지 포함한 표 전체'],['G4','더할 열의 제목 칸 (예약인원)'],['E4:E5','조건: E4 “구분” + E5 “집중관리” (표에 있는 값을 그대로 조건으로 써요)'],['ROUND(값,-1)','-1 = 일의 자리에서 반올림 → 842 → 840']],
+   chk:[['E14','840 (실제 합 390 + 452 = 842)']]},
+  {title:'최대 관리비용',cell:'J13',f:'=MAX(관리비용)',use:'MAX 함수 · 이름(관리비용)',
+   say:'앞에서 <b>이름 정의</b>한 관리비용(H5:H12) 중 가장 큰 값.',parts:[['관리비용','H5:H12에 붙인 이름'],['MAX(…)','가장 큰 수']],
+   chk:[['J13','150,000원 (서식이 없으면 150000)']],help:[['#NAME? 이 나와요','<b>이름 정의</b>(관리비용)가 안 됐거나 글자가 달라요. 이름 정의 단계를 다시 해요.']]},
+  {title:'구분 찾기',cell:'J14',f:'=VLOOKUP(H14,C5:H12,3,0)',use:'VLOOKUP 함수',
+   say:'H14에서 고른 프로그램명을 찾아 <b>3번째 열(구분)</b> 값을 가져와요.',
+   parts:[['H14','찾을 값 (레이저치료)'],['C5:H12','찾을 표. 첫 열이 <b>C(프로그램명)</b>이어야 해요'],['3','C=1, D=2, <b>E=3</b> → 구분'],['0','정확히 같은 것만']],
+   chk:[['J14 (레이저치료일 때)','집중관리']]}],
+ cf:{f:'=$G5>=1000',col:'G',colName:'예약인원(명)',what:'예약인원 1,000 이상',blue:'스케일링 · 시린이케어 · 구강유산균 (3줄)'},
+ t2:{kind:'goal',cond:[['구분','E2'],['관리비용','H2']],cv:[['B15','<>집중관리'],['C15','>=50000']],or:false,
+     condRange:'$B$14:$C$15',out:[['C2','프로그램명'],['E2','구분'],['G2','예약인원(명)'],['H2','관리비용']],
+     res:[['스케일링','예방관리','1,456','65,000원'],['치아미백','심미관리','680','150,000원'],['착색제거','심미관리','920','70,000원']],
+     say:'구분이 <b>집중관리가 아니면서(그리고)</b> 관리비용이 <b>50,000 이상</b>'},
+ t3:{kind:'subtotal',res:[['집중관리 평균','421'],['집중관리 개수','2'],['예방관리 평균','1,167'],['예방관리 개수','4'],['심미관리 평균','800'],['심미관리 개수','2'],['전체 평균','889'],['전체 개수','8']]},
+ t4:{title:'집중관리 및 예방관리 예약 현황',rows:[4,5,6,7,8,10,11],cols:'CGH',
+     selHow:`<b>C4:C8</b> 드래그 → ${K('Ctrl')} 누른 채 <b>G4:H8</b> → ${K('Ctrl')} 누른 채 <b>C10:C11</b> → ${K('Ctrl')} 누른 채 <b>G10:H11</b>`,
+     cats:'레이저치료 · 불소도포 · 스케일링 · 시린이케어 · 잇몸치료 · 구강유산균',skip:'치아미백 · 착색제거(심미관리)',
+     bar:'예약인원(명)',line:'관리비용',texture:'분홍 박엽지',textureLook:'연한 분홍 종이 무늬',marker:'마름모',
+     lineHint:'관리비용은 숫자가 커서 <b>키 큰 막대</b>예요. 그 막대 하나를 우클릭해요.',
+     labelAt:'‘스케일링’ <b>막대</b> (예약인원)',labelVal:'1,456',callout:'최대 예약인원',
+     ax:[['왼쪽 세로 축 (예약인원)','0 ~ 1,600 · 주 단위 400'],['오른쪽 보조 축 (관리비용)','0원 ~ 120,000원 · 주 단위 20,000']],
+     legend:{from:'예약인원 (명)',to:'예약인원(명)'},legendOrder:'■ 예약인원(명) · ◆ 관리비용'}},
+
+C:{id:'C',lc:'c',no:3,type:'C형',title:'지역 축제 방문객 현황',emoji:'🎆',
+ shape:'십자형',shapeTip:'네 모서리가 <b>안쪽으로 오목하게 파인</b> 모양이 엑셀의 <b>십자형</b>이에요. 마우스를 올리면 이름이 떠요.',
+ appr:['결재','담당','대리','과장'],
+ head:['축제코드','축제명','지역','행사장 규모(제곱미터)','행사기간(일)','방문객수','만족도','순위','축제 규모'],
+ brk:[['E4','행사장 규모','(제곱미터)'],['F4','행사기간','(일)'],['I14','행사기간','(일)']],
+ rows:[['SE-01','봄꽃축제','서울',8500,5,18520,4.6],['BU-02','바다축제','부산',12000,7,24370,4.8],['SA-03','음악축제','서울',6500,3,12627,4.3],['CR-04','문화축제','전주',7800,4,15800,4.5],
+       ['BE-05','불빛축제','부산',10500,6,21704,4.7],['CA-06','전통축제','전주',7200,5,14314,4.4],['CR-07','음식축제','전주',5800,3,11900,4.2],['BA-08','겨울축제','부산',13500,8,26820,4.9]],
+ r13:['전주지역 축제 개수','최대 방문객수'],r14:['서울지역 방문객수 평균','축제코드','SE-01','행사기간(일)'],
+ numC:'EFGH',rightHow:'<b>E5:H12</b> 드래그',comma:{rng:'E5:E12',ex:'8,500'},
+ unit:{rng:'G5:G12',fmt:'#,##0"명"',ex:'18,520명',ch:'명'},
+ name:{rng:'D5:D12',name:'지역'},
+ valid:{src:'=$B$5:$B$12',what:'축제코드',pick:'SE-01'},
+ fn:[
+  {title:'순위',rng:'I5:I12',f:'=RANK.EQ(G5,$G$5:$G$12)&"위"',use:'RANK.EQ 함수 · & 연산자',
+   say:'방문객수가 <b>많은 순서</b>로 몇 등인지 구하고 ‘위’를 붙여요.',
+   parts:[['RANK.EQ(G5, …)','G5가 몇 번째로 큰지 (큰 수가 1등)'],['$G$5:$G$12','비교할 범위는 $로 고정 ('+K('F4')+')'],['&"위"','뒤에 ‘위’를 붙여요']],
+   chk:[['I5 (봄꽃축제)','4위'],['I12 (겨울축제)','1위'],['I11 (음식축제)','8위']]},
+  {title:'축제 규모',rng:'J5:J12',f:'=IF(AND(F5>=6,G5>=20000),"대규모","일반")',use:'IF · AND 함수',
+   say:'행사기간 <b>6일 이상</b>이면서(그리고) 방문객수 <b>20,000 이상</b>이면 대규모, 아니면 일반.',
+   parts:[['AND(조건1,조건2)','두 조건이 <b>모두</b> 맞아야 참'],['F5>=6','행사기간 6 이상'],['G5>=20000','방문객수 20,000 이상 (쉼표 없이!)']],
+   chk:[['J5 (봄꽃축제)','일반'],['J6 (바다축제)','대규모'],['J9 (불빛축제)','대규모']]},
+  {title:'전주지역 축제 개수',cell:'E13',f:'=COUNTIF(지역,"전주")',use:'COUNTIF 함수 · 이름(지역)',
+   say:'앞에서 <b>이름 정의</b>한 지역(D5:D12)에서 “전주”가 몇 개인지 세요.',parts:[['지역','D5:D12에 붙인 이름'],['"전주"','조건']],
+   chk:[['E13','3']],help:[['#NAME? 이 나와요','<b>이름 정의</b>(지역)가 안 됐거나 글자가 달라요. 이름 정의 단계를 다시 해요.']]},
+  {title:'서울지역 방문객수 평균',cell:'E14',f:'=ROUND(DAVERAGE(B4:H12,G4,D4:D5),-2)',use:'ROUND · DAVERAGE 함수',
+   say:'지역이 <b>서울</b>인 줄의 방문객수 평균을 <b>십의 자리에서 반올림</b>해요 (예: 16,870 → 16,900).',
+   parts:[['B4:H12','제목 줄까지 포함한 표 전체'],['G4','평균 낼 열의 제목 칸 (방문객수)'],['D4:D5','조건: D4 “지역” + D5 “서울” (표에 있는 값을 그대로 조건으로)'],['ROUND(값,-2)','-2 = 십의 자리에서 반올림 → 15,573.5 → 15,600']],
+   chk:[['E14','15,600명 (또는 15,600 / 15600)']]},
+  {title:'최대 방문객수',cell:'J13',f:'=MAX(G5:G12)',use:'MAX 함수',
+   say:'방문객수 중 <b>가장 큰 값</b>.',parts:[['MAX(G5:G12)','G5:G12 중 가장 큰 수']],
+   chk:[['J13','26,820명 (또는 26820)']]},
+  {title:'행사기간 찾기',cell:'J14',f:'=VLOOKUP(H14,B5:H12,5,0)',use:'VLOOKUP 함수',
+   say:'H14에서 고른 축제코드를 찾아 <b>5번째 열(행사기간)</b> 값을 가져와요.',
+   parts:[['H14','찾을 값 (SE-01)'],['B5:H12','찾을 표. 첫 열(B)에서 찾아요'],['5','B=1, C=2, D=3, E=4, <b>F=5</b> → 행사기간'],['0','정확히 같은 것만']],
+   chk:[['J14 (SE-01일 때)','5']]}],
+ cf:{f:'=$G5>=20000',col:'G',colName:'방문객수',what:'방문객수 20,000 이상',blue:'바다축제 · 불빛축제 · 겨울축제 (3줄)'},
+ t2:{kind:'filter',cond:[['축제코드','B2'],['방문객수','G2']],cv:[['B15','S*'],['C16','>=20000']],or:true,
+     condRange:'$B$14:$C$16',out:[['C2','축제명'],['F2','행사기간(일)'],['G2','방문객수'],['H2','만족도']],
+     res:[['봄꽃축제','5','18,520명','4.6'],['바다축제','7','24,370명','4.8'],['음악축제','3','12,627명','4.3'],['불빛축제','6','21,704명','4.7'],['겨울축제','8','26,820명','4.9']],tbl:'B18:E23',
+     say:'축제코드가 <b>S로 시작</b>하거나(또는) 방문객수가 <b>20,000 이상</b>'},
+ t3:{kind:'pivot',rowF:'행사기간(일)',colF:'지역',cntF:'축제명',avgF:'방문객수',grp:[3,8,2],order:'전주 · 서울 · 부산',comma:true,
+     res:{cols:['전주','서울','부산'],rows:[['3-4','2','13,850','1','12,627','**','**'],['5-6','1','14,314','1','18,520','1','21,704'],['7-8','**','**','**','**','2','25,595'],['총합계','3','14,005','2','15,574','3','24,298']]}},
+ t4:{title:'부산 및 전주지역 축제 현황',rows:[4,6,8,9,10,11,12],cols:'CFG',
+     selHow:`<b>C4</b> 클릭 → ${K('Ctrl')} 누른 채 <b>F4:G4</b> → ${K('Ctrl')} <b>C6</b> → ${K('Ctrl')} <b>F6:G6</b> → ${K('Ctrl')} <b>C8:C12</b> → ${K('Ctrl')} <b>F8:G12</b>`,
+     cats:'바다축제 · 문화축제 · 불빛축제 · 전통축제 · 음식축제 · 겨울축제',skip:'봄꽃축제 · 음악축제(서울)',
+     bar:'행사기간(일)',line:'방문객수',texture:'분홍 박엽지',textureLook:'연한 분홍 종이 무늬',marker:'세모',
+     lineHint:'방문객수는 숫자가 커서 <b>키 큰 막대</b>예요. 그 막대 하나를 우클릭해요.',
+     labelAt:'꺾은선의 ‘겨울축제’ 점',labelVal:'26,820명',callout:'최다 방문객수',
+     ax:[['왼쪽 세로 축 (행사기간)','0 ~ 9 · 주 단위 1'],['오른쪽 보조 축 (방문객수)','0명 ~ 32,000명 · 주 단위 4,000']],
+     legend:{from:'행사기간 (일)',to:'행사기간(일)'},legendOrder:'■ 행사기간(일) · ▲ 방문객수'}}
+};
+
+/* ───────── 작은 화면 조각 ───────── */
+const CP={};   // 복사 버튼 내용
+function pathHTML(p){
+  const keyLike=s=>/^(F\d+|Ctrl.*|Alt.*|Shift.*)$/.test(s);
+  const segs=p.filter(s=>!keyLike(s)),key=p.find(keyLike);
+  return `<div class="path">${segs.map(s=>`<span class="seg">${s}</span>`).join('<span class="arr">›</span>')}${key?`<span class="or">또는 ${K(key)}</span>`:''}</div>`;
+}
+const paths=(...ps)=>`<div class="paths">${ps.map(pathHTML).join('')}</div>`;
+function fieldVal(v,sw){
+  let pre='';
+  if(v.startsWith(ON)){pre='<span class="chk">✓</span>';v=v.slice(1).trim()}
+  else if(v.startsWith(OFF)){pre='<span class="chk off"></span>';v=v.slice(1).trim()}
+  if(sw)pre=`<span class="sw" style="background:${sw}"></span>`;
+  return pre+v;
+}
+function dlgHTML(d){
+  const tabs=d.tabs||[],on=d.on||tabs.slice(0,1);
+  return `<div class="dlg" role="img" aria-label="${esc(d.t)} 입력 내용"><div class="bar">${d.t}<span>✕</span></div>
+  ${tabs.length?`<div class="tabs">${tabs.map(t=>`<span class="tab ${on.includes(t)?'on':''}">${t}</span>`).join('')}</div>`:''}
+  <div class="body">${d.rows.map(r=>r[0][0]==='#'?`<div class="sec">${r[0].slice(1)}</div>`:`<div class="fld"><span class="fl">${r[0]}</span><span class="fv">${fieldVal(r[1],r[2])}</span></div>`).join('')}</div>
+  <div class="foot"><span>${d.btn||'확인'}</span><span>취소</span></div></div>`;
+}
+const D=(t,rows,o={})=>dlgHTML({t,rows,...o});
+const note=s=>`<p class="snote">${s}</p>`;
+const warn=s=>`<p class="snote warn">⚠️ ${s}</p>`;
+const good=s=>`<p class="snote good">✅ ${s}</p>`;
+let CPN=0;
+function fx(cell,f){const key='c'+(++CPN);CP[key]=f;
+  return `<div class="fx"><span class="fxc">${cell}</span><code>${esc(f)}</code><button class="btn" data-copy="${key}" aria-label="${cell} 수식 복사">📋 복사</button></div>`}
+function cbox(label,text,pre){const key='c'+(++CPN);CP[key]=text;
+  return `<div class="cbox"><div class="xhead"><h2 style="font-size:.9rem">${label}</h2><button class="btn" data-copy="${key}">📋 복사</button></div>${pre===false?'':`<div class="copyzone">${esc(text)}</div>`}</div>`}
+const chk=rows=>`<table class="tbl ok"><thead><tr><th>셀</th><th>이 값이 나오면 정답 ✅</th></tr></thead><tbody>${rows.map(r=>`<tr><td>${r[0]}</td><td class="res">${r[1]}</td></tr>`).join('')}</tbody></table>`;
+const partsT=p=>`<table class="parts"><tbody>${p.map(r=>`<tr><td>${esc(r[0])}</td><td>${r[1]}</td></tr>`).join('')}</tbody></table>`;
+const resT=(head,rows,cap)=>`<div class="xsw"><table class="tbl res"><thead><tr>${head.map(h=>`<th>${h}</th>`).join('')}</tr></thead><tbody>${rows.map(r=>`<tr>${r.map(c=>`<td>${c}</td>`).join('')}</tr>`).join('')}</tbody></table></div>${cap?`<p class="xscap">${cap}</p>`:''}`;
+/* 미니 엑셀 화면: cols 예 'BCDE', rows [[행번호,[[글자,클래스],…]],…] */
+function xs(cols,rows,cap){
+  return `<div class="xsw"><table class="xs" role="img" aria-label="엑셀 화면 예시"><thead><tr><th></th>${cols.split('').map(c=>`<th>${c}</th>`).join('')}</tr></thead><tbody>${rows.map(([n,cells,tr])=>`<tr class="${tr||''}"><th>${n}</th>${cells.map(c=>{const [v,cl]=Array.isArray(c)?c:[c,''];return `<td class="${cl||''}">${esc(v)}</td>`}).join('')}</tr>`).join('')}</tbody></table></div>${cap?`<p class="xscap">${cap}</p>`:''}`;
+}
+const tabsDemo=(names,cur)=>`<div class="tabsdemo" aria-hidden="true">${names.map(n=>`<span class="${n===cur?'on':''}">${n}</span>`).join('')}<b>⊕</b></div>`;
+const abs=r=>'='+r.replace(/([A-Z]+)(\d+)/g,'$$$1$$$2');
+const fmtN=v=>typeof v==='number'?String(v):v;
+
+/* 제1작업 표의 셀 값 (붙여넣은 직후 모습) */
+function cellVal(T,c,r){
+  const ci=COLS.indexOf(c);
+  if(ci<0||r<4||r>14)return '';
+  if(r===4)return T.head[ci];
+  if(r>=5&&r<=12)return ci<7?fmtN(T.rows[r-5][ci]):'';
+  if(r===13)return c==='B'?T.r13[0]:c==='G'?T.r13[1]:'';
+  if(r===14)return {B:T.r14[0],G:T.r14[1],H:T.r14[2],I:T.r14[3]}[c]||'';
+  return '';
+}
+function sheet1(T,o={}){
+  const from=o.from||4,to=o.to||14,cols=o.cols||'BCDEFGHIJ',rows=[];
+  for(let r=from;r<=to;r++){
+    const cells=cols.split('').map(c=>{let v=cellVal(T,c,r),cl='';
+      if(r>=5&&r<=12&&T.numC.includes(c))cl='n';
+      if(o.mark){const m=o.mark(c,r);if(m)cl+=' '+m}
+      if(o.blank&&!v)v='';
+      return [v.length>14&&!o.full?v.slice(0,13)+'…':v,cl]});
+    rows.push([r,cells,o.tr?o.tr(r):'']);
+  }
+  return xs(cols,rows,o.cap);
+}
+const tsvData=T=>{
+  const L=[T.head.join('\t')];
+  T.rows.forEach(r=>L.push([...r.map(fmtN),'',''].join('\t')));
+  L.push([T.r13[0],'','','','',T.r13[1],'','',''].join('\t'));
+  L.push([T.r14[0],'','','','',T.r14[1],T.r14[2],T.r14[3],''].join('\t'));
+  return L.join('\n');
+};
+const DLS=r=>`<a class="dl" href="files/itq-excel-${RD[r].lc}.pdf" download="ITQ엑셀_${RD[r].no}회차_${RD[r].type}.pdf"><span class="ic">📑</span><span>${RD[r].no}회차 ${RD[r].type} 문제지<small>${RD[r].title}</small></span></a>`;
+
+/* ───────── 회차 데이터 → 단계(미션) 목록 ─────────
+   미션: {id,w(0 준비 · 1~4 작업 · 5 마무리),icon,title,sub,imgs,paths,tip,help,steps:[{t,b:[html]}]} */
+function build(T){
+  const P=T.lc,M=[],add=o=>M.push(o);
+  const img=n=>`${P}-${n}`;
+  const apr=T.appr;
+  const sumBrk=T.brk.map(b=>`<b>${b[0]}</b>`).join(', ');
+
+  add({id:'start',w:0,icon:'🚀',title:'시작하기',sub:'문제지 열고, 화면 나누고, 엑셀 켜기',imgs:[img('t1')],
+   paths:[['파일','새로 만들기','새 통합 문서','Ctrl+N']],
+   steps:[
+    {t:`아래 <b>${T.no}회차 ${T.type} 문제지 PDF</b>를 눌러 열어 두기`,b:[`<div class="dls">${DLS(T.id)}</div>`,note('PDF 1쪽 오른쪽 = 제1작업, 3쪽 왼쪽 = 제2·3작업, 3쪽 오른쪽 = 제4작업(차트)이에요. 2쪽·4쪽은 1쪽·3쪽과 같은 내용이에요.')]},
+    {t:`이 창 ${K('Win+←')}, 엑셀 창 ${K('Win+→')} 로 화면 반씩 나누기`,b:[`<div class="splitdemo" aria-hidden="true"><div>📘 이 페이지<br><kbd>Win</kbd>+<kbd>←</kbd></div><div>📊 엑셀<br><kbd>Win</kbd>+<kbd>→</kbd></div></div>`]},
+    {t:'<b>엑셀 2021</b> 실행 → <b>새 통합 문서</b>',b:[paths(['파일','새로 만들기','새 통합 문서','Ctrl+N']),note('엑셀을 켜면 나오는 첫 화면에서 <b>새 통합 문서</b>를 눌러도 돼요.')]},
+    {t:'왼쪽 <b>완성하면 이렇게!</b> 그림(≪출력형태≫)을 한 번 크게 보기',b:[note('그림을 누르면 크게 보여요. 이 그림과 <b>똑같이</b> 만드는 게 목표예요.')]}],
+   tip:'엑셀 시험은 <b>제1작업부터 순서대로!</b> 제2~4작업이 제1작업 표를 써요.',
+   help:[['PDF가 안 열려요','PDF를 <b>내려받기</b>한 뒤 파일을 더블클릭해서 열어요. 그래도 안 되면 선생님께 종이 문제지를 받아요.'],['엑셀 버전이 달라요','이 안내는 <b>MS 엑셀 2021</b> 기준이에요. 엑셀 365도 메뉴 이름이 거의 같아요.']],
+   extra:'start',stamp:'시작',next:'준비 완료! 시작 →'});
+
+  add({id:'sheets',w:0,icon:'🗂️',title:'시트 3개 만들기',sub:'제1작업 · 제2작업 · 제3작업',imgs:[],
+   paths:[['시트 탭 오른쪽 ⊕ (새 시트)'],['시트 탭 더블클릭','이름 입력','Enter']],
+   steps:[
+    {t:'아래쪽 <b>Sheet1</b> 탭 오른쪽 <b>⊕</b>를 <b>2번</b> 눌러 시트를 3개로',b:[tabsDemo(['Sheet1','Sheet2','Sheet3'],'Sheet3')]},
+    {t:`<b>Sheet1</b> 탭 더블클릭 → <b>제1작업</b> 입력 → ${K('Enter')}`,b:[tabsDemo(['제1작업','Sheet2','Sheet3'],'제1작업')]},
+    {t:'같은 방법으로 <b>제2작업</b>, <b>제3작업</b>',b:[tabsDemo(['제1작업','제2작업','제3작업'],'제3작업')]},
+    {t:'탭 순서가 <b>제1작업 · 제2작업 · 제3작업</b>인지 확인',b:[note('순서가 다르면 탭을 마우스로 끌어서 옮겨요.'),good('<b>제4작업</b>은 지금 만들지 않아요! 나중에 차트를 “새 시트”로 옮기면서 그 이름을 붙여요.')]}],
+   tip:'시트 이름은 <b>띄어쓰기 없이</b> “제1작업”! 다르면 감점이에요.',
+   help:[['Sheet2가 Sheet1 앞에 생겼어요','탭을 마우스로 끌어 순서를 바꾸면 돼요.'],['제4작업 시트도 미리 만들면 안 되나요?','미리 만들면 차트를 옮길 때 “이미 있는 이름”이라고 막혀요. 그러면 빈 제4작업 시트를 먼저 지워야 해서 번거로워요.']]});
+
+  add({id:'base',w:0,icon:'🔤',title:'글꼴 · A열 너비',sub:'모든 시트: 굴림 11pt, A열 너비 1',imgs:[],
+   paths:[['홈','글꼴','굴림 · 11'],['A열 머리글 우클릭','열 너비']],
+   steps:[
+    {t:`<b>제1작업</b> 탭 클릭 → ${K('Shift')} 누른 채 <b>제3작업</b> 탭 클릭`,b:[note('제목 표시줄(맨 위)에 <b>[그룹]</b>이 보이면 성공! 지금부터 하는 서식이 시트 3개에 한꺼번에 들어가요.')]},
+    {t:`왼쪽 위 A열 머리글 왼쪽의 <b>◢ 모두 선택</b> 단추 클릭 (또는 ${K('Ctrl+A')})`,b:[xs('ABC',[[1,['','','']],[2,['','','']]],'◢ 단추는 A열 머리글과 1행 머리글이 만나는 왼쪽 위 모서리에 있어요.')]},
+    {t:'<b>홈 › 글꼴</b>에서 글꼴 <b>굴림</b>, 크기 <b>11</b>',b:[D('홈 › 글꼴',[['글꼴','굴림'],['크기','11']])]},
+    {t:'<b>A</b>열 머리글 우클릭 → <b>열 너비</b> → <b>1</b> → 확인',b:[D('열 너비',[['열 너비','1']])]},
+    {t:'시트 탭 우클릭 → <b>시트 그룹 해제</b> → [그룹] 글자가 사라졌는지 확인',b:[warn('그룹을 풀지 않고 데이터를 입력하면 <b>시트 3개에 똑같이</b> 들어가요!')]}],
+   tip:'글꼴은 <b>굴림</b>! 굴림체가 아니에요.',
+   help:[['글꼴 목록에 굴림이 안 보여요',`글꼴 칸에 <b>굴림</b>을 직접 치고 ${K('Enter')}.`],['[그룹]인 채로 입력해 버렸어요',`${K('Ctrl+Z')}로 되돌리거나, 다른 시트에 들어간 내용을 지워요.`],['A열이 안 보여요','너비 1이라 아주 좁아서 그래요. 정상이에요!']]});
+
+  add({id:'save',w:0,icon:'💾',title:'파일 저장',sub:'내 PC\\문서\\ITQ · 수험번호-성명.xlsx',imgs:[],
+   paths:[['파일','다른 이름으로 저장','찾아보기','F12']],
+   steps:[
+    {t:`${K('F12')} (다른 이름으로 저장) 누르기`,b:[paths(['파일','다른 이름으로 저장','찾아보기','F12'])]},
+    {t:'왼쪽 목록에서 <b>내 PC › 문서 › ITQ</b> 폴더 열기',b:[note('연습 때는 선생님이 알려 주는 폴더에 저장해요.')]},
+    {t:'파일 이름 <b>수험번호-성명</b> 입력 → <b>저장</b>',b:[D('다른 이름으로 저장',[['파일 이름','12345678-홍길동 (연습: 1-1-01-내이름)'],['파일 형식','Excel 통합 문서 (*.xlsx)']],{btn:'저장'})]},
+    {t:`이제부터 한 단계 끝날 때마다 ${K('Ctrl+S')}`,b:[]}],
+   tip:'파일 이름이 다르면 <b>실격</b>! 하이픈(-) 하나까지 똑같이.',
+   help:[['ITQ 폴더가 없어요','연습 때는 바탕 화면이나 선생님이 알려 준 폴더에 저장해요. 시험장에는 미리 만들어져 있어요.'],['F12가 안 먹어요',`노트북은 ${K('Fn+F12')}일 수 있어요. 또는 <b>파일 › 다른 이름으로 저장 › 찾아보기</b>.`]],
+   stamp:'준비'});
+
+  /* ── 제1작업 ── */
+  add({id:'data',w:1,icon:'⌨️',title:'데이터 입력',sub:'B4:J14 표 내용 넣기',imgs:[img('t1')],
+   paths:[['제1작업 B4 클릭','Ctrl+V'],['셀 더블클릭','줄 바꿀 곳 클릭','Alt+Enter']],
+   steps:[
+    {t:'<b>제1작업</b> 탭에서 <b>B4</b> 셀 클릭',b:[sheet1(T,{from:3,to:5,cols:'ABCD',mark:(c,r)=>c==='B'&&r===4?'pick':'',cap:'파란 칸이 B4예요. A열은 너비 1이라 아주 좁아요.'})]},
+    {t:`아래 <b>📋 복사</b> 단추 → 엑셀에서 ${K('Ctrl+V')}`,b:[cbox('표 데이터 (B4:J14)',tsvData(T)),sheet1(T,{cap:'붙여넣으면 이렇게 들어가요. I·J열과 E13·E14·J13·J14는 함수로 채울 칸이라 비어 있어요.'})]},
+    {t:`날짜가 <b>${T.rows[0][3]}</b>처럼 보이고 셀 <b>오른쪽</b>에 붙었는지 확인`,b:[note('오른쪽에 붙으면 엑셀이 <b>날짜(숫자)</b>로 알아본 거예요. 왼쪽에 붙으면 글자로 들어간 거라 다시 입력해요.')]},
+    {t:`줄바꿈 머리글 ${sumBrk}: 셀 더블클릭 → 줄 바꿀 곳 클릭 → ${K('Alt+Enter')} → ${K('Enter')}`,b:[resT(['셀','이렇게 두 줄로'],T.brk.map(b=>[b[0],`${b[1]}<br>${b[2]}`])),note('출력형태 그림에서 두 줄로 보이는 칸이에요.')]}],
+   tip:`셀 안 줄바꿈은 ${K('Alt+Enter')}! 그냥 ${K('Enter')}는 다음 칸으로 가요.`,
+   help:[['한 칸에 다 들어갔어요',`B4 셀을 <b>한 번만</b> 클릭(더블클릭 X)하고 ${K('Ctrl+V')} 해요. 그래도 안 되면 직접 입력해요.`],['####이 보여요','열 너비가 좁아서 그래요. 열 머리글 사이 경계선을 더블클릭하면 넓어져요.'],['날짜가 왼쪽에 붙어 있어요',`그 칸에 다시 <b>${T.rows[0][3]}</b> 처럼 하이픈(-)으로 입력해요.`],['직접 입력하고 싶어요','좋아요! 시험에서는 직접 쳐야 해요. 2번째 연습부터는 복사 대신 직접 쳐 보세요.']]});
+
+  add({id:'align',w:1,icon:'↔️',title:'셀 병합 · 정렬',sub:'아래 두 줄 병합, 가운데 · 오른쪽 정렬',imgs:[img('bot'),img('t1')],
+   paths:[['홈','맞춤','병합하고 가운데 맞춤'],['홈','맞춤','가운데 맞춤'],['홈','맞춤','오른쪽 맞춤'],...(T.comma?[['홈','표시 형식','쉼표 스타일 ( , )']]:[])],
+   steps:[
+    {t:'<b>B13:D13</b> 드래그 → <b>병합하고 가운데 맞춤</b>',b:[sheet1(T,{from:12,to:14,mark:(c,r)=>r===13&&'BCD'.includes(c)?'pick':''})]},
+    {t:'같은 방법으로 <b>B14:D14</b>, <b>F13:F14</b>, <b>G13:I13</b>도 하나씩 병합',b:[sheet1(T,{from:12,to:14,mark:(c,r)=>(r===14&&'BCD'.includes(c))||(c==='F'&&r>=13)||(r===13&&'GHI'.includes(c))?'pick':''}),note('파란 칸 덩어리 <b>3개</b>를 <b>따로따로</b> 병합해요.')]},
+    {t:'<b>B4:J14</b> 전체 드래그 → <b>가운데 맞춤</b>',b:[]},
+    {t:`숫자 칸 ${T.rightHow} → <b>오른쪽 맞춤</b>`,b:[sheet1(T,{from:4,to:6,mark:(c,r)=>r>=5&&T.numC.includes(c)?'pick':''}),note('조건: <b>숫자는 오른쪽</b>, 나머지(글자 · 날짜)는 가운데. 날짜는 출력형태처럼 가운데예요.')]},
+    ...(T.comma?[{t:`<b>${T.comma.rng}</b> 드래그 → 홈 › 표시 형식 › <b>쉼표 스타일</b> ( <b>,</b> 단추)`,b:[note(`<b>${T.comma.ex}</b> 처럼 천 단위 쉼표가 생겨요.`)]}]:[])],
+   tip:'병합은 <b>한 덩어리씩</b>! B13:I13을 한 번에 병합하면 안 돼요.',
+   help:[['병합하니 경고 창이 떠요','“왼쪽 위 값만 남는다”는 뜻이에요. 글자가 왼쪽 위 칸에만 있으면 괜찮으니 <b>확인</b>.'],['날짜도 숫자인데 왜 가운데예요?','출력형태 그림에서 날짜가 가운데에 있어요. 예외는 ≪출력형태≫를 따라요.']]});
+
+  add({id:'border',w:1,icon:'🔲',title:'테두리 · 열 너비',sub:'모든 테두리 · 굵은 바깥쪽 · 대각선',imgs:[img('t1'),img('bot')],
+   paths:[['홈','글꼴','테두리 ▾','모든 테두리'],['홈','글꼴','테두리 ▾','굵은 바깥쪽 테두리'],['셀 서식','테두리 탭','Ctrl+1']],
+   steps:[
+    {t:'<b>B4:J14</b> 드래그 → 테두리 ▾ → <b>모든 테두리</b>',b:[]},
+    {t:'선택한 그대로 → 테두리 ▾ → <b>굵은 바깥쪽 테두리</b>',b:[]},
+    {t:'<b>B5:J12</b> 드래그 → <b>굵은 바깥쪽 테두리</b>',b:[note('머리글(4행) 아래와 13행 위에 <b>굵은 선</b>이 생겨요. 출력형태 그림과 비교!')]},
+    {t:`병합한 <b>F13</b> 칸 클릭 → ${K('Ctrl+1')} → <b>테두리</b> 탭 → 대각선 <b>╲</b> <b>╱</b> 둘 다 → 확인`,b:[D('셀 서식',[['선 스타일','가는 실선'],['대각선','╲ 단추 + ╱ 단추 (미리 보기 아래 양쪽 끝)']],{tabs:['표시 형식','맞춤','글꼴','테두리','채우기'],on:['테두리']})]},
+    {t:'B~J 열 너비를 출력형태처럼 조절 (글자가 잘리거나 ### 이 없게)',b:[note('열 머리글 사이 경계선을 <b>더블클릭</b>하면 글자에 맞게 넓어져요. 그다음 출력형태 그림을 보며 끌어서 살짝 조절해요.')]}],
+   tip:'굵은 선 위치를 출력형태 그림과 <b>꼭 비교</b>해요!',
+   help:[['굵은 선이 안 생겨요','범위를 다시 드래그했는지 확인! 선택이 풀리면 한 칸에만 들어가요.'],['대각선 단추가 어디예요?','셀 서식 테두리 탭의 미리 보기 상자 <b>왼쪽 아래 끝</b>(╱)과 <b>오른쪽 아래 끝</b>(╲) 단추예요.']]});
+
+  add({id:'shape',w:1,icon:'⬡',title:'제목 도형 그리기',sub:`${T.shape} 도형에 제목 넣기`,imgs:[img('top')],
+   paths:[['삽입','일러스트레이션','도형','기본 도형',T.shape]],
+   steps:[
+    {t:`<b>삽입 › 도형</b> → 기본 도형 → <b>${T.shape}</b> 클릭`,b:[paths(['삽입','일러스트레이션','도형','기본 도형',T.shape]),note(T.shapeTip)]},
+    {t:'<b>B1</b>부터 <b>G3</b> 정도까지 끌어서 그리기',b:[xs('BCDEFGHIJ',[[1,[['제목 도형','pick'],['','pick'],['','pick'],['','pick'],['','pick'],['','pick'],'결재란','','']],[2,['','','','','','','','','']],[3,['','','','','','','','','']]],'H~J는 결재란 자리라 비워 둬요.')]},
+    {t:'도형이 선택된 채로 바로 제목 입력 (또는 아래 복사 → 붙여넣기)',b:[cbox('제목',T.title)]},
+    {t:'도형 <b>테두리 선</b>을 클릭해서 도형 전체 선택',b:[note('글자 안을 클릭하면 커서가 깜박여요. <b>테두리 선</b>을 클릭하면 테두리가 실선이 되고, 이때 서식을 주면 글자 전체에 들어가요.')]}],
+   tip:'도형 안 = 글자 편집, <b>테두리 선</b> = 도형 전체 선택!',
+   help:[['도형이 셀에 안 맞아요',`그리면서 ${K('Alt')}를 누르고 있으면 셀 눈금에 딱 맞춰져요.`],[`${T.shape}을 못 찾겠어요`,'도형 목록 <b>기본 도형</b> 줄에 있어요. 마우스를 올리면 이름이 떠요.']]});
+
+  add({id:'shape2',w:1,icon:'🎨',title:'제목 꾸미기',sub:'굴림 24pt 검정 굵게 · 노랑 · 그림자',imgs:[img('top')],
+   paths:[['홈','글꼴','굴림 · 24 · 굵게 · 검정'],['홈','맞춤','가운데 맞춤 · 세로 가운데 맞춤'],['도형 서식','도형 채우기','노랑'],['도형 서식','도형 효과','그림자','바깥쪽','오프셋: 오른쪽']],
+   steps:[
+    {t:'홈 › 글꼴: <b>굴림 · 24 · 굵게(가) · 글꼴 색 검정</b>',b:[D('홈 › 글꼴',[['글꼴','굴림'],['크기','24'],['굵게',ON+' 가'],['글꼴 색','검정, 텍스트 1',SW.black]])]},
+    {t:'홈 › 맞춤: <b>가운데 맞춤</b> + <b>세로 가운데 맞춤</b>',b:[]},
+    {t:'<b>도형 서식</b> 탭 › 도형 채우기 › 표준 색 <b>노랑</b>',b:[D('도형 서식',[['도형 채우기','노랑 (표준 색)',SW.yellow]])]},
+    {t:'도형 서식 › 도형 효과 › 그림자 › 바깥쪽 › <b>오프셋: 오른쪽</b>',b:[D('도형 효과 › 그림자',[['바깥쪽','오프셋: 오른쪽']])]}],
+   tip:'도형 글자는 처음에 <b>흰색</b>이에요. 꼭 <b>검정</b>으로!',
+   help:[['노랑이 두 개 있어요','아래쪽 <b>표준 색</b> 줄의 노랑을 골라요.'],['그림자 이름이 안 보여요','마우스를 올리면 “오프셋: 오른쪽”이 떠요. 바깥쪽 그림자 목록의 첫 줄에 있어요.'],['글꼴이 일부만 바뀌었어요','글자 일부만 선택된 상태였어요. 도형 <b>테두리 선</b>을 클릭하고 다시!']]});
+
+  add({id:'appr',w:1,icon:'✍️',title:'결재란 만들기',sub:'빈 곳에 작은 표 만들기 (원본)',imgs:[img('top')],
+   paths:[['홈','맞춤','방향 (ab↗)','세로 쓰기'],['홈','글꼴','테두리 ▾','모든 테두리']],
+   steps:[
+    {t:`표와 먼 빈 칸 <b>L16</b> 클릭 → 아래 복사 → ${K('Ctrl+V')}`,b:[cbox('결재란 글자',apr.join('\t')),xs('LMNO',[[16,apr.map(a=>[a,'pick'])],[17,['','','','']]])]},
+    {t:'<b>L16:L17</b> 드래그 → 병합하고 가운데 맞춤 → 홈 › 맞춤 › 방향 › <b>세로 쓰기</b>',b:[]},
+    {t:'<b>L16:O17</b> 드래그 → <b>모든 테두리</b> · <b>가운데 맞춤</b>',b:[]},
+    {t:'17행 머리글 아래 경계를 끌어 <b>도장 칸</b>을 높게, M~O열을 출력형태처럼 넓게',b:[note('출력형태의 결재란 모양을 보며 맞춰요.')]}],
+   tip:'이 표는 <b>그림으로 복사</b>할 원본이에요. 다음 단계에서 지워요.',
+   help:[['세로 쓰기가 어디 있어요?','홈 › 맞춤 묶음의 <b>ab↗ (방향)</b> 단추를 누르면 나와요.']]});
+
+  add({id:'appr2',w:1,icon:'🖼',title:'결재란 그림으로 붙이기',sub:'그림으로 복사 → H1에 붙이기 → 원본 삭제',imgs:[img('top')],
+   paths:[['홈','클립보드','복사 ▾','그림으로 복사']],
+   steps:[
+    {t:'<b>L16:O17</b> 드래그 → 홈 › 클립보드 › <b>복사 ▾</b> › <b>그림으로 복사</b> → 확인',b:[D('그림 복사',[['모양','화면에 표시된 대로'],['형식','그림']])]},
+    {t:`<b>H1</b> 클릭 → ${K('Ctrl+V')}`,b:[]},
+    {t:'그림 모서리를 끌어 <b>H1:J3</b> 칸에 맞게 크기 · 위치 조절',b:[]},
+    {t:'<b>L</b>~<b>O</b> 열 머리글 드래그 → 우클릭 → <b>삭제</b> (원본 삭제)',b:[warn('B~J 열은 절대 선택하지 마세요. 표가 지워져요!')]}],
+   tip:'조건에 <b>“원본 삭제”</b>가 있어요. 원본을 남기면 감점!',
+   help:[['그림으로 복사가 안 보여요','<b>복사</b> 단추 오른쪽의 작은 <b>▾</b>를 눌러야 나와요.'],['붙였는데 그림이 아니라 표예요',`그냥 ${K('Ctrl+C')}로 복사한 거예요. 지우고 <b>그림으로 복사</b>로 다시!`],['원본을 지웠더니 그림도 사라졌어요',`그림이 L~O열 위에 있었나 봐요. ${K('Ctrl+Z')} 후 그림을 먼저 H1로 옮기고 지워요.`]]});
+
+  add({id:'fill',w:1,icon:'🟧',title:'주황 채우기',sub:'B4:J4, G14, I14',imgs:[img('t1')],
+   paths:[['홈','글꼴','채우기 색 ▾','표준 색','주황']],
+   steps:[
+    {t:'<b>B4:J4</b> 드래그',b:[sheet1(T,{from:4,to:4,mark:(c,r)=>'or'})]},
+    {t:`${K('Ctrl')} 누른 채 <b>G14</b>, <b>I14</b> 클릭`,b:[sheet1(T,{from:13,to:14,mark:(c,r)=>r===14&&'GI'.includes(c)?'or':''})]},
+    {t:'채우기 색 ▾ → 표준 색 <b>주황</b>',b:[D('채우기 색',[['색','주황 (표준 색)',SW.orange]])]}],
+   tip:`떨어진 칸을 같이 고를 땐 ${K('Ctrl')}!`,
+   help:[['주황이 두 개예요','<b>표준 색</b> 줄의 주황이에요. 마우스를 올리면 “주황”이라고 떠요.'],['Ctrl로 고르다 실수했어요','빈 칸을 한 번 클릭해서 선택을 풀고 처음부터!']]});
+
+  add({id:'valid',w:1,icon:'✅',title:'유효성 검사',sub:`H14에 ${T.valid.what} 목록 만들기`,imgs:[img('bot')],
+   paths:[['데이터','데이터 도구','데이터 유효성 검사']],
+   steps:[
+    {t:'<b>H14</b> 클릭',b:[]},
+    {t:'데이터 › 데이터 도구 › <b>데이터 유효성 검사</b>',b:[paths(['데이터','데이터 도구','데이터 유효성 검사'])]},
+    {t:`설정 탭: 제한 대상 <b>목록</b> → 원본 칸 클릭 → <b>${T.valid.src.slice(1).replace(/\$/g,'')}</b> 드래그 → 확인`,b:[D('데이터 유효성',[['제한 대상','목록'],['드롭다운 표시',ON+' 켜기'],['원본',T.valid.src]],{tabs:['설정','설명 메시지','오류 메시지'],on:['설정']})]},
+    {t:`H14의 <b>▾</b>를 눌러 <b>${T.valid.pick}</b> 고르기`,b:[note('출력형태처럼 H14에 '+T.valid.pick+'가 보이면 돼요.')]}],
+   tip:'원본은 <b>드래그</b>로 고르면 $가 자동으로 붙어요.',
+   help:[['단추가 두 부분으로 나뉘어 있어요','단추의 <b>위쪽 그림 부분</b>을 누르면 바로 창이 떠요.'],['원본에 머리글까지 들어갔어요',`원본은 <b>${T.valid.src}</b> (5~12행)만! 고쳐서 확인.`]]});
+
+  add({id:'fmt',w:1,icon:'💲',title:'셀 서식 (사용자 지정)',sub:`${T.unit.rng} 숫자 뒤에 ‘${T.unit.ch}’`,imgs:[img('t1')],
+   paths:[['셀 서식','표시 형식 탭','사용자 지정','Ctrl+1']],
+   steps:[
+    {t:`<b>${T.unit.rng}</b> 드래그 → ${K('Ctrl+1')}`,b:[]},
+    {t:'<b>표시 형식</b> 탭 → 범주 맨 아래 <b>사용자 지정</b>',b:[]},
+    {t:`형식 칸을 지우고 <b>${esc(T.unit.fmt)}</b> 입력 (또는 붙여넣기) → 확인`,b:[fx('형식',T.unit.fmt),D('셀 서식',[['범주','사용자 지정'],['형식',esc(T.unit.fmt)]],{tabs:['표시 형식','맞춤','글꼴','테두리','채우기']})]},
+    {t:`<b>${T.unit.ex}</b>처럼 보이는지 확인`,b:[]}],
+   tip:`“${T.unit.ch}”은 <b>큰따옴표</b> 안에! #,##0 은 천 단위 쉼표 기호예요.`,
+   help:[['####으로 보여요','열이 좁아서 그래요. 열 너비를 넓혀요.'],[`${T.unit.ch}이 숫자 앞에 붙었어요`,`형식을 <b>${esc(T.unit.fmt)}</b> 순서 그대로 다시 입력해요.`]]});
+
+  add({id:'name',w:1,icon:'🏷️',title:'이름 정의',sub:`${T.name.rng} → ‘${T.name.name}’`,imgs:[img('t1')],
+   paths:[['이름 상자 (수식 입력줄 왼쪽)','이름 입력','Enter'],['수식','정의된 이름','이름 정의']],
+   steps:[
+    {t:`<b>${T.name.rng}</b> 드래그`,b:[]},
+    {t:`수식 입력줄 왼쪽 <b>이름 상자</b> 클릭 (지금 <b>${T.name.rng.split(':')[0]}</b>이 보이는 칸)`,b:[`<div class="mw"><div class="mt">수식 입력줄</div><div class="mb"><span class="minp tgt" data-p="1">${T.name.rng.split(':')[0]}</span><span>▾ &nbsp; ✕ ✓ <i>fx</i></span></div></div>`]},
+    {t:`<b>${T.name.name}</b> 입력 → 꼭 ${K('Enter')}`,b:[cbox('이름',T.name.name)]},
+    {t:`다른 칸 클릭 → 이름 상자 ▾에 <b>${T.name.name}</b>가 있는지 확인`,b:[]}],
+   tip:`이름 상자에 쓰고 ${K('Enter')}를 안 누르면 저장이 안 돼요!`,
+   help:[['이미 있는 이름이라고 나와요','<b>수식 › 이름 관리자</b>에서 잘못 만든 이름을 지우고 다시!'],['나중에 #NAME? 이 나와요','이름 정의가 빠졌거나 글자가 달라요. 이 단계를 다시 확인해요.']]});
+
+  T.fn.forEach((f,n)=>{
+    const no=n+1,cell=f.cell||f.rng.split(':')[0],last=f.rng?f.rng.split(':')[1]:'';
+    const steps=[
+      {t:`<b>${cell}</b> 셀을 <b>한 번</b> 클릭`,b:[note(f.say),partsT(f.parts)]},
+      {t:`아래 수식 <b>📋 복사</b> → ${K('Ctrl+V')} → ${K('Enter')} (또는 직접 입력)`,b:[fx(cell,f.f),note('수식은 꼭 <b>=</b>로 시작해요. 직접 칠 때는 괄호 · 쉼표 · 따옴표를 하나씩 확인!')]}];
+    if(f.rng)steps.push({t:`<b>${cell}</b> 다시 클릭 → 오른쪽 아래 <b>채우기 핸들(■)</b>을 <b>${last}</b>까지 끌기`,b:[note('끌고 나면 생기는 <b>자동 채우기 옵션</b> 단추 → <b>서식 없이 채우기</b>를 누르면 굵은 테두리가 그대로 남아요.')]});
+    (f.more||[]).forEach(s=>steps.push({t:s.t,b:s.b.map(x=>x.startsWith('note:')?note(x.slice(5)):x)}));
+    steps.push({t:'결과가 아래 표와 같은지 확인',b:[chk(f.chk)]});
+    add({id:'f'+no,w:1,icon:'🧮',title:`함수 ${CIRC[no]} ${f.title}`,sub:f.use,imgs:[f.rng?img('t1'):img('bot')],
+     paths:[['셀 한 번 클릭','수식 붙여넣기 · 직접 입력','Enter'],['수식 고치기','F2']],
+     steps,tip:no===1?'시험에서는 복사 단추가 없어요. 2번째 연습부터는 <b>직접 입력</b>해 봐요!':`<b>${CIRC[no]}</b> ${f.use} — 결과값을 직접 쓰면 <b>0점</b>! 꼭 함수로.`,
+     help:[...(f.help||[]),['#NAME? 이 나와요','함수 이름이나 정의된 이름의 글자가 틀렸어요. 수식을 다시 복사해 보세요.'],['수식이 글자 그대로 보여요','셀을 더블클릭한 상태에서 붙여넣었거나, 셀 서식이 “텍스트”예요. 셀을 지우고 <b>한 번 클릭</b>한 뒤 다시 붙여넣어요.'],['값이 표와 달라요','제1작업 데이터에 오타가 없는지, 수식의 셀 주소가 맞는지 확인해요.']]});
+  });
+
+  add({id:'cf',w:1,icon:'🔵',title:`조건부 서식 ${CIRC[7]}`,sub:`${T.cf.what} → 행 전체 파랑 · 굵게`,imgs:[img('t1')],
+   paths:[['홈','스타일','조건부 서식','새 규칙']],
+   steps:[
+    {t:'<b>B5:J12</b> 드래그 (머리글 · 13행은 빼고)',b:[]},
+    {t:'홈 › 스타일 › 조건부 서식 › <b>새 규칙</b>',b:[paths(['홈','스타일','조건부 서식','새 규칙'])]},
+    {t:'<b>수식을 사용하여 서식을 지정할 셀 결정</b> → 수식 칸에 붙여넣기',b:[fx('수식',T.cf.f),note(`<b>$${T.cf.col}5</b> 뜻: 열(<b>${T.cf.col}</b>, ${T.cf.colName})은 $로 꽉 잡고, 줄 번호 <b>5</b>는 잡지 않아요. 그래서 6행은 $${T.cf.col}6, 7행은 $${T.cf.col}7을 보고 <b>그 줄 전체</b>를 칠해요.`)]},
+    {t:'<b>서식</b> → 글꼴 탭: 글꼴 스타일 <b>굵게</b>, 색 표준 색 <b>파랑</b> → 확인 → 확인',b:[D('셀 서식',[['글꼴 스타일','굵게'],['색','파랑 (표준 색)',SW.blue]],{tabs:['표시 형식','글꼴','테두리','채우기'],on:['글꼴']})]},
+    {t:'파랗게 바뀐 줄 확인',b:[chk([['파랑 · 굵게 줄',T.cf.blue]])]}],
+   tip:`<b>$${T.cf.col}5</b> = 열은 고정, 줄은 따라 내려가요!`,
+   help:[['한 칸만 파래요',`B5:J12를 선택하지 않았거나 수식에 $가 빠졌어요. 홈 › 조건부 서식 › <b>규칙 관리</b>에서 고쳐요.`],['전부 파랗거나 하나도 안 돼요',`수식이 <b>=$${T.cf.col}$5</b> 처럼 5 앞에도 $가 붙었어요. 5 앞의 $는 빼야 해요.`],['수식 칸에서 방향키를 눌렀더니 이상한 주소가 생겨요','수식 칸에서 방향키를 누르면 셀 주소가 들어가요. 지우고 다시 붙여넣어요.']],
+   stamp:'제1작업',next:'제1작업 끝! →'});
+
+  /* ── 제2작업 ── */
+  const t2=T.t2;
+  add({id:'t2copy',w:2,icon:'📄',title:'제2작업 표 복사',sub:'제1작업 B4:H12 → 제2작업 B2',imgs:[img('t2')],goalLabel:'문제지 조건 (제2작업은 그림이 없어요)',
+   paths:[['제1작업 B4:H12','Ctrl+C'],['제2작업 B2','Ctrl+V'],['붙여넣기 옵션 (Ctrl)','원본 열 너비 유지']],
+   steps:[
+    {t:`<b>제1작업</b>에서 <b>B4:H12</b> 드래그 → ${K('Ctrl+C')}`,b:[sheet1(T,{from:4,to:6,mark:(c,r)=>'BCDEFGH'.includes(c)?'pick':''})]},
+    {t:`<b>제2작업</b> 탭 → <b>B2</b> 클릭 → ${K('Ctrl+V')}`,b:[]},
+    {t:'붙인 표 오른쪽 아래 <b>(Ctrl)</b> 단추 → <b>원본 열 너비 유지</b>',b:[note('열 너비까지 똑같이 맞춰져요. 단추가 사라졌으면 열 너비를 직접 넓혀요.')]}],
+   tip:'제2작업은 <b>B2</b>부터! B4가 아니에요.',
+   help:[['####이 보여요','열이 좁아요. 원본 열 너비 유지 또는 열 경계 더블클릭.'],['파란 글씨도 같이 왔어요','조건부 서식까지 복사된 거예요. 정상이에요!']]});
+
+  if(t2.kind==='goal'){
+    add({id:'t2avg',w:2,icon:'🧮',title:'평균 칸 만들기',sub:'B11:G11 병합 · H11 DAVERAGE',imgs:[img('t2')],goalLabel:'문제지 조건 (제2작업은 그림이 없어요)',
+     paths:[['홈','맞춤','병합하고 가운데 맞춤'],['홈','글꼴','테두리 ▾','모든 테두리']],
+     steps:[
+      {t:'<b>B11:G11</b> 드래그 → <b>병합하고 가운데 맞춤</b> → 글자 입력',b:[cbox('B11 글자','집중관리 예약인원(명) 평균')]},
+      {t:`<b>H11</b> 클릭 → 수식 붙여넣기 → ${K('Enter')}`,b:[fx('H11','=DAVERAGE(B2:H10,G2,E2:E3)'),partsT([['B2:H10','제목 줄 포함 표 전체 (제2작업은 2행부터!)'],['G2','평균 낼 열 제목 (예약인원)'],['E2:E3','조건: E2 “구분” + E3 “집중관리” (표에 있는 값 그대로)']])]},
+      {t:'<b>B11:H11</b> 드래그 → <b>모든 테두리</b>',b:[]},
+      {t:'H11 값 확인',b:[chk([['H11','421 (390과 452의 평균)']])]}],
+     tip:'조건 “입력데이터를 이용” = 표에 이미 있는 <b>E2:E3</b>를 조건으로 써요.',
+     help:[['#VALUE! 가 나와요','범위가 B4:H12(제1작업 주소)로 들어갔어요. 제2작업은 <b>B2:H10</b>이에요.']]});
+    add({id:'t2goal',w:2,icon:'🎯',title:'목표값 찾기',sub:'평균이 430이 되려면?',imgs:[img('t2')],goalLabel:'문제지 조건 (제2작업은 그림이 없어요)',
+     paths:[['데이터','예측','가상 분석','목표값 찾기']],
+     steps:[
+      {t:'<b>H11</b> 클릭 → 데이터 › 예측 › 가상 분석 › <b>목표값 찾기</b>',b:[paths(['데이터','예측','가상 분석','목표값 찾기'])]},
+      {t:'수식 셀 <b>H11</b> · 찾는 값 <b>430</b> · 값을 바꿀 셀 <b>G3</b> → 확인',b:[D('목표값 찾기',[['수식 셀','$H$11'],['찾는 값','430'],['값을 바꿀 셀','$G$3 (레이저치료 예약인원)']])]},
+      {t:'<b>목표값 찾기 상태</b> 창 → <b>확인</b>',b:[]},
+      {t:'바뀐 값 확인',b:[chk([['G3 (레이저치료)','408'],['H11','430']])]}],
+     tip:'마지막 상태 창에서 <b>확인</b>! 취소하면 값이 원래대로 돌아가요.',
+     help:[['찾는 값에 셀 주소가 들어가요','찾는 값 칸은 <b>숫자 430</b>을 직접 쳐요.'],['값을 바꿀 셀을 잘못 골랐어요',`${K('Ctrl+Z')} 후 다시. 레이저치료 줄의 예약인원 칸(<b>G3</b>)이에요.`]]});
+  }
+  const condGrid=xs('BC',[[14,t2.cond.map(c=>[c[0],'pick'])],[15,['B15','C15'].map(a=>{const v=t2.cv.find(x=>x[0]===a);return v?[v[1],'res']:['','e']})],...(t2.or?[[16,['B16','C16'].map(a=>{const v=t2.cv.find(x=>x[0]===a);return v?[v[1],'res']:['','e']})]]:[])],
+    t2.or?'다른 줄에 쓰면 <b>또는(OR)</b>':'같은 줄에 쓰면 <b>그리고(AND)</b>');
+  add({id:'t2cond',w:2,icon:'🔎',title:'고급 필터 조건 쓰기',sub:'조건 B14 · 추출 제목 B18',imgs:[img('t2')],goalLabel:'문제지 조건 (제2작업은 그림이 없어요)',
+   paths:[['제목 칸 복사','Ctrl+C'],['B14','Ctrl+V']],
+   steps:[
+    {t:`조건 제목: <b>${t2.cond[0][1]}</b>(${t2.cond[0][0]}) 복사 → <b>B14</b>에 붙여넣기, <b>${t2.cond[1][1]}</b>(${t2.cond[1][0]}) 복사 → <b>C14</b>에 붙여넣기`,b:[note('제목은 표에서 <b>복사</b>해야 줄바꿈까지 똑같아요. 글자가 하나라도 다르면 필터가 안 돼요!')]},
+    {t:`조건 값 입력: ${t2.cv.map(v=>`<b>${v[0]}</b>에 <b>${esc(v[1])}</b>`).join(', ')}`,b:[condGrid,note(`문제: ${t2.say}`),note(t2.or?'<b>또는</b>이니까 두 조건을 <b>다른 줄</b>(15행, 16행)에 써요.':'<b>그리고</b>니까 두 조건을 <b>같은 줄</b>(15행)에 써요. <b>&lt;&gt;</b>는 “같지 않다”예요.')]},
+    {t:`추출할 제목: ${t2.out.map(o=>`<b>${o[0]}</b>`).join(', ')}를 ${K('Ctrl')}로 함께 선택 → ${K('Ctrl+C')} → <b>B18</b> 클릭 → ${K('Ctrl+V')}`,b:[xs('BCDE',[[18,t2.out.map(o=>[o[1],'pick'])]],'B18부터 제목 4개가 나란히 붙어요.')]}],
+   tip:'조건 제목 · 추출 제목은 <b>직접 치지 말고 복사</b>!',
+   help:[['Ctrl로 고른 칸이 복사가 안 돼요','같은 줄(2행)에 있는 칸들만 함께 복사할 수 있어요. 2행 칸만 골랐는지 확인!'],['>=40 을 쳤더니 이상해요','<b>&gt;=</b>는 키보드의 <b>&gt;</b>와 <b>=</b>를 차례로 쳐요. 띄어쓰기 없이!']]});
+
+  add({id:'t2run',w:2,icon:'⚙️',title:'고급 필터 실행',sub:'다른 장소에 복사 → B18',imgs:[img('t2')],goalLabel:'문제지 조건 (제2작업은 그림이 없어요)',
+   paths:[['데이터','정렬 및 필터','고급']],
+   steps:[
+    {t:'표 안의 <b>B2</b> 클릭',b:[]},
+    {t:'데이터 › 정렬 및 필터 › <b>고급</b>',b:[paths(['데이터','정렬 및 필터','고급'])]},
+    {t:'<b>다른 장소에 복사</b> 고르고 세 칸 확인 · 입력 → 확인',b:[D('고급 필터',[['결과','다른 장소에 복사'],['목록 범위','$B$2:$H$10'],['조건 범위',t2.condRange],['복사 위치','$B$18:$E$18']]),...(t2.kind==='goal'?[warn('목록 범위가 <b>$B$2:$H$11</b>로 잡히면 <b>$H$10</b>으로 고쳐요 (11행 평균 줄은 빼요).')]:[])]},
+    {t:'결과 확인',b:[resT(t2.out.map(o=>o[1]),t2.res,`${t2.res.length}줄이 나오면 정답!`)]}],
+   tip:'조건 범위 · 복사 위치 칸은 클릭한 뒤 <b>드래그</b>로 고르면 쉬워요.',
+   help:[['“추출 범위에 잘못된 필드 이름”','B18의 제목이 표 제목과 글자가 달라요. 표에서 다시 복사해요.'],['결과가 없거나 너무 많아요','조건 위치(같은 줄 = 그리고, 다른 줄 = 또는)와 &gt;= 기호를 확인!'],['원래 표가 줄어들었어요',`<b>현재 위치에 필터</b>를 고른 거예요. ${K('Ctrl+Z')} 후 <b>다른 장소에 복사</b>로!`]],
+   ...(t2.kind==='goal'?{stamp:'제2작업',next:'제2작업 끝! →'}:{})});
+
+  if(t2.kind==='filter'){
+    add({id:'t2tbl',w:2,icon:'🎨',title:'표 서식',sub:'채우기 없음 → 파랑, 표 스타일 보통 6',imgs:[img('t2')],goalLabel:'문제지 조건 (제2작업은 그림이 없어요)',
+     paths:[['홈','글꼴','채우기 색 ▾','채우기 없음'],['홈','스타일','표 서식','파랑, 표 스타일 보통 6']],
+     steps:[
+      {t:`결과 <b>${t2.tbl}</b> 드래그 → 채우기 색 ▾ → <b>채우기 없음</b>`,b:[note('제목 칸의 주황색을 먼저 지워야 표 스타일 색이 제대로 보여요.')]},
+      {t:'홈 › 스타일 › <b>표 서식</b> → 보통 → <b>파랑, 표 스타일 보통 6</b>',b:[note('마우스를 올리면 이름이 떠요. “보통” 묶음 첫 줄의 파란색이에요.')]},
+      {t:'<b>머리글 포함</b> ✓ → 확인',b:[D('표 만들기',[['표에 사용할 데이터',abs(t2.tbl)],['머리글 포함',ON+' 켜기']])]},
+      {t:'<b>테이블 디자인</b> 탭: <b>머리글 행 ✓ · 줄무늬 행 ✓</b> 확인',b:[]}],
+     tip:'순서: <b>채우기 없음 먼저</b> → 표 서식!',
+     help:[['제목이 열1, 열2로 바뀌었어요',`<b>머리글 포함</b>을 안 켰어요. ${K('Ctrl+Z')} 후 다시.`],['경고 창이 떠요','“외부 데이터 연결” 같은 안내면 <b>예</b>를 눌러요.']],
+     stamp:'제2작업',next:'제2작업 끝! →'});
+  }
+
+  /* ── 제3작업 ── */
+  const t3=T.t3;
+  if(t3.kind==='pivot'){
+    const [g0,g1,g2]=t3.grp;
+    add({id:'pv1',w:3,icon:'🧱',title:'피벗 테이블 만들기',sub:'제1작업 B4:J12 → 제3작업 B2',imgs:[img('t3')],
+     paths:[['삽입','표','피벗 테이블']],
+     steps:[
+      {t:'<b>제1작업</b>에서 <b>B4:J12</b> 드래그 (13 · 14행은 빼요!)',b:[sheet1(T,{from:11,to:14,mark:(c,r)=>r<=12?'pick':''}),note('13 · 14행까지 들어가면 피벗이 이상해져요.')]},
+      {t:'삽입 › 표 › <b>피벗 테이블</b>',b:[paths(['삽입','표','피벗 테이블'])]},
+      {t:'<b>기존 워크시트</b> → 위치 칸 클릭 → <b>제3작업</b> 탭 → <b>B2</b> 클릭 → 확인',b:[D('표 또는 범위의 피벗 테이블',[['표/범위','제1작업!$B$4:$J$12'],['위치','기존 워크시트'],['위치 칸','제3작업!$B$2']])]}],
+     tip:'피벗은 <b>제3작업 B2</b>에! 새 시트가 생기면 안 돼요.',
+     help:[['표/범위가 $B$4:$J$14 예요','13·14행까지 잡혔어요. <b>$J$12</b>로 고쳐요.'],['새 시트가 생겼어요','<b>새 워크시트</b>로 만든 거예요. 그 시트를 지우고 <b>기존 워크시트</b>로 다시!']]});
+    add({id:'pv2',w:3,icon:'🧩',title:'필드 배치',sub:`행 ${t3.rowF} · 열 ${t3.colF} · 값 개수/평균`,imgs:[img('t3')],
+     paths:[['피벗 테이블 필드 목록','끌어서 놓기'],['값 칸 항목 ▾','값 필드 설정']],
+     steps:[
+      {t:`오른쪽 필드 목록에서 <b>${t3.rowF}</b>를 아래 <b>행</b> 칸으로 끌기`,b:[]},
+      {t:`<b>${t3.colF}</b>를 <b>열</b> 칸으로 끌기`,b:[]},
+      {t:`<b>${t3.cntF}</b>를 <b>값</b> 칸으로 → “개수 : ${t3.cntF}”가 됐는지 확인`,b:[]},
+      {t:`<b>${t3.avgF}</b>를 <b>값</b> 칸으로 → 그 항목 ▾ → <b>값 필드 설정</b> → <b>평균</b> → 확인`,b:[D('값 필드 설정',[['값 요약 기준','평균'],['이름','평균 : '+t3.avgF]])]}],
+     tip:'값 칸 순서: <b>개수 먼저</b>, 평균 나중!',
+     help:[['필드 목록이 사라졌어요','피벗 표 안을 클릭하면 다시 나와요. 안 나오면 <b>피벗 테이블 분석 › 표시 › 필드 목록</b>.'],['합계로 나와요','값 칸의 그 항목 ▾ → 값 필드 설정 → <b>평균</b>.'],['열 칸에 Σ 값이 생겼어요','정상이에요! 그대로 두세요.'],['개수/평균 순서가 반대예요','값 칸에서 항목을 위아래로 끌어서 순서를 바꿔요.']]});
+    add({id:'pv3',w:3,icon:'🗃️',title:'그룹화 · 정렬',sub:`${t3.rowF} ${g0}~${g1} 단위 ${g2} · ${t3.colF} 내림차순`,imgs:[img('t3')],
+     paths:[['행 레이블 숫자 우클릭','그룹'],[`${t3.colF} ▾`,'텍스트 내림차순 정렬']],
+     steps:[
+      {t:`B5 같은 <b>${t3.rowF}</b> 숫자 칸 우클릭 → <b>그룹</b>`,b:[]},
+      {t:`시작 <b>${g0}</b> · 끝 <b>${g1}</b> · 단위 <b>${g2}</b> → 확인`,b:[D('그룹화',[['시작',String(g0)],['끝',String(g1)],['단위',String(g2)]]),note('숫자를 바꾸면 옆의 ✓(자동)가 저절로 꺼져요.')]},
+      {t:`<b>${t3.colF}</b>(또는 열 레이블) 옆 <b>▾</b> → <b>텍스트 내림차순 정렬</b>`,b:[note(`순서가 <b>${t3.order}</b>가 되면 성공 (가나다 거꾸로).`)]}],
+     tip:'그룹은 <b>행 레이블 숫자</b> 위에서 우클릭!',
+     help:[['그룹이 회색이에요','숫자 값 칸이 아니라 <b>왼쪽 행 레이블</b>(B열) 숫자 위에서 우클릭해요.'],['“그룹으로 묶을 수 없습니다”','피벗 범위에 13 · 14행이 들어갔을 수 있어요. 피벗 테이블 분석 › 데이터 원본 변경에서 <b>B4:J12</b>로!']]});
+    add({id:'pv4',w:3,icon:'⚙️',title:'피벗 테이블 옵션',sub:'셀 병합 · 빈 셀 ** · 행 총합계 지우기',imgs:[img('t3')],
+     paths:[['피벗 표 안 우클릭','피벗 테이블 옵션']],
+     steps:[
+      {t:'피벗 표 안 우클릭 → <b>피벗 테이블 옵션</b>',b:[]},
+      {t:'<b>레이아웃 및 서식</b> 탭: <b>레이블이 있는 셀 병합 및 가운데 맞춤 ✓</b>',b:[D('피벗 테이블 옵션',[['레이블이 있는 셀 병합 및 가운데 맞춤',ON+' 켜기'],['빈 셀 표시',ON+' **']],{tabs:['레이아웃 및 서식','요약 및 필터','표시'],on:['레이아웃 및 서식']})]},
+      {t:'같은 탭: <b>빈 셀 표시 ✓</b> 칸에 <b>**</b> 입력',b:[]},
+      {t:'<b>요약 및 필터</b> 탭: <b>행 총합계 표시</b> 체크 해제 → 확인',b:[D('피벗 테이블 옵션',[['행 총합계 표시',OFF+' 끄기'],['열 총합계 표시',ON+' 켜기 (그대로)']],{tabs:['레이아웃 및 서식','요약 및 필터','표시'],on:['요약 및 필터']})]}],
+     tip:'행 총합계 = <b>오른쪽 끝</b> 총합계 열이에요. 아래 총합계 줄은 남겨요!',
+     help:[['아래 총합계 줄까지 사라졌어요','<b>열 총합계 표시</b>를 끈 거예요. 다시 켜요.']]});
+    add({id:'pv5',w:3,icon:'✨',title:'피벗 마무리',sub:'필드 이름 표시 · 숫자 서식 · 확인',imgs:[img('t3')],
+     paths:[['피벗 테이블 디자인','레이아웃','보고서 레이아웃','개요 형식으로 표시'],['평균 값 우클릭','값 필드 설정','표시 형식']],
+     steps:[
+      {t:'피벗 테이블 디자인 › 보고서 레이아웃 › <b>개요 형식으로 표시</b>',b:[note(`“행 레이블 / 열 레이블” 대신 <b>${t3.rowF} / ${t3.colF}</b>가 보여요. 출력형태처럼!`)]},
+      {t:`평균 숫자 칸 우클릭 → 값 필드 설정 → <b>표시 형식</b> → 숫자 · 소수 자릿수 <b>0</b>${t3.comma?' · <b>1000 단위 구분 기호 ✓</b>':''} → 확인 → 확인`,b:[D('셀 서식',[['범주','숫자'],['소수 자릿수','0'],['1000 단위 구분 기호(,) 사용',(t3.comma?ON+' 켜기':OFF+' 그대로')]])]},
+      {t:'열 너비를 출력형태처럼 조절 · 숫자가 오른쪽에 붙었는지 확인',b:[]},
+      {t:'출력형태와 숫자 비교',b:[resT([t3.rowF,...t3.res.cols.flatMap(c=>[c+' 개수',c+' 평균'])],t3.res.rows,'빈 칸은 ** 로 보여야 해요.')]}],
+     tip:'숫자 하나하나 출력형태 그림과 비교!',
+     help:[['평균이 소수로 나와요','값 필드 설정 → <b>표시 형식</b>에서 소수 자릿수 0.'],['행 레이블이라고 보여요','보고서 레이아웃을 <b>개요 형식</b>으로 바꾸거나, 그 칸을 클릭하고 '+t3.rowF+'(으)로 고쳐 써도 돼요.']],
+     stamp:'제3작업',next:'제3작업 끝! →'});
+  }else{
+    add({id:'sb1',w:3,icon:'📄',title:'표 복사 · 정렬',sub:'제3작업 B2 · 구분 내림차순',imgs:[img('t3')],
+     paths:[['데이터','정렬 및 필터','정렬']],
+     steps:[
+      {t:`제1작업 <b>B4:H12</b> ${K('Ctrl+C')} → 제3작업 <b>B2</b> ${K('Ctrl+V')} → (Ctrl) → <b>원본 열 너비 유지</b>`,b:[]},
+      {t:'표 안 <b>B2</b> 클릭 → 데이터 › 정렬 및 필터 › <b>정렬</b>',b:[paths(['데이터','정렬 및 필터','정렬'])]},
+      {t:'정렬 기준 <b>구분</b> · <b>셀 값</b> · <b>내림차순</b> → 확인',b:[D('정렬',[['정렬 기준','구분'],['정렬 기준(값)','셀 값'],['정렬','내림차순'],['내 데이터에 머리글 표시',ON+' 켜기']])]},
+      {t:'순서가 <b>집중관리 → 예방관리 → 심미관리</b>인지 확인',b:[]}],
+     tip:'부분합 전에는 꼭 <b>정렬</b>! 같은 구분끼리 모여 있어야 해요.',
+     help:[['정렬 기준에 열 B, 열 C가 보여요','<b>내 데이터에 머리글 표시</b>를 켜요.']]});
+    add({id:'sb2',w:3,icon:'🔢',title:'부분합 ① 개수',sub:'구분별 프로그램명 개수',imgs:[img('t3')],
+     paths:[['데이터','개요','부분합']],
+     steps:[
+      {t:'표 안 클릭 → 데이터 › 개요 › <b>부분합</b>',b:[paths(['데이터','개요','부분합'])]},
+      {t:'그룹화할 항목 <b>구분</b> · 사용할 함수 <b>개수</b>',b:[D('부분합',[['그룹화할 항목','구분'],['사용할 함수','개수'],['부분합 계산 항목','☑ 프로그램명 (나머지 모두 ☐)']])]},
+      {t:'부분합 계산 항목: <b>프로그램명</b>만 ✓ (맨 아래 <b>관리비용</b> ✓는 해제!) → 확인',b:[]}],
+     tip:'계산 항목 목록을 <b>스크롤</b>해서 다른 ✓가 없는지 꼭 확인!',
+     help:[['관리비용 아래에도 개수가 생겼어요','기본으로 체크된 <b>관리비용</b>을 안 끈 거예요. 데이터 › 부분합 › <b>모두 제거</b> 후 다시.']]});
+    add({id:'sb3',w:3,icon:'➗',title:'부분합 ② 평균',sub:'예약인원 평균 · 새로운 값으로 대치 해제',imgs:[img('t3')],
+     paths:[['데이터','개요','부분합']],
+     steps:[
+      {t:'다시 데이터 › 개요 › <b>부분합</b>',b:[]},
+      {t:'그룹화할 항목 <b>구분</b> · 함수 <b>평균</b> · 계산 항목 <b>예약인원(명)</b>만 ✓ (프로그램명 ✓ 해제)',b:[D('부분합',[['그룹화할 항목','구분'],['사용할 함수','평균'],['부분합 계산 항목','☑ 예약인원(명)만'],['새로운 값으로 대치',OFF+' 끄기']])]},
+      {t:'<b>새로운 값으로 대치</b> 체크 해제 → 확인',b:[warn('이걸 해제하지 않으면 ① 개수가 지워져요!')]}],
+     tip:'두 번째 부분합은 <b>새로운 값으로 대치 ☐</b>!',
+     help:[['개수가 사라졌어요',`<b>새로운 값으로 대치</b>가 켜져 있었어요. ${K('Ctrl+Z')} 후 다시.`]]});
+    add({id:'sb4',w:3,icon:'🧹',title:'개요 지우기 · 확인',sub:'왼쪽 1 2 3 4 단추 없애기',imgs:[img('t3')],
+     paths:[['데이터','개요','그룹 해제 ▾','개요 지우기']],
+     steps:[
+      {t:'데이터 › 개요 › 그룹 해제 <b>▾</b> › <b>개요 지우기</b>',b:[note('왼쪽의 1 2 3 4 단추와 [-] 선이 사라져요.')]},
+      {t:'열 너비 조절 (“집중관리 평균” 글자가 다 보이게)',b:[]},
+      {t:'출력형태와 값 비교',b:[resT(['줄','값'],t3.res,'평균은 G열(예약인원), 개수는 C열(프로그램명)에 나와요.')]}],
+     tip:'“개요 <b>지우기</b>”예요. 부분합 <b>모두 제거</b>를 누르면 안 돼요!',
+     help:[['평균이 888.75 처럼 소수로 나와요','G열 숫자 칸을 선택하고 홈 › 표시 형식 › <b>쉼표 스타일(,)</b>.'],['개요 지우기가 회색이에요','표 안의 칸을 하나 클릭한 다음 다시 눌러요.']],
+     stamp:'제3작업',next:'제3작업 끝! →'});
+  }
+
+  /* ── 제4작업 (차트) ── */
+  const c4=T.t4,lineIsBar=!c4.pickLine;
+  add({id:'ch1',w:4,icon:'📊',title:'차트 범위 고르기',sub:'Ctrl로 필요한 칸만 선택 → 묶은 세로 막대형',imgs:[img('t4')],
+   paths:[['삽입','차트','세로 또는 가로 막대형 차트 삽입','묶은 세로 막대형']],
+   steps:[
+    {t:'<b>제1작업</b> 탭으로 가기',b:[]},
+    {t:'아래 그림의 <b>파란 칸</b>만 선택',b:[note(c4.selHow),sheet1(T,{from:4,to:12,mark:(c,r)=>c4.rows.includes(r)&&c4.cols.includes(c)?'pick':'',tr:r=>c4.rows.includes(r)?'':'skip',cap:`빼는 줄: ${c4.skip} — 출력형태 차트에 없어요.`})]},
+    {t:'삽입 › 차트 › <b>세로 또는 가로 막대형 차트 삽입</b> › 2차원 <b>묶은 세로 막대형</b>',b:[paths(['삽입','차트','세로 또는 가로 막대형 차트 삽입','묶은 세로 막대형'])]},
+    {t:`막대 아래 이름이 <b>${c4.cats}</b> 인지 확인`,b:[]}],
+   tip:`떨어진 칸은 ${K('Ctrl')}을 <b>누른 채</b> 드래그! 손을 떼면 처음부터.`,
+   help:[['다른 줄까지 들어갔어요',`${K('Ctrl+Z')}로 차트를 지우고 다시 선택해요. 첫 범위는 Ctrl 없이, 그다음부터 Ctrl!`],['차트 모양이 이상해요(가로·세로가 바뀜)','차트 디자인 › 데이터 › <b>행/열 전환</b>을 눌러 봐요.']]});
+  add({id:'ch2',w:4,icon:'📑',title:'새 시트로 옮기기',sub:'차트 이동 → ‘제4작업’ · 맨 끝으로',imgs:[img('t4')],
+   paths:[['차트 디자인','위치','차트 이동']],
+   steps:[
+    {t:'차트 클릭 → 차트 디자인 › 위치 › <b>차트 이동</b>',b:[paths(['차트 디자인','위치','차트 이동'])]},
+    {t:'<b>새 시트</b> 고르고 이름 <b>제4작업</b> → 확인',b:[D('차트 이동',[['새 시트','제4작업']])]},
+    {t:'<b>제4작업</b> 탭을 끌어서 <b>맨 끝</b>(제3작업 뒤)으로 옮기기',b:[tabsDemo(['제1작업','제2작업','제3작업','제4작업'],'제4작업')]}],
+   tip:'차트 시트는 <b>제1작업 앞</b>에 생겨요. 꼭 맨 뒤로 옮겨요!',
+   help:[['이미 있는 이름이라고 나와요','빈 “제4작업” 워크시트가 있어요. 그 시트 탭을 우클릭 → <b>삭제</b>하고 다시 이동해요.']]});
+  add({id:'ch3',w:4,icon:'🖌️',title:'레이아웃 · 스타일 · 글꼴',sub:'레이아웃 3 · 스타일 1 · 굴림 11',imgs:[img('t4')],
+   paths:[['차트 디자인','차트 레이아웃','빠른 레이아웃','레이아웃 3'],['차트 디자인','차트 스타일','스타일 1'],['차트 영역 클릭','홈','글꼴','굴림 · 11']],
+   steps:[
+    {t:'차트 디자인 › 빠른 레이아웃 › <b>레이아웃 3</b>',b:[note('제목이 위에, 범례가 아래로 가요.')]},
+    {t:'차트 디자인 › 차트 스타일 › <b>스타일 1</b> (목록 맨 처음)',b:[]},
+    {t:'차트 바깥 여백(<b>차트 영역</b>) 클릭 → 홈 › 글꼴 <b>굴림 · 11</b>',b:[note('차트 영역을 고른 채로 글꼴을 바꾸면 차트 글자 전체가 바뀌어요.')]}],
+   tip:'차트 <b>바깥 여백</b> = 차트 영역, <b>막대가 있는 안쪽</b> = 그림 영역!',
+   help:[['레이아웃 3이 어떤 거예요?','빠른 레이아웃 목록에 마우스를 올리면 “레이아웃 3”이 떠요. 첫 줄 세 번째예요.']]});
+  add({id:'ch4',w:4,icon:'🧻',title:'영역 서식 (질감)',sub:`차트: ${c4.texture} · 그림: 흰색`,imgs:[img('t4')],
+   paths:[['차트 영역 우클릭','차트 영역 서식','채우기','그림 또는 질감 채우기','질감'],['그림 영역 우클릭','그림 영역 서식','채우기','단색 채우기','흰색, 배경 1']],
+   steps:[
+    {t:'차트 영역 우클릭 → <b>차트 영역 서식</b>',b:[]},
+    {t:`🪣 채우기 › <b>그림 또는 질감 채우기</b> → 질감 ▾ → <b>${c4.texture}</b>`,b:[D('차트 영역 서식',[['채우기','그림 또는 질감 채우기'],['질감',c4.texture]])]},
+    {t:'막대가 있는 안쪽(<b>그림 영역</b>) 클릭 → 채우기 › <b>단색 채우기</b> › 색 <b>흰색, 배경 1</b>',b:[D('그림 영역 서식',[['채우기','단색 채우기'],['색','흰색, 배경 1',SW.white]])]}],
+   tip:'질감 이름은 마우스를 올리면 떠요!',
+   help:[['질감을 못 찾겠어요',`${c4.texture}는 <b>${c4.textureLook}</b>예요. 질감 목록에서 마우스를 올려 이름을 확인해요.`],['서식 창이 오른쪽에 계속 떠 있어요','정상이에요. 다른 부분을 클릭하면 그 부분 서식으로 바뀌어요.']]});
+  add({id:'ch5',w:4,icon:'🔠',title:'차트 제목',sub:'굴림 굵게 20pt · 흰색 채우기 · 테두리',imgs:[img('t4')],
+   paths:[['제목 클릭','홈','글꼴','굴림 · 20 · 굵게'],['제목 우클릭','차트 제목 서식']],
+   steps:[
+    {t:'“차트 제목” 글자 클릭 → 지우고 제목 입력',b:[cbox('차트 제목',c4.title)]},
+    {t:'제목 테두리 클릭 → 홈 › 글꼴: <b>굴림 · 20 · 굵게</b>',b:[]},
+    {t:'제목 우클릭 → <b>차트 제목 서식</b> → 채우기 <b>단색 채우기 · 흰색, 배경 1</b>',b:[D('차트 제목 서식',[['채우기','단색 채우기 · 흰색, 배경 1',SW.white],['테두리','실선 · 검정',SW.black]])]},
+    {t:'같은 창 <b>테두리</b> → <b>실선</b> (색 검정)',b:[]}],
+   tip:'제목 안을 클릭하면 글자 편집, <b>제목 테두리</b>를 클릭하면 제목 전체!',
+   help:[['제목이 없어요','차트 디자인 › 차트 요소 추가 › 차트 제목 › <b>차트 위</b>.']]});
+  add({id:'ch6',w:4,icon:'📈',title:'꺾은선 + 보조 축',sub:`${c4.line} → 표식이 있는 꺾은선형`,imgs:[img('t4')],
+   paths:[[c4.line+' 계열 우클릭','계열 차트 종류 변경'],['서식','현재 선택 영역','차트 요소 ▾']],
+   steps:[
+    c4.pickLine?{t:`<b>서식</b> 탭 › 맨 왼쪽 <b>차트 요소 ▾</b> → <b>계열 "${c4.line}"</b> 고르기 → 차트 디자인 › <b>차트 종류 변경</b>`,b:[note(c4.lineHint)]}
+               :{t:`<b>${c4.line}</b> 막대 하나 우클릭 → <b>계열 차트 종류 변경</b>`,b:[note(c4.lineHint)]},
+    {t:`<b>혼합</b> 화면 아래 표에서 ${c4.line} → <b>표식이 있는 꺾은선형</b>`,b:[D('차트 종류 변경 (혼합)',[[c4.bar,'묶은 세로 막대형 · 보조 축 ☐'],[c4.line,'표식이 있는 꺾은선형 · 보조 축 ☑']])]},
+    {t:`그 줄(${c4.line})의 <b>보조 축 ✓</b> → 확인`,b:[note('오른쪽에 두 번째 세로 축이 생기면 성공!')]}],
+   tip:`<b>${c4.line}</b> 한 계열만 바꿔요. 막대까지 다 꺾은선이 되면 안 돼요!`,
+   help:[['막대까지 다 꺾은선이 됐어요',`${K('Ctrl+Z')} 후 <b>${c4.line}</b> 계열 하나만 골라서 다시.`],['보조 축 칸이 회색이에요','꺾은선형을 먼저 고른 다음 보조 축을 체크해요.']]});
+  add({id:'ch7',w:4,icon:'🔷',title:'표식 · 데이터 레이블',sub:`${c4.marker} 크기 10 · 레이블 ${c4.labelVal}`,imgs:[img('t4')],
+   paths:[['꺾은선 우클릭','데이터 계열 서식','채우기 및 선','표식','표식 옵션'],['점 하나 선택','우클릭','데이터 레이블 추가']],
+   steps:[
+    {t:'꺾은선 우클릭 → <b>데이터 계열 서식</b> → 🪣 <b>채우기 및 선</b> → <b>표식</b>',b:[]},
+    {t:`표식 옵션 › <b>기본 제공</b> · 형식 <b>${c4.marker}</b> · 크기 <b>10</b>`,b:[D('데이터 계열 서식 › 표식',[['표식 옵션','기본 제공'],['형식',c4.marker],['크기','10']])]},
+    {t:`레이블 달 곳(${c4.labelAt})을 천천히 <b>두 번</b> 클릭 → 그 하나만 선택`,b:[note('첫 번째 클릭 = 계열 전체 선택, 두 번째 클릭 = <b>그 점(막대) 하나만</b> 선택')]},
+    {t:`우클릭 → <b>데이터 레이블 추가</b> → <b>${c4.labelVal}</b> 확인`,b:[note('출력형태처럼 레이블 <b>하나만</b> 보이면 돼요.')]}],
+   tip:'레이블은 <b>출력형태에 보이는 곳 하나만</b>!',
+   help:[['레이블이 전부 생겼어요',`${K('Ctrl+Z')} 후, 두 번째 클릭으로 <b>하나만</b> 선택됐는지 확인하고 다시.`],['표식 메뉴가 안 보여요','서식 창 위쪽 🪣(채우기 및 선) 아이콘 → 그 아래 <b>표식</b> 글자를 눌러요.']]});
+  add({id:'ch8',w:4,icon:'📏',title:'눈금선 · 축',sub:'눈금선 파선 · 축 숫자 맞추기',imgs:[img('t4')],
+   paths:[['눈금선 우클릭','주 눈금선 서식','선','대시 종류','파선'],['축 숫자 우클릭','축 서식','축 옵션']],
+   steps:[
+    {t:'가로 눈금선 하나 우클릭 → <b>주 눈금선 서식</b> → 선 › 대시 종류 <b>파선</b>',b:[D('주 눈금선 서식',[['선','실선'],['대시 종류','파선 (- - - -)']])]},
+    {t:`<b>${c4.ax[0][0]}</b> 숫자를 그림과 비교 → 다르면 축 서식에서 맞추기`,b:[resT(['축','출력형태 값'],c4.ax),D('축 서식 › 축 옵션',[['최소값','0'],['최대값 · 주 단위','위 표대로 입력']])]},
+    {t:`<b>${c4.ax[1][0]}</b> 숫자도 비교 → 다르면 맞추기`,b:[]},
+    {t:'출력형태처럼 세로 축 선이 보이게: 축 서식 › 🪣 › 선 › <b>실선</b> (검정)',b:[note('그림에서 축 옆에 선이 보이면 해 줘요.')]}],
+   tip:'축 숫자가 이미 그림과 같으면 <b>안 고쳐도</b> 돼요!',
+   help:[['값을 넣었는데 원래대로 돌아가요',`숫자를 넣고 ${K('Enter')}를 눌러야 적용돼요. 옆의 <b>다시 설정</b>은 누르지 마세요.`],['0 대신 - 가 보여요','숫자 서식(쉼표 스타일) 때문이에요. 출력형태에도 그렇게 보이면 그대로 둬요.']]});
+  add({id:'ch9',w:4,icon:'🏷️',title:'범례 이름 바꾸기',sub:`${c4.legend.to}`,imgs:[img('t4')],
+   paths:[['차트 디자인','데이터','데이터 선택']],
+   steps:[
+    {t:'차트 디자인 › 데이터 › <b>데이터 선택</b>',b:[]},
+    {t:`범례 항목(계열)에서 <b>${c4.legend.from}</b> 고르기 → <b>편집</b>`,b:[]},
+    {t:`계열 이름 칸 내용을 지우고 <b>${c4.legend.to}</b> 입력 → 확인 → 확인`,b:[cbox('계열 이름',c4.legend.to),D('계열 편집',[['계열 이름',c4.legend.to],['계열 값','그대로 두기']])]},
+    {t:`범례가 차트 <b>아래</b>에 <b>${c4.legendOrder}</b>로 보이는지 확인`,b:[]}],
+   tip:'머리글의 줄바꿈 때문에 범례가 두 줄로 보여요. 이름을 <b>한 줄</b>로 바꿔요.',
+   help:[['계열 값까지 지워졌어요',`취소하고 다시! <b>계열 이름</b> 칸만 고쳐요.`]]});
+  add({id:'ch10',w:4,icon:'💬',title:'말풍선 도형',sub:`‘${c4.callout}’`,imgs:[img('t4')],
+   paths:[['삽입','일러스트레이션','도형','설명선','말풍선: 모서리가 둥근 사각형']],
+   steps:[
+    {t:'차트 클릭 → 삽입 › 도형 › 설명선 › <b>말풍선: 모서리가 둥근 사각형</b>',b:[]},
+    {t:`레이블 <b>${c4.labelVal}</b> 근처에 끌어서 그리기 → 글자 입력`,b:[cbox('말풍선 글자',c4.callout)]},
+    {t:'도형 테두리 클릭 → 홈 › 글꼴 <b>굴림 · 11 · 검정</b> · 가운데 맞춤 · 세로 가운데 맞춤',b:[]},
+    {t:'도형 서식 › 도형 채우기 <b>흰색</b> · 도형 윤곽선 <b>검정</b>',b:[D('도형 서식',[['도형 채우기','흰색, 배경 1',SW.white],['도형 윤곽선','검정',SW.black]])]},
+    {t:`말풍선 꼬리의 <b>노란 점</b>을 끌어 <b>${c4.labelVal}</b>을 가리키게`,b:[]}],
+   tip:'차트를 먼저 클릭하고 도형을 그리면 차트와 같이 움직여요.',
+   help:[['노란 점이 안 보여요','말풍선을 한 번 클릭해서 선택하면 나와요.'],['글자가 흰색이에요','도형 글자는 기본이 흰색! 홈 › 글꼴 색 <b>검정</b>.']],
+   stamp:'제4작업',next:'제4작업 끝! →'});
+
+  add({id:'end',w:5,icon:'🏁',title:'마무리 점검',sub:'시트 순서 · 저장 · 답안 전송',imgs:[img('t1'),img('t4')],
+   paths:[['파일','저장','Ctrl+S']],
+   steps:[
+    {t:'시트 탭 순서: <b>제1작업 · 제2작업 · 제3작업 · 제4작업</b>',b:[tabsDemo(['제1작업','제2작업','제3작업','제4작업'],'')]},
+    {t:'다른 시트(Sheet1 같은 것)가 남아 있지 않은지 확인',b:[note('답안 시트 말고 다른 시트가 있으면 <b>감점</b>이에요.')]},
+    {t:'제1~3작업 시트 모두 <b>A열 너비 1</b> · 글꼴 <b>굴림</b>인지 다시 보기',b:[]},
+    {t:`${K('Ctrl+S')} 저장 (파일 이름 <b>수험번호-성명.xlsx</b>)`,b:[]},
+    {t:'시험장에서는 <b>답안 전송</b>까지! (연습은 선생님 안내대로 제출)',b:[]}],
+   tip:'마지막 1분은 <b>저장 · 전송</b>에! 저장 안 하고 전송하면 예전 파일이 가요.',
+   help:[['차트 시트에도 A열 너비를 해야 해요?','차트 시트(제4작업)에는 열이 없어서 안 해도 돼요.']],
+   extra:'finish',stamp:'완성',next:'🎉 회차 완료!'});
+
+  M.forEach((m,i)=>{if(m.w>=0&&m.id!=='start'&&m.id!=='end')m.cond=i});   // 번호는 1부터 (시작 화면 다음부터)
+  return M;
+}
+
+/* 실전 모의 채점표 (배점은 연습용 추정: 제1작업 240 · 제2 80 · 제3 80 · 제4 100) */
+function examItems(T){
+  const f=T.fn.map((x,n)=>[1,`${CIRC[n+1]} ${x.title}`,`${x.use}`,20,'f'+(n+1)]);
+  const it=[
+   [1,'데이터 · 병합 · 정렬 · 테두리','B4:J14 출력형태대로 · 숫자 오른쪽 · 나머지 가운데 · 굴림 11 · A열 너비 1',35,'data'],
+   [1,'제목 도형',`${T.shape} · 그림자(오프셋 오른쪽) · 굴림 24pt 검정 굵게 · 채우기 노랑`,20,'shape'],
+   [1,'결재란','임의의 셀에 작성 → 그림으로 복사 → 원본 삭제',15,'appr2'],
+   [1,'채우기','B4:J4, G14, I14 → 주황',5,'fill'],
+   [1,'유효성 검사',`H14 → ${T.valid.what} 목록`,10,'valid'],
+   [1,'셀 서식',`${T.unit.rng} → ${T.unit.fmt}`,10,'fmt'],
+   [1,'이름 정의',`${T.name.rng} → ${T.name.name}`,10,'name'],
+   ...f,
+   [1,`${CIRC[7]} 조건부 서식`,`${T.cf.f} → 글꼴 파랑 · 굵게`,15,'cf']];
+  if(T.t2.kind==='goal')it.push([2,'평균 칸','B11:G11 병합 · H11 DAVERAGE · 테두리',20,'t2avg'],[2,'목표값 찾기','평균 430 → 레이저치료 예약인원',20,'t2goal'],[2,'고급 필터 조건','B14 조건 · B18 추출 제목',20,'t2cond'],[2,'고급 필터 결과',T.t2.say.replace(/<[^>]+>/g,''),20,'t2run']);
+  else it.push([2,'고급 필터 조건','B14 조건 · B18 추출 제목',20,'t2cond'],[2,'고급 필터 결과',T.t2.say.replace(/<[^>]+>/g,''),30,'t2run'],[2,'표 서식','채우기 없음 → 파랑, 표 스타일 보통 6 · 머리글 행 · 줄무늬 행',30,'t2tbl']);
+  if(T.t3.kind==='pivot'){const t=T.t3;it.push([3,'피벗 위치 · 필드',`제3작업 B2 · 행 ${t.rowF} · 열 ${t.colF} · 개수/평균`,30,'pv2'],[3,'그룹화 · 정렬',`${t.grp[0]}~${t.grp[1]} 단위 ${t.grp[2]} · ${t.order}`,20,'pv3'],[3,'피벗 옵션','레이블 셀 병합 · 빈 셀 ** · 행 총합계 지우기',20,'pv4'],[3,'숫자 서식 · 필드 이름','출력형태대로',10,'pv5'])}
+  else it.push([3,'정렬','구분 내림차순',20,'sb1'],[3,'부분합 ① 개수','구분별 프로그램명 개수',25,'sb2'],[3,'부분합 ② 평균','예약인원 평균 · 새로운 값으로 대치 해제',25,'sb3'],[3,'개요 지우기','열 너비 · 출력형태대로',10,'sb4']);
+  const c=T.t4;
+  it.push([4,'차트 종류 · 범위 · 위치','묶은 세로 막대형 · 새 시트 “제4작업”',20,'ch1'],[4,'레이아웃 · 스타일 · 글꼴','레이아웃 3 · 스타일 1 · 굴림 11',10,'ch3'],[4,'영역 서식',`차트 ${c.texture} · 그림 흰색`,10,'ch4'],[4,'제목 서식','굴림 굵게 20pt · 흰색 채우기 · 테두리',10,'ch5'],
+   [4,'꺾은선 · 보조 축',`${c.line} → 표식이 있는 꺾은선형 · 보조 축`,15,'ch6'],[4,'표식 · 레이블',`${c.marker} 10 · 레이블 값`,10,'ch7'],[4,'눈금선 · 축','파선 · 출력형태대로',10,'ch8'],[4,'범례','범례명 변경',5,'ch9'],[4,'말풍선',`“${c.callout}”`,10,'ch10']);
+  return it;
+}
+
+/* ───────── 화면 엔진 (워드 페이지 index.html과 같은 구조) ───────── */
+const ROUNDS=['A','B','C'];
+const MS={A:build(RD.A),B:build(RD.B),C:build(RD.C)};
+const EXAMS={A:examItems(RD.A),B:examItems(RD.B),C:examItems(RD.C)};
+const WNAME=['준비','제1작업','제2작업','제3작업','제4작업','마무리'];
+const condN=k=>MS[k].filter(m=>m.cond).length;
+const RANKS_BASE=[[0,'인턴','🎒'],[.15,'수습사원','🌱'],[.3,'사원','💼'],[.45,'주임','⭐'],[.6,'대리','🏅'],[.8,'과장','👔'],[1,'팀장','👑']];
+const ranksFor=k=>{const n=condN(k);return RANKS_BASE.map(([f,a,b])=>[Math.round(f*n),a,b])};
+
+const $=s=>document.querySelector(s);
+/* 진도: 반·번호(학생)별로 이 PC의 localStorage에 따로 저장, 그 안에서 회차(A/B/C)별로 나눠 저장합니다.
+   워드 페이지(gunsan-word-mission-v4:)와 다른 접두어를 써서 서로 건드리지 않습니다.
+   마지막으로 고른 학생 키(WHO · WHO_TAB)는 워드 페이지와 함께 써서 과목을 바꿔도 다시 고르지 않게 합니다. */
+const KEY='gunsan-excel-mission-v1:';           // + '1-2-07'
+const WHO='gunsan-word-mission-who';            // 이 PC에서 마지막으로 고른 학생 (워드와 공유)
+const WHO_TAB='gunsan-word-mission-who-tab';    // 이 탭에서 확인한 학생 (sessionStorage, 워드와 공유)
+const SUBJ='gunsan-subject-tab';                // 이 탭에서 고른 과목 (sessionStorage)
+const freshRound=()=>({cur:0,tick:{},done:{}});
+const fresh=()=>({round:null,r:{},fs:16,quizBest:0,exam:null,examLog:[]});
+const store={get:(st,k)=>{try{return st.getItem(k)}catch(e){return null}},set:(st,k,v)=>{try{st.setItem(k,v)}catch(e){}},del:(st,k)=>{try{st.removeItem(k)}catch(e){}}};
+const isObj=o=>o&&typeof o==='object'&&!Array.isArray(o);
+function loadState(id){
+  let s=fresh();
+  try{const p=JSON.parse(store.get(localStorage,KEY+id)||'null');if(isObj(p))s={...s,...p}}catch(e){}
+  if(!ROUNDS.includes(s.round))s.round=null;
+  if(!isObj(s.r))s.r={};
+  ROUNDS.forEach(k=>{const x=s.r[k];if(!x)return;if(!isObj(x)){delete s.r[k];return}
+    const M=MS[k];x.cur=Math.min(M.length-1,Math.max(0,+x.cur||0));
+    if(!isObj(x.tick))x.tick={};if(!isObj(x.done))x.done={};
+    M.forEach((m,i)=>{if(x.done[i])x.tick[i]=m.steps.map(()=>true)})});
+  s.fs=Math.min(20,Math.max(14,+s.fs||16));
+  if(!Array.isArray(s.examLog))s.examLog=[];
+  if(s.exam&&(!isObj(s.exam)||!ROUNDS.includes(s.exam.round)||!Array.isArray(s.exam.c)))s.exam=null;
+  return s;
+}
+let who=null,S=fresh();
+const RK=()=>S.round||'A';
+const R=()=>S.r[RK()]||(S.r[RK()]=freshRound());
+const curM=()=>MS[RK()];
+const save=()=>{if(who)store.set(localStorage,KEY+who,JSON.stringify(S))};
+const doneCount=(s=S,k=RK())=>{const x=s.r&&s.r[k];return x?MS[k].reduce((n,m,i)=>n+(m.cond&&x.done[i]?1:0),0):0};
+const whoLabel=id=>{const [g,c,n]=id.split('-');return `${+g}학년 ${+c}반 ${+n}번`};
+const whoShort=id=>{const [g,c,n]=id.split('-');return `${+g}-${+c} · ${+n}번`};
+function savedStudents(){
+  const out=[];
+  try{for(let i=0;i<localStorage.length;i++){const k=localStorage.key(i);if(k&&k.startsWith(KEY))out.push(k.slice(KEY.length))}}catch(e){}
+  return out.filter(id=>/^\d-\d{1,2}-\d{2}$/.test(id)).sort((a,b)=>a.localeCompare(b,'ko',{numeric:true}));
+}
+const rankOf=(n,k=RK())=>ranksFor(k).filter(r=>n>=r[0]).pop();
+const ticks=i=>R().tick[i]||(R().tick[i]=[]);
+
+let peek=null,folded=false;
+const activeStep=(i,m)=>{const t=ticks(i);
+  if(peek!==null&&peek<m.steps.length)return peek;
+  return m.steps.findIndex((_,j)=>!t[j])};
+function stepsHTML(i,m){
+  const t=ticks(i),a=activeStep(i,m);
+  const has=j=>(m.steps[j].b||[]).length>0;
+  const body=j=>{if(!has(j))return '';
+    return `<li class="stepbody" aria-label="${j+1}번 단계 자세히"><div class="bodyhead"><p class="bodylab">▲ ${j+1}번 단계 · 이렇게 해요</p><button class="peek" data-hide="${j}" aria-expanded="true" aria-label="${j+1}번 단계 입력 내용 숨기기">숨기기 ▴</button></div>${m.steps[j].b.join('')}${!t[j]?`<button class="btn complete" data-complete="${j}">✓ 이 단계 완료</button>`:''}</li>`};
+  return `<ol class="steps">${m.steps.map((s,j)=>`<li class="step ${t[j]?'on':''} ${j===a?'cur':''}" data-step="${j}" role="checkbox" aria-checked="${!!t[j]}" tabindex="0"><span class="box">${t[j]?'✓':j+1}</span><span class="tx">${s.t}</span>${(j!==a||folded)&&has(j)?`<button class="peek" data-peek="${j}" aria-expanded="false" aria-label="${j+1}번 단계 입력 내용 보기">입력 내용 ▾</button>`:''}</li>${j===a&&!folded?body(j):''}`).join('')}</ol>
+  <p class="stepnote">${m.note||'엑셀에서 한 동작 하고 → 여기서 한 줄 체크!'}</p>`;
+}
+const YEOM={base:'img/avatar-yeom.webp',cheer:'img/avatar-yeom-cheer.webp',worry:'img/avatar-yeom-worry.webp'};
+function mascot(tip,face){return `<div class="mascot"><img src="${YEOM[face||'base']}" alt="" width="256" height="256"><div class="bubble"><small>염 대리의 꿀팁</small>${tip}</div></div>`}
+const ALLDLS=()=>ROUNDS.map(DLS).join('');
+
+function extraHTML(x){
+  const T=RD[RK()];
+  switch(x){
+  case 'start':return `<section class="card extra gx"><div class="xhead"><h2>📂 문제지 PDF (회차별)</h2></div><div class="dls">${ALLDLS()}</div>
+    <p class="stepnote">학생용으로 옮겨 둔 문제지예요. 지금 회차는 <b>${T.no}회차 ${T.type}</b>.</p></section>`;
+  case 'finish':{const M=curM(),k=RK(),n=doneCount(),N=condN(k),r=rankOf(n);
+    return `<section class="card cert" style="margin-top:14px"><small style="font-weight:800;color:#0b5c30">ITQ 엑셀 연습 · ${T.no}회차 ${T.type}</small><h1>연습 결과</h1>
+    <div class="big">${r[2]} ${r[1]}</div><p style="margin:0;color:var(--muted)">${N}단계 중 <b style="color:var(--ink)">${n}단계</b> 완료</p>
+    <div class="stamps">${M.map((m,j)=>m.cond?`<span class="${R().done[j]?'ok':''}" title="${esc(m.title)}" data-gostamp="${j}" role="button" tabindex="0">${R().done[j]?'완료':m.cond}</span>`:'').join('')}</div>
+    <p style="font-size:.85rem;color:var(--muted);margin:8px 0 0">${n===N?'모든 단계를 해냈어요! 다른 회차에도 도전해 보세요. 🎉':'빈 칸 번호를 누르면 그 단계로 돌아가요.'}</p></section>`}
+  }return '';
+}
+
+function render(){
+  const k=RK(),T=RD[k],M=curM(),i=R().cur,m=M[i],done=!!R().done[i];
+  document.documentElement.style.setProperty('--fs',S.fs+'px');
+  const imgs=(m.imgs||[]).map(n=>`<button data-goal="${n}" aria-label="이 그림 크게 보기"><img src="img/excel/${n}.webp" alt="${esc(m.title)} 출력형태"></button>`).join('');
+  let html='';
+  if(i===0){
+    const n=doneCount(),r=rankOf(n),RK_=ranksFor(k);
+    html+=`<section class="card hero xl"><div><small>ITQ 엑셀 · MS 엑셀 2021 · 60분</small><h1>${T.emoji} ${T.no}회차 ${T.type}<br>${T.title}</h1><p>한 단계 끝낼 때마다 <b>결재 도장</b>, 단계를 많이 끝낼수록 <b>승진</b>해요.</p>
+      <div class="flowline"><span>📋 제1작업 표·함수</span><i>→</i><span>🔎 제2작업 ${T.t2.kind==='goal'?'목표값·필터':'필터·표 서식'}</span><i>→</i><span>🧱 제3작업 ${T.t3.kind==='pivot'?'피벗':'부분합'}</span><i>→</i><span>📊 제4작업 차트</span></div>
+      <button class="roundnow" data-openround>📚 회차 바꾸기 (지금 ${T.no}회차)</button></div>
+      <button class="thumb" data-goal="${T.lc}-t1" aria-label="출력형태 크게 보기"><img src="img/excel/${T.lc}-t1.webp" alt="제1작업 출력형태 미리 보기" width="1397" height="650"></button></section>
+      <div class="ranks" aria-label="승진 단계">${RK_.map(x=>`<span class="${x[1]===r[1]?'me':''}">${x[2]} ${x[1]}${x[0]?` · ${x[0]}단계`:''}</span>`).join('')}</div>`;
+  }
+  html+=`<section class="card head" style="margin-top:${i===0?14:0}px"><div class="num ${done?'ok':''}">${m.cond?String(m.cond).padStart(2,'0'):m.icon}</div>
+    <div><h1>${m.cond?`${m.icon} `:''}${m.title}</h1><p>${WNAME[m.w]} · ${m.sub}</p></div>${done?'<span class="tag">✔ 결재 완료</span>':''}</section>`;
+  const left=`<div class="card ga">${imgs?`<p class="lab"><i class="l1">🖼</i>${m.goalLabel||'완성하면 이렇게! (출력형태)'}</p><div class="goal">${imgs}</div>`:''}${mascot(m.tip)}
+    ${m.paths&&m.paths.length?`<p class="lab" style="margin-top:16px"><i class="l2">🧭</i>어디서? (엑셀 2021 메뉴)</p><div class="paths">${m.paths.map(pathHTML).join('')}</div>`:''}</div>`;
+  const all=m.steps.filter(s=>(s.b||[]).length).map((s,j)=>`<p class="lab" style="margin:10px 0 6px"><i class="l3">✎</i>${esc(s.t.replace(/<[^>]+>/g,''))}</p>${s.b.join('')}`).join('');
+  const todo=`<div class="card gb"><p class="lab"><i class="l4">✓</i>지금 할 일 · 한 줄씩 체크 <span class="labn">지금 단계 바로 아래에 입력 내용이 펼쳐져요</span></p>${stepsHTML(i,m)}
+    ${all?`<details class="allvals"><summary>📋 이 단계의 입력 내용 한눈에 보기</summary>${all}</details>`:''}</div>`;
+  const help=m.help&&m.help.length?`<details class="card help gh"><summary>막혔어요</summary>${m.help.map(h=>`<div class="qa"><b>${h[0]}</b><span>${h[1]}</span></div>`).join('')}</details>`:'';
+  html+=`<div class="grid"><div class="col">${left}${m.extra==='start'?extraHTML('start'):''}${help}</div><div class="col">${todo}</div></div>`;
+  if(m.extra==='finish')html+=extraHTML('finish');
+  $('#main').innerHTML=html;
+  // 상단 지도
+  let w=-1;
+  $('#map').innerHTML=M.map((x,j)=>{let g='';if(x.w!==w){w=x.w;if(w>=1&&w<=4)g=`<span class="mapg" aria-hidden="true">${w}작업</span>`}
+    return g+`<button class="dot ${R().done[j]?'done':''} ${j===i?'cur':''}" data-go="${j}" title="${x.cond?x.cond+'. ':''}${esc(x.title)}" aria-label="${x.cond?x.cond+'번 ':''}${esc(x.title)}${R().done[j]?' 완료':''}">${!x.cond?x.icon:R().done[j]&&j!==i?'✓':x.cond}</button>`}).join('');
+  const cur=$('#map .cur');if(cur)cur.scrollIntoView({block:'nearest',inline:'center'});
+  const n=doneCount(),r=rankOf(n);
+  $('#rank').innerHTML=`<span class="em">${r[2]}</span>${r[1]} · ${n}/${condN(k)}`;
+  $('#whoChip').textContent=who?whoShort(who):'학생 선택';
+  $('#roundChip').textContent=S.round?`${T.no}회차 ${T.type}`:'회차';
+  bottom();save();
+}
+function bottom(){
+  const M=curM(),i=R().cur,m=M[i],t=ticks(i),c=m.steps.filter((_,j)=>t[j]).length,all=c===m.steps.length;
+  $('#prev').disabled=i===0;
+  $('#meterText').textContent=`체크 ${c}/${m.steps.length}`;
+  $('#meterBar').style.width=(c/m.steps.length*100)+'%';
+  const nb=$('#next');
+  if(i===M.length-1){nb.textContent=R().done[i]?'🎉 완료!':all?m.next:'체크하고 완료';nb.className='bnext'+(all?' go':'')}
+  else if(R().done[i]){nb.textContent='다음 →';nb.className='bnext go'}
+  else if(all){nb.textContent=m.next||'결재 받기 →';nb.className='bnext go'}
+  else{nb.textContent='건너뛰기 →';nb.className='bnext'}
+}
+function focusStep(j){
+  const cur=$('.step.cur')||(j!=null?$(`.step[data-step="${j}"]`):null);if(!cur)return;
+  cur.focus({preventScroll:true});
+  const body=cur.nextElementSibling&&cur.nextElementSibling.classList.contains('stepbody')?cur.nextElementSibling:null;
+  const top=cur.getBoundingClientRect().top,bottomEdge=(body||cur).getBoundingClientRect().bottom,head=$('.top').offsetHeight+8,foot=$('.bottom').offsetHeight+8;
+  if(top<head||bottomEdge>innerHeight-foot)window.scrollBy({top:top-head,behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth'});
+}
+function go(i){R().cur=Math.min(curM().length-1,Math.max(0,i));peek=null;folded=false;render();window.scrollTo({top:0});$('#main').focus({preventScroll:true})}
+function toast(s){const t=$('#toast');t.textContent=s;t.classList.remove('hidden');clearTimeout(toast.t);toast.t=setTimeout(()=>t.classList.add('hidden'),2200)}
+function confetti(n=70){
+  if(matchMedia('(prefers-reduced-motion: reduce)').matches)return;
+  const cols=['#107c41','#2f5bea','#f97316','#ffd700','#e5484d','#7c3aed'];
+  for(let j=0;j<n;j++){const d=document.createElement('i');d.className='confetti';d.style.left=Math.random()*100+'vw';d.style.background=cols[j%cols.length];d.style.animationDuration=(1.6+Math.random()*1.6)+'s';d.style.animationDelay=Math.random()*.4+'s';document.body.appendChild(d);setTimeout(()=>d.remove(),3800)}
+}
+function stamp(text,sub){const s=document.createElement('div');s.className='stamp';s.innerHTML=`<div><span>${text}<small>${sub}</small></span></div>`;document.body.appendChild(s);setTimeout(()=>s.remove(),900)}
+
+$('#main').addEventListener('click',e=>{
+  const pk=e.target.closest('[data-peek]');
+  if(pk){peek=+pk.dataset.peek;folded=false;render();focusStep();return}
+  const hd=e.target.closest('[data-hide]');
+  if(hd){const j=+hd.dataset.hide;peek=null;folded=j===activeStep(R().cur,curM()[R().cur]);render();focusStep(j);return}
+  const cp=e.target.closest('[data-copy]');if(cp){copy(cp.dataset.copy);return}
+  const st=e.target.closest('[data-step], [data-complete]');
+  if(st){const t=ticks(R().cur),j=+(st.dataset.step??st.dataset.complete);t[j]=!t[j];peek=null;folded=false;
+    if(!t[j]&&R().done[R().cur]){delete R().done[R().cur];toast('체크를 풀어서 결재가 취소됐어요')}
+    render();focusStep(j);return}
+  const g=e.target.closest('[data-goal]');if(g){openGoal(g.dataset.goal);return}
+  if(e.target.closest('[data-openround]')){openRound();return}
+  const sp=e.target.closest('[data-gostamp]');if(sp){go(+sp.dataset.gostamp);return}
+});
+$('#main').addEventListener('keydown',e=>{
+  const st=e.target.closest('[data-step]');if(st&&e.target===st&&(e.key===' '||e.key==='Enter')){e.preventDefault();st.click()}
+  const sp=e.target.closest('[data-gostamp]');if(sp&&(e.key===' '||e.key==='Enter')){e.preventDefault();sp.click()}
+});
+$('#map').addEventListener('click',e=>{const b=e.target.closest('[data-go]');if(b)go(+b.dataset.go)});
+$('#prev').onclick=()=>go(R().cur-1);
+let busy=false;
+$('#next').onclick=()=>{
+  if(busy)return;
+  const M=curM(),i=R().cur,m=M[i],t=ticks(i),all=m.steps.every((_,j)=>t[j]);
+  if(i===M.length-1){if(all){R().done[i]=true;stamp('완성','축하');confetti(120);render()}else toast('체크를 모두 하면 완료할 수 있어요');return}
+  if(all&&!R().done[i]){
+    const before=rankOf(doneCount());R().done[i]=true;const after=rankOf(doneCount());
+    stamp(m.stamp||'결재','완료');
+    busy=true;setTimeout(()=>{busy=false;go(i+1);if(after[1]!==before[1])rankUp(after)},650);return;
+  }
+  go(i+1);
+};
+function rankUp(r){
+  $('#upBody').innerHTML=`<img src="${YEOM.cheer}" alt="" width="256" height="256" style="border-radius:50%"><h2>승진을 축하합니다!</h2><div class="r">${r[2]} ${r[1]}</div><p>벌써 ${doneCount()}단계를 해냈어요. 계속 가 볼까요?</p><button class="bnext go" data-close style="margin-top:8px">계속하기 →</button>`;
+  $('#upDlg').showModal();confetti();
+}
+async function copy(key){
+  const v=CP[key];if(v==null)return;
+  try{await navigator.clipboard.writeText(v);toast('복사 완료! 엑셀에서 Ctrl+V')}
+  catch(e){toast('복사가 안 돼요. 보고 직접 입력해 주세요')}
+}
+let zoom=100;
+function openGoal(part){
+  const T=RD[RK()],list=[['t1','제1작업'],['t2','제2작업 조건'],['t3','제3작업'],['t4','제4작업 차트']];
+  part=part&&part.startsWith(T.lc+'-')?part:T.lc+'-t1';zoom=100;
+  $('#goalTabs').innerHTML=list.map(([n,l])=>`<button class="btn" data-gimg="${T.lc}-${n}" ${part===T.lc+'-'+n?'style="background:#107c41;color:#fff"':''}>${l}</button>`).join('');
+  $('#goalImg').src=`img/excel/${part}.webp`;$('#goalImg').style.width='100%';
+  $('#goalTitle').textContent=`${T.no}회차 ${T.type} 출력형태`;
+  if(!$('#goalDlg').open)$('#goalDlg').showModal();
+}
+$('#goalTabs').addEventListener('click',e=>{const b=e.target.closest('[data-gimg]');if(b)openGoal(b.dataset.gimg)});
+document.querySelectorAll('[data-z]').forEach(b=>b.onclick=()=>{zoom=Math.max(50,Math.min(250,zoom+ +b.dataset.z));$('#goalImg').style.width=zoom+'%'});
+document.addEventListener('click',e=>{if(e.target.closest('[data-close]')){e.target.closest('dialog').close()}});
+document.querySelectorAll('dialog').forEach(d=>d.addEventListener('click',e=>{if(e.target===d&&(d.id!=='whoDlg'||who)&&(d.id!=='roundDlg'||S.round))d.close()}));
+$('#goalBtn').onclick=()=>openGoal();
+$('#helpBtn').onclick=()=>{$('#dlsHelp').innerHTML=ALLDLS();$('#helpDlg').showModal()};
+const fs=d=>{S.fs=Math.min(20,Math.max(14,S.fs+d));render()};
+$('#fsUp').onclick=$('#fsUp2').onclick=()=>fs(1);
+$('#fsDown').onclick=$('#fsDown2').onclick=()=>fs(-1);
+$('#subjBtn').onclick=()=>{store.del(sessionStorage,SUBJ);location.href='index.html'};
+function resetRound(){
+  if(!who)return openWho();
+  const T=RD[RK()];
+  if(!confirm(`${whoLabel(who)}의 ${T.no}회차 ${T.type} 체크 · 결재 기록을 지우고 처음부터 할까요? (다른 회차는 그대로예요)`))return;
+  S.r[RK()]=freshRound();
+  if($('#helpDlg').open)$('#helpDlg').close();
+  go(0);toast(`${T.no}회차를 처음 상태로 돌렸어요`);
+}
+$('#resetBtn').onclick=$('#resetTop').onclick=resetRound;
+$('#wipeBtn').onclick=()=>{
+  const list=savedStudents();
+  if(!confirm(`이 PC에 저장된 엑셀 학생 기록 ${list.length}명분을 모두 지울까요? (워드 기록은 그대로예요) 되돌릴 수 없어요.`))return;
+  list.forEach(id=>store.del(localStorage,KEY+id));
+  who=null;S=fresh();quiz=null;$('#helpDlg').close();render();openWho();toast('이 PC의 엑셀 학생 기록을 모두 지웠어요');
+};
+
+/* 회차 고르기 */
+function openRound(){
+  const cards=ROUNDS.map(k=>{const T=RD[k],n=doneCount(S,k),N=condN(k),started=S.r[k]&&Object.values(S.r[k].tick||{}).some(a=>Array.isArray(a)&&a.some(Boolean));
+    return `<button class="rcard ${S.round===k?'on':''}" data-round="${k}"><span class="rn">${T.type}</span><span><b>${T.no}회차 · ${T.title}</b><small>제목 ${T.shape} · 제2작업 ${T.t2.kind==='goal'?'목표값 찾기 + 고급 필터':'고급 필터 + 표 서식'} · 제3작업 ${T.t3.kind==='pivot'?'피벗 테이블':'정렬 및 부분합'}</small><span class="rbar"><i style="width:${n/N*100}%"></i></span></span><span class="rp">${n}/${N}단계${started&&n<N?' · 이어하기':n===N?' · 🎉':''}</span></button>`}).join('');
+  $('#rcards').innerHTML=cards;
+  if(!$('#roundDlg').open)$('#roundDlg').showModal();
+}
+function setRound(k,quiet){
+  S.round=k;peek=null;folded=false;R();save();
+  if($('#roundDlg').open)$('#roundDlg').close();
+  go(R().cur);
+  if(!quiet)toast(`${RD[k].no}회차 ${RD[k].type} · ${RD[k].title}`);
+}
+$('#rcards').addEventListener('click',e=>{const b=e.target.closest('[data-round]');if(b)setRound(b.dataset.round)});
+$('#roundDlg').addEventListener('cancel',e=>{if(!S.round)e.preventDefault()});
+$('#roundBtn').onclick=()=>{if(!who)return openWho();openRound()};
+
+/* 학생 고르기 (1학년 1~7반, 1~20번) */
+const opts=(n,unit)=>`<option value="" disabled selected>선택</option>`+Array.from({length:n},(_,i)=>`<option value="${i+1}">${i+1}${unit}</option>`).join('');
+$('#wC').innerHTML=opts(7,'반');$('#wN').innerHTML=opts(20,'번');
+const pickId=()=>{const c=$('#wC').value,n=$('#wN').value;return c&&n?`1-${c}-${String(n).padStart(2,'0')}`:null};
+['#wC','#wN'].forEach(q=>$(q).onchange=()=>{const id=pickId();$('#whoGo').disabled=!id;$('#whoGo').textContent=id?`${whoLabel(id)} 시작하기 →`:'시작하기 →'});
+const progLine=s=>ROUNDS.map(k=>`${RD[k].type} ${doneCount(s,k)}/${condN(k)}`).join(' · ');
+function openWho(){
+  const last=store.get(localStorage,WHO),list=savedStudents();
+  $('#whoLast').innerHTML=last&&list.includes(last)?`<button class="whocont" data-who="${last}">▶ ${whoLabel(last)}으로 이어하기<small>${progLine(loadState(last))}</small></button><p style="margin:0 0 10px;font-size:.82rem;color:var(--muted)">내가 아니면 아래에서 반·번호를 골라요.</p>`:'';
+  const others=list.filter(id=>id!==last);
+  $('#whoList').innerHTML=others.length?`<details class="wholist"><summary>이 PC에 저장된 다른 학생 (${others.length}명)</summary><div>${others.map(id=>`<button data-who="${id}">${whoShort(id)}</button>`).join('')}</div></details>`:'';
+  ['#wC','#wN'].forEach(q=>$(q).selectedIndex=0);$('#whoGo').disabled=true;$('#whoGo').textContent='시작하기 →';
+  if(!$('#whoDlg').open)$('#whoDlg').showModal();
+}
+function useStudent(id,quiet){
+  who=id;S=loadState(id);quiz=null;
+  store.set(localStorage,WHO,id);store.set(sessionStorage,WHO_TAB,id);
+  if($('#whoDlg').open)$('#whoDlg').close();
+  if(S.round){setRound(S.round,true);if(!quiet)toast(`${whoLabel(id)} · ${RD[S.round].no}회차 이어서`)}
+  else{render();openRound();if(!quiet)toast(`${whoLabel(id)} 안녕하세요! 회차를 골라요`)}
+}
+$('#whoDlg').addEventListener('click',e=>{const b=e.target.closest('[data-who]');if(b)useStudent(b.dataset.who)});
+$('#whoGo').onclick=()=>{const id=pickId();if(id)useStudent(id)};
+$('#whoDlg').addEventListener('cancel',e=>{if(!who)e.preventDefault()});
+$('#whoBtn').onclick=openWho;
+
+/* ---------- 실기 마스터: 시험 알기 · 단축키 퀴즈 · 실전 모의 60분 ---------- */
+const KEYS=[['셀 서식 창 열기','Ctrl+1'],['셀 안에서 줄 바꾸기','Alt+Enter'],['수식에서 절대 참조($) 바꾸기','F4'],['셀 고치기 (수식 다시 보기)','F2'],['저장','Ctrl+S'],['선택한 여러 셀에 한꺼번에 입력','Ctrl+Enter'],['오늘 날짜 넣기','Ctrl+;'],['필터 켜기 · 끄기','Ctrl+Shift+L'],['지금 시트에 차트 바로 만들기','Alt+F1'],['새 차트 시트에 차트 만들기','F11'],['되돌리기','Ctrl+Z'],['복사','Ctrl+C'],['붙여넣기','Ctrl+V'],['선택하여 붙여넣기','Ctrl+Alt+V'],['새 워크시트 넣기','Shift+F11'],['다음 시트로 가기','Ctrl+Page Down'],['이전 시트로 가기','Ctrl+Page Up'],['자동 합계 (SUM)','Alt+='],['다른 이름으로 저장','F12'],['전체 선택','Ctrl+A']];
+const QUIZ_N=10,EXAM_MS=60*60e3;
+let mtab='info',quiz=null,examTimer=null,examPick=null;
+const shuffle=a=>{a=[...a];for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a};
+const mmss=ms=>{const t=Math.max(0,Math.floor(ms/1000));return String(Math.floor(t/60)).padStart(2,'0')+':'+String(t%60).padStart(2,'0')};
+function infoHTML(){return `<div class="minfo">
+  <section><h3>🕒 시험은 이렇게 나와요</h3><ul><li>ITQ 엑셀 · <b>60분</b> · MS 엑셀 2021</li><li>총 <b>500점</b>: 제1작업 <b>240</b> · 제2작업 <b>80</b> · 제3작업 <b>80</b> · 제4작업 <b>100</b></li><li>문제지의 <b>≪조건≫</b>과 <b>≪출력형태≫</b> 그림대로 만들기</li><li>반드시 <b>제1작업부터 순서대로</b> (뒤 작업이 제1작업 표를 써요)</li></ul></section>
+  <section><h3>📁 파일 · 시트 규칙</h3><ul><li>파일 이름 <b>수험번호-성명.xlsx</b> · 내 PC\\문서\\ITQ — 다르면 <b>실격</b></li><li>시트 이름·순서: <b>제1작업 · 제2작업 · 제3작업 · 제4작업</b>, 다른 시트가 있으면 감점</li><li>모든 작업 시트 <b>A열 너비 1</b>, 나머지 열은 알맞게</li><li>글꼴 <b>굴림 11pt</b> · 숫자는 오른쪽, 나머지는 가운데</li><li>시트를 파일로 나눠 저장하면 <b>실격</b></li></ul></section>
+  <section><h3>🧮 함수 칸 ⑴~⑹</h3><ul><li>반드시 <b>주어진 함수</b>로! 결과값을 직접 쓰면 그 칸 <b>0점</b></li><li>자주 나오는 함수: RANK.EQ · IF · LEFT · MID · CHOOSE · SUMIF · COUNTIF · DSUM · DAVERAGE · ROUND · ROUNDDOWN · MAX · VLOOKUP · AND</li><li>범위 고정은 <b>${K('F4')}</b> ($)</li></ul></section>
+  <section><h3>⚠️ 감점 잦은 실수 TOP</h3><ul><li>시트 이름 띄어쓰기 · 순서 틀림 (제4작업 차트 시트가 맨 앞!)</li><li>결재란 <b>원본을 안 지움</b> · 그림이 아닌 표로 붙임</li><li>도형 글자색 흰색 그대로 · 그림자 빠짐</li><li>조건부 서식 <b>$</b> 위치 틀림 (=$H5)</li><li>고급 필터 조건 제목을 <b>직접 쳐서</b> 글자가 다름</li><li>피벗 범위에 13·14행 포함 · 행 총합계 안 지움</li><li>차트에 빼야 할 행이 들어감 · 범례 이름 그대로</li><li>마지막에 저장 · 답안 전송 안 함</li></ul></section>
+  <section class="wide"><h3>🏆 마스터 순서</h3><ul><li><b>1번째</b>: 회차 하나를 입력 내용 보면서 끝까지 따라 하기 (복사 단추 써도 OK)</li><li><b>2번째</b>: ↺ 초기화 후 데이터 · 수식을 <b>직접 입력</b>, 막힐 때만 입력 내용 펴 보기</li><li><b>3번째</b>: ② 단축키 퀴즈 10점 → ③ 실전 모의를 <b>60분 안에, 힌트 0번</b> · A형 → B형 → C형</li></ul></section></div>
+  <p class="mnote">배점(240·80·80·100)은 문제지에 적힌 대로예요. 실전 모의의 항목별 점수는 연습용으로 나눈 것이라 실제 채점과 다를 수 있어요.</p>`}
+function quizHTML(){
+  if(!quiz)return `<div class="qcard"><p class="qq">엑셀 단축키 퀴즈 ${QUIZ_N}문제</p><p>기능을 보고 맞는 단축키를 골라요.<br>내 최고 점수: <b>${S.quizBest||0}/${QUIZ_N}</b></p><button class="bnext go" data-quiz="start">시작 →</button></div>`;
+  if(quiz.i>=QUIZ_N)return `<div class="qcard"><p class="qq">${quiz.score}/${QUIZ_N}점 ${quiz.score===QUIZ_N?'🎉 완벽해요!':quiz.score>=7?'👍 거의 다 왔어요':'💪 한 번 더!'}</p>${quiz.miss.length?`<p style="text-align:left"><b>다시 볼 것</b><br>${quiz.miss.map(x=>`${x[0]} → ${K(x[1])}`).join('<br>')}</p>`:''}<p>내 최고 점수: <b>${S.quizBest}/${QUIZ_N}</b></p><button class="bnext go" data-quiz="start">다시 하기 →</button></div>`;
+  const q=quiz.qs[quiz.i];
+  return `<div class="qcard"><p class="qn">${quiz.i+1} / ${QUIZ_N} · 점수 ${quiz.score}</p><p class="qq">${q.f}</p>
+  <div class="qopts">${q.opts.map(o=>`<button class="qopt ${quiz.picked?(o===q.a?'right':o===quiz.picked?'wrong':''):''}" data-qopt="${esc(o)}" ${quiz.picked?'disabled':''}>${esc(o)}</button>`).join('')}</div>
+  <p class="qfb">${quiz.picked?(quiz.picked===q.a?'⭕ 정답!':`❌ 정답은 ${esc(q.a)}`):''}</p>${quiz.picked?`<button class="bnext go" data-quiz="next">${quiz.i+1===QUIZ_N?'결과 보기 →':'다음 →'}</button>`:''}</div>`}
+function startQuiz(){const pick=shuffle(KEYS).slice(0,QUIZ_N);
+  quiz={i:0,score:0,miss:[],picked:null,qs:pick.map(([f,a])=>({f,a,opts:shuffle([a,...shuffle(KEYS.map(x=>x[1]).filter(x=>x!==a)).slice(0,3)])}))}}
+const examScore=e=>EXAMS[e.round].reduce((s,x,j)=>s+(e.c[j]?x[3]:0),0);
+function examHTML(){
+  const e=S.exam;
+  if(!e){const pk=examPick||RK();
+    return `<div class="qcard"><p class="qq">실전 모의 60분</p>
+    <div class="exsel" role="group" aria-label="회차 고르기">${ROUNDS.map(k=>`<button class="${pk===k?'on':''}" data-expick="${k}">${RD[k].no}회차 ${RD[k].type}</button>`).join('')}</div>
+    <p style="text-align:left">① 엑셀에서 <b>새 통합 문서</b>로 시작하고, 문제지 PDF만 봐요.<br>② 시작을 누르면 <b>조건 목록과 배점</b>만 보여요. 입력 내용 · 복사 단추는 없어요.<br>③ 끝낸 항목을 체크하면 점수가 더해져요. 막히면 <b>힌트</b>(그 단계 화면)를 볼 수 있지만 기록에 남아요.<br>④ 60분이 지나도 계속할 수 있어요(시계가 빨간색으로 넘은 시간을 보여 줘요).<br>⑤ 목표: <b>60분 안에 500점, 힌트 0개</b></p>
+    ${S.examLog.length?`<p><b>지난 기록</b><br>${S.examLog.slice(-3).map(x=>`${x.d} · ${RD[x.round]?RD[x.round].type:''} · ${x.score}/500점 · ${mmss(x.ms)} · 힌트 ${x.h}개`).join('<br>')}</p>`:''}<button class="bnext go" data-exam="start">시작 →</button></div>`}
+  const items=EXAMS[e.round],sc=examScore(e),h=e.h.filter(Boolean).length,ms=(e.end||Date.now())-e.start,left=EXAM_MS-ms,T=RD[e.round];
+  return `<div class="examhead"><span class="timer ${left<0?'late':''}" id="examClock">${left<0?'+'+mmss(-left):mmss(left)}</span><span><b>${T.no}회차 ${T.type}</b> · <b>${sc}</b>/500점 · 힌트 ${h}개</span>
+    <span style="margin-left:auto">${e.end?'<button class="btn" data-exam="reset">새로 하기</button>':'<button class="btn" data-exam="finish">제출하기</button> <button class="btn" data-exam="reset" style="background:#f1f3f8;color:#475467">그만두기</button>'}</span></div>
+  ${e.end?`<div class="exres"><b>${sc===500&&left>=0&&h===0?'🏆 마스터! 60분 안에 힌트 없이 다 했어요.':sc===500&&left>=0?'👍 시간 안에 완성! 다음엔 힌트 없이 도전해요.':sc===500?'✅ 다 했어요. 다음엔 60분 안에 도전!':'💪 '+(500-sc)+'점이 남았어요. 노란 항목부터 다시 연습해요.'}</b><br>걸린 시간 ${mmss(ms)} · 점수 ${sc}/500 · 힌트 본 항목 ${h}개</div>`:`<p class="mnote">공통: 시트 3개(제1~3작업) · 굴림 11 · A열 너비 1 · 파일 저장부터 하고 시작해요.</p>`}
+  ${[1,2,3,4].map(g=>`<p class="exw">제${g}작업 (${[0,240,80,80,100][g]}점) · 지금 ${items.reduce((s,x,j)=>s+(x[0]===g&&e.c[j]?x[3]:0),0)}점</p><ol class="exlist">${items.map((x,j)=>x[0]!==g?'':`<li class="${e.c[j]?'ok':e.h[j]?'hint':''}"><input type="checkbox" data-ex="${j}" ${e.c[j]?'checked':''} ${e.end?'disabled':''} aria-label="${esc(x[1])} 완료"><span><b class="t">${esc(x[1])}<span class="pt">${x[3]}점</span></b><span class="d">${esc(x[2])}</span></span><button class="peek" data-exhint="${j}">${e.h[j]?'힌트 봄':'힌트'}</button></li>`).join('')}</ol>`).join('')}`}
+function renderMaster(){
+  document.querySelectorAll('[data-mt]').forEach(b=>{b.classList.toggle('on',b.dataset.mt===mtab);b.setAttribute('aria-selected',b.dataset.mt===mtab)});
+  $('#masterBody').innerHTML=mtab==='info'?infoHTML():mtab==='quiz'?quizHTML():examHTML();
+  clearInterval(examTimer);
+  if(mtab==='exam'&&S.exam&&!S.exam.end)examTimer=setInterval(()=>{const c=$('#examClock');if(!c||!$('#masterDlg').open)return clearInterval(examTimer);
+    const left=EXAM_MS-(Date.now()-S.exam.start);c.textContent=left<0?'+'+mmss(-left):mmss(left);c.classList.toggle('late',left<0)},1000);
+}
+$('#masterBtn').onclick=()=>{if(!who)return openWho();if(S.exam&&!S.exam.end)mtab='exam';renderMaster();$('#masterDlg').showModal()};
+$('#masterDlg').addEventListener('click',e=>{
+  const t=e.target.closest('[data-mt]');if(t){mtab=t.dataset.mt;renderMaster();return}
+  const q=e.target.closest('[data-quiz]');
+  if(q){if(q.dataset.quiz==='start')startQuiz();else{quiz.i++;quiz.picked=null;if(quiz.i>=QUIZ_N&&quiz.score>(S.quizBest||0)){S.quizBest=quiz.score;save()}}renderMaster();return}
+  const o=e.target.closest('[data-qopt]');
+  if(o&&quiz&&!quiz.picked){const cur=quiz.qs[quiz.i];quiz.picked=cur.opts.find(x=>esc(x)===o.dataset.qopt||x===o.dataset.qopt);if(quiz.picked===cur.a)quiz.score++;else quiz.miss.push([cur.f,cur.a]);renderMaster();return}
+  const pk=e.target.closest('[data-expick]');if(pk){examPick=pk.dataset.expick;renderMaster();return}
+  const x=e.target.closest('[data-exam]');
+  if(x){const a=x.dataset.exam;
+    if(a==='start')S.exam={round:examPick||RK(),start:Date.now(),c:[],h:[],end:0};
+    else if(a==='finish'){const E=S.exam;E.end=Date.now();const sc=examScore(E);S.examLog.push({d:new Date().toLocaleDateString('ko-KR'),round:E.round,score:sc,ms:E.end-E.start,h:E.h.filter(Boolean).length});S.examLog=S.examLog.slice(-10);
+      if(sc===500&&E.end-E.start<=EXAM_MS)confetti(120)}
+    else if(a==='reset'){if(S.exam&&!S.exam.end&&!confirm('진행 중인 실전 모의를 그만둘까요?'))return;S.exam=null}
+    save();renderMaster();return}
+  const c=e.target.closest('[data-ex]');if(c&&S.exam&&!S.exam.end){S.exam.c[+c.dataset.ex]=c.checked;save();renderMaster();return}
+  const hb=e.target.closest('[data-exhint]');
+  if(hb&&S.exam){const j=+hb.dataset.exhint,E=S.exam;if(!E.end)E.h[j]=true;save();$('#masterDlg').close();
+    if(S.round!==E.round)setRound(E.round,true);
+    const idx=curM().findIndex(m=>m.id===EXAMS[E.round][j][4]);go(idx<0?0:idx);toast('힌트: 이 단계를 확인하고 🎓에서 이어 하세요')}
+});
+
+/* 시작 */
+store.set(sessionStorage,SUBJ,'excel');
+render();
+const tabWho=store.get(sessionStorage,WHO_TAB);
+if(tabWho&&/^\d-\d{1,2}-\d{2}$/.test(tabWho)&&tabWho===store.get(localStorage,WHO))useStudent(tabWho,true);   // 같은 탭(새로고침 · 워드에서 넘어옴): 바로 이어서
+else openWho();
+</script>
+</body>
+</html>
